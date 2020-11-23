@@ -9,6 +9,7 @@ import {
 
 import * as serviceWorker from "./serviceWorker";
 import Pages from "./pages";
+import "./styles/app.css";
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 	cache: new InMemoryCache(),
@@ -19,7 +20,9 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 ReactDOM.render(
 	<React.StrictMode>
 		<ApolloProvider client={client}>
-			<Pages />
+			<div className="app">
+				<Pages />
+			</div>
 		</ApolloProvider>
 	</React.StrictMode>,
 	document.getElementById("root")
