@@ -3,5 +3,5 @@
 	"bracketSpacing": false,
 	"trailingComma": "es5",
 	"useTabs": true,
-	"tabWidth": 4
+	"tabWidth": 2
 }
