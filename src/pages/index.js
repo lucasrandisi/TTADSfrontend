@@ -1,14 +1,14 @@
-import React from "react"
-import { BrowserRouter, Switch, Route } from "react-router-dom"
+import React from "react";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 
-import App from "./App"
+import OrderPage from "./orderPage";
 
 export default function Pages() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" component={App} />
-      </Switch>
-    </BrowserRouter>
-  )
+	return (
+		<BrowserRouter>
+			<Switch>
+				<Route path="/order/:id" component={OrderPage} />
+			</Switch>
+		</BrowserRouter>
+	);
 }

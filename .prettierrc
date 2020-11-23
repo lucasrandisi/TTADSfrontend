@@ -1,7 +1,7 @@
 {
-  "prettier": {
-    "printWidth": 90,
-    "bracketSpacing": false,
-    "trailingComma": "es5"
-  }
+	"printWidth": 90,
+	"bracketSpacing": false,
+	"trailingComma": "es5",
+	"useTabs": true,
+	"tabWidth": 2
 }
