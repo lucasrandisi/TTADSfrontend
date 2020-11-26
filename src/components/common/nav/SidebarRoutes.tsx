@@ -1,29 +1,37 @@
 import React from "react";
-import {MdRestaurantMenu} from "react-icons/md";
-import {FiHome} from "react-icons/fi";
-import {BiBookAdd} from "react-icons/bi";
-import {BsGear} from "react-icons/bs";
+import {
+	EventNoteRounded,
+	HomeRounded,
+	RestaurantRounded,
+	SettingsRounded,
+	TimerRounded,
+} from "@material-ui/icons";
 
 const SidebarRoutes = [
 	{
 		title: "Home",
 		path: "/",
-		icon: <FiHome />,
+		icon: <HomeRounded fontSize="large" />,
+	},
+	{
+		title: "Orders",
+		path: "/orders",
+		icon: <TimerRounded fontSize="large" />,
 	},
 	{
 		title: "Reservations",
 		path: "#",
-		icon: <BiBookAdd />,
+		icon: <EventNoteRounded fontSize="large" />,
 	},
 	{
 		title: "Menu",
 		path: "#",
-		icon: <MdRestaurantMenu />,
+		icon: <RestaurantRounded fontSize="large" />,
 	},
 	{
 		title: "Settings",
 		path: "#",
-		icon: <BsGear />,
+		icon: <SettingsRounded fontSize="large" />,
 	},
 ];
 
