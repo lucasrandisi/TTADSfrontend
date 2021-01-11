@@ -1,40 +1,31 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import moment from "moment";
 import { Redirect, useRouteMatch } from "react-router-dom";
 import { TableInterface } from "../models/table.model";
 
 export default function Table(props) {
 	const { table }: { table: TableInterface } = props;
-	const [now, setNow] = useState(Date.now());
 	const [redirect, setRedirect] = useState(false);
 	const { url } = useRouteMatch();
 	let timer: string = "";
 
 	useEffect(() => {
-		const dateTimer = setTimeout(() => {
-			setNow(Date.now());
-		}, 1000);
+		const dateTimer = setTimeout(() => null, 1000 * 60);
 
 		return () => clearTimeout(dateTimer);
 	});
 
 	if (table.currentOrder) {
-		const orderTime = new Date(table.currentOrder.createdAt);
-		const timeDifference = new Date(now - orderTime.getTime());
+		const timeDifference = moment().diff(moment(table.currentOrder.createdAt));
+		const duration = moment.duration(timeDifference);
 
-		const hours = timeDifference.getHours().toString().padStart(2, "0");
-		const minutes = timeDifference.getMinutes().toString().padStart(2, "0");
-		const seconds = timeDifference.getSeconds().toString().padStart(2, "0");
-
-		timer = `${hours} : ${minutes} : ${seconds}`;
+		timer = `${duration.get("hours").toString().padStart(2, "0")} : 
+			${duration.get("minutes").toString().padStart(2, "0")}`;
 	} else if (table.nextReservation) {
-		const reservationTime = new Date(table.nextReservation.reservationDateTime);
+		const reservationTime = moment(table.nextReservation.reservationDateTime);
 
-		const hours = reservationTime.getUTCHours().toString().padStart(2, "0");
-		const minutes = reservationTime.getMinutes().toString().padStart(2, "0");
-		const seconds = reservationTime.getSeconds().toString().padStart(2, "0");
-
-		timer = `${hours} : ${minutes} : ${seconds}`;
+		timer = `${reservationTime.hours()} : ${reservationTime.minutes()}`;
 	}
 
 	if (redirect) {
