@@ -3,12 +3,16 @@ import { useQuery } from "@apollo/client";
 import styled from "styled-components";
 import Calendar from "react-calendar";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 
 import { GET_TABLE_RESERVATIONS } from "../../queries/tables.query";
 
 export function TableReservations() {
-	const { loading, error, data } = useQuery(GET_TABLE_RESERVATIONS);
+	const { tableId } = useParams();
+	const { loading, error, data } = useQuery(GET_TABLE_RESERVATIONS, {
+		variables: { tableId },
+	});
 	const reservedDates: Date[] = [];
 
 	if (loading) return "Loading...";
@@ -18,10 +22,8 @@ export function TableReservations() {
 	for (const reservation of data.table.reservations) {
 		reservedDates.push(reservation.reservationDateTime);
 	}
-
 	function tileClassName({ date }) {
 		if (reservedDates.find(reservedDate => moment(reservedDate).isSame(date, "date"))) {
-			console.log(date);
 			return "reserved";
 		}
 
