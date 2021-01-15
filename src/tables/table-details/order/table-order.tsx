@@ -22,12 +22,17 @@ function TableOrder() {
 
 	const { currentOrder } = data.table;
 
+	if (!currentOrder) {
+		// TODO: OPEN NEW ORDER
+		return <button type="button">+ New order</button>;
+	}
+
 	return (
 		<Main>
 			<OrderColumn>
 				<Header>
 					<TableInfo>
-						<div>Table: 4</div>
+						<div>Table: {tableId}</div>
 						<div>Orden Nº: #{currentOrder.id}</div>
 					</TableInfo>
 					<OrderInfo>

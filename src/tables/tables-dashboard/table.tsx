@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { Redirect, useRouteMatch } from "react-router-dom";
+import { useRouteMatch, Link } from "react-router-dom";
 import { TableInterface } from "../models/table.model";
 
 export default function Table(props) {
 	const { table }: { table: TableInterface } = props;
-	const [redirect, setRedirect] = useState(false);
 	const { url } = useRouteMatch();
 	let timer: string = "";
 
@@ -28,33 +27,25 @@ export default function Table(props) {
 		timer = `${reservationTime.hours()} : ${reservationTime.minutes()}`;
 	}
 
-	if (redirect) {
-		return <Redirect to={`${url}/${table.id}`} />;
-	}
-
 	return (
-		<Box
-			open={table.currentOrder}
-			reserved={table.nextReservation}
-			onClick={() => setRedirect(true)}>
+		<StyledLink to={`${url}/${table.id}`} table={table}>
 			<span>Table {table.id}</span>
 			{(table.currentOrder || table.nextReservation) && <span>{timer}</span>}
-		</Box>
+		</StyledLink>
 	);
 }
 
-const Box = styled.div`
+const StyledLink = styled(Link)`
 	width: 30%;
 	height: 10vh;
 	margin: 0 1% 3vh;
 	background-color: ${props => {
-		if (props.open) {
+		if (props.table.currentOrder) {
 			return props.theme.color3;
 		}
-		if (props.reserved) {
+		if (props.table.nextReservation) {
 			return props.theme.color5;
 		}
-
 		return props.theme.color4;
 	}};
 	display: flex;
@@ -62,6 +53,7 @@ const Box = styled.div`
 	justify-content: center;
 	align-items: center;
 	align-content: center;
+	text-decoration: none;
 
 	@media (min-width: ${props => props.theme.md}) {
 		width: 25%;
@@ -79,13 +71,14 @@ const Box = styled.div`
 		height: 7vh;
 	}
 
-	&: hover {
+	&:hover {
 		border: 1px solid black;
 		cursor: pointer;
 	}
 
 	span {
 		font-weight: 700;
-		color: ${props => (props.open ? props.theme.color4 : props.theme.color1)};
+		color: ${props =>
+			props.table.currentOrder ? props.theme.color4 : props.theme.color1};
 	}
 `;
