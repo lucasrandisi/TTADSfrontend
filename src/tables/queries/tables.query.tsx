@@ -15,20 +15,11 @@ export const GET_TABLES = gql`
 	}
 `;
 
-export const GET_TABLE_RESERVATIONS = gql`
-	query($tableId: ID!) {
-		table(id: $tableId) {
-			reservations {
-				reservationDateTime
-			}
-		}
-	}
-`;
-
 export const GET_TABLE_CURRENT_ORDER = gql`
 	query($tableId: ID!) {
 		table(id: $tableId) {
-			currentOrder {
+			size
+			order: currentOrder {
 				id
 				staff {
 					firstName

@@ -6,7 +6,7 @@ import { theme } from "./styles/theme";
 import Navbar from "./common/nav/Navbar";
 
 const HistoryPage = React.lazy(() => import("./order/OrderHistoryPage"));
-const TableDetails = React.lazy(() => import("./tables/table-details/table-details"));
+const TableDetails = React.lazy(() => import("./tables/table-details/TableDetails"));
 const TablesDashboard = React.lazy(() =>
 	import("./tables/tables-dashboard/tables-dashboard")
 );
