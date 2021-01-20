@@ -1,5 +1,5 @@
 import React from "react";
-import {useQuery, gql} from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 
 const GET_ITEMS = gql`
 	query {
@@ -12,13 +12,13 @@ const GET_ITEMS = gql`
 	}
 `;
 
-const Menu = ({addToOrder}) => {
-	const {data, loading, error} = useQuery(GET_ITEMS);
+const Menu = ({ addToOrder }) => {
+	const { data, loading, error } = useQuery(GET_ITEMS);
 	return (
 		<div>
 			{!loading && !error && data && (
 				<div>
-					{data.items.map((item) => (
+					{data.items.map(item => (
 						<button key={item.id} type="button" onClick={() => addToOrder(item.id, 2)}>
 							{item.title}
 						</button>

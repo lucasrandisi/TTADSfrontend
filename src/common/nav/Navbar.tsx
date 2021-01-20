@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import SidebarRoutes from "./SidebarRoutes";
@@ -8,7 +8,7 @@ const Navbar = () => {
 	return (
 		<Sidebar>
 			<ul>
-				{SidebarRoutes.map((item) => (
+				{SidebarRoutes.map(item => (
 					<Route key={item.title}>
 						<TabLink to={item.path}>
 							{item.icon}

@@ -8,7 +8,7 @@ import {
 } from "@apollo/client";
 
 import * as serviceWorker from "./serviceWorker";
-import Pages from "./pages";
+import Pages from "./Router";
 import "./styles/app.css";
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({

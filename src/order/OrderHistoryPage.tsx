@@ -1,5 +1,5 @@
 import React from "react";
-import {useQuery, gql} from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 
 import {
 	Table,
@@ -22,7 +22,7 @@ const GET_ORDERS = gql`
 `;
 
 export default function HistoryPage() {
-	const {data, loading, error} = useQuery(GET_ORDERS);
+	const { data, loading, error } = useQuery(GET_ORDERS);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>ERROR: {error.message}</p>;
@@ -37,7 +37,7 @@ export default function HistoryPage() {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{data?.orders.map((row) => (
+					{data?.orders.map(row => (
 						<TableRow key={row.id}>
 							<TableCell component="th" scope="row">
 								{row.id}
