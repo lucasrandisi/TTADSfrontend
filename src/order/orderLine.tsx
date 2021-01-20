@@ -1,8 +1,8 @@
 import React from "react";
 
-const OrderLine = ({data}) => {
-	const {item, quantity} = data;
-	const {title, pricePerUnit} = item;
+const OrderLine = ({ data }) => {
+	const { item, quantity } = data;
+	const { title, pricePerUnit } = item;
 	return (
 		<tr>
 			<td>{quantity}</td>

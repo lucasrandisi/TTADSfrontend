@@ -1,5 +1,5 @@
 import React from "react";
-import {useQuery, gql} from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import Order from "./order";
 
 const GET_ORDER = gql`
@@ -18,9 +18,9 @@ const GET_ORDER = gql`
 	}
 `;
 
-export default function OrderContainer({id}) {
-	const {data, loading, error} = useQuery(GET_ORDER, {
-		variables: {orderId: id},
+export default function OrderContainer({ id }) {
+	const { data, loading, error } = useQuery(GET_ORDER, {
+		variables: { orderId: id },
 	});
 
 	if (loading) return <p>Loading...</p>;

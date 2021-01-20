@@ -1,8 +1,8 @@
 import React from "react";
 import OrderLine from "./orderLine";
 
-const Order = ({data}) => {
-	const {id, lines} = data;
+const Order = ({ data }) => {
+	const { id, lines } = data;
 	return (
 		<div className="container">
 			<div className="header">
@@ -22,7 +22,7 @@ const Order = ({data}) => {
 
 				{lines && (
 					<tbody>
-						{lines.map((line) => (
+						{lines.map(line => (
 							<OrderLine key={line.id} data={line} />
 						))}
 					</tbody>

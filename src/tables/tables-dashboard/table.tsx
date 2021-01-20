@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { useRouteMatch, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TableInterface } from "../models/table.model";
 
 export default function Table(props) {
 	const { table }: { table: TableInterface } = props;
-	const { url } = useRouteMatch();
 	let timer: string = "";
 
 	useEffect(() => {
@@ -28,7 +27,7 @@ export default function Table(props) {
 	}
 
 	return (
-		<StyledLink to={`${url}/${table.id}`} table={table}>
+		<StyledLink to={`table/${table.id}`} table={table}>
 			<span>Table {table.id}</span>
 			{(table.currentOrder || table.nextReservation) && <span>{timer}</span>}
 		</StyledLink>

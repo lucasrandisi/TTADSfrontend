@@ -2,11 +2,14 @@ import React, { Suspense } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 
-import { theme } from "../styles/theme";
-import Navbar from "../components/common/nav/Navbar";
+import { theme } from "./styles/theme";
+import Navbar from "./common/nav/Navbar";
 
-const OrderPage = React.lazy(() => import("./orderPage"));
-const TablesPage = React.lazy(() => import("../tables"));
+const HistoryPage = React.lazy(() => import("./order/OrderHistoryPage"));
+const TableDetails = React.lazy(() => import("./tables/table-details/table-details"));
+const TablesDashboard = React.lazy(() =>
+	import("./tables/tables-dashboard/tables-dashboard")
+);
 
 export default function Pages() {
 	return (
@@ -17,8 +20,9 @@ export default function Pages() {
 					<Main>
 						<Switch>
 							<Suspense fallback={<div>Loading...</div>}>
-								<Route path="/mesas" component={TablesPage} />
-								<Route path="/order/:id" component={OrderPage} />
+								<Route exact path="/" component={TablesDashboard} />
+								<Route path="/table/:tableId" component={TableDetails} />
+								<Route path="/orders" component={HistoryPage} />
 							</Suspense>
 						</Switch>
 					</Main>

@@ -1,9 +1,8 @@
 import React from "react";
-import {useQuery, gql, useMutation} from "@apollo/client";
-import {useParams} from "react-router-dom";
+import { useQuery, gql, useMutation } from "@apollo/client";
 
-import Order from "../components/order/order";
-import Menu from "../components/order/menu";
+import Order from "./order";
+import Menu from "./menu";
 
 const GET_ORDER = gql`
 	query GetOrder($orderId: ID!) {
@@ -22,23 +21,22 @@ const GET_ORDER = gql`
 `;
 
 const ADD_ITEM = gql`
-	mutation addItem($orderId: ID!, $itemId: ID!, $qty: Int!) {
-		createLine(line: {orderId: $orderId, itemId: $itemId, quantity: $qty}) {
+	mutation addItem($orderId: ID!, $itemId: ID!, $quantity: Int!) {
+		createLine(line: { orderId: $orderId, itemId: $itemId, quantity: $quantity }) {
 			id
 		}
 	}
 `;
 
-export default function OrderPage() {
+export default function OrderPage({ orderId }) {
 	const [addItem] = useMutation(ADD_ITEM);
-	const {id} = useParams();
 
 	const addToOrder = (itemId, quantity) => {
-		addItem({variables: {orderId: id, itemId, qty: quantity}});
+		addItem({ variables: { orderId, itemId, quantity } });
 	};
 
-	const {data, loading, error} = useQuery(GET_ORDER, {
-		variables: {orderId: id},
+	const { data, loading, error } = useQuery(GET_ORDER, {
+		variables: { orderId },
 	});
 
 	if (loading) return <p>Loading...</p>;

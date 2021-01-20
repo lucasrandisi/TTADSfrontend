@@ -1,5 +1,4 @@
 import React from "react";
-import { AiFillAppstore } from "react-icons/ai";
 import {
 	EventNoteRounded,
 	HomeRounded,
@@ -18,11 +17,6 @@ const SidebarRoutes = [
 		title: "Orders",
 		path: "/orders",
 		icon: <TimerRounded fontSize="large" />,
-	},
-	{
-		title: "Tables",
-		path: "/mesas",
-		icon: <AiFillAppstore />,
 	},
 	{
 		title: "Reservations",
