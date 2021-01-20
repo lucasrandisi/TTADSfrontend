@@ -8,7 +8,7 @@ import Navbar from "./common/nav/Navbar";
 const HistoryPage = React.lazy(() => import("./order/OrderHistoryPage"));
 const TableDetails = React.lazy(() => import("./tables/table-details/TableDetails"));
 const TablesDashboard = React.lazy(() =>
-	import("./tables/tables-dashboard/tables-dashboard")
+	import("./tables/tables-dashboard/TablesDashboard")
 );
 
 export default function Pages() {
