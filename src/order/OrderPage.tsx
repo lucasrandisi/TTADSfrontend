@@ -29,7 +29,9 @@ const ADD_ITEM = gql`
 `;
 
 export default function OrderPage({ orderId }) {
-	const [addItem] = useMutation(ADD_ITEM);
+	const [addItem] = useMutation(ADD_ITEM, {
+		refetchQueries: [{ query: GET_ORDER, variables: { orderId } }],
+	});
 
 	const addToOrder = (itemId, quantity) => {
 		addItem({ variables: { orderId, itemId, quantity } });
@@ -41,7 +43,6 @@ export default function OrderPage({ orderId }) {
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>ERROR: {error.message}</p>;
-	if (!data.order) return <p>Not found</p>;
 	return (
 		<div>
 			<Order data={data.order} />
