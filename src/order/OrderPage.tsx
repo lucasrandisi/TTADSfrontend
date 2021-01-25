@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery, gql, useMutation } from "@apollo/client";
+import styled from "styled-components";
 
 import Order from "./order";
 import Menu from "./menu";
@@ -44,9 +45,15 @@ export default function OrderPage({ orderId }) {
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>ERROR: {error.message}</p>;
 	return (
-		<div>
+		<OrderMenu>
 			<Order data={data.order} />
 			<Menu addToOrder={addToOrder} />
-		</div>
+		</OrderMenu>
 	);
 }
+
+const OrderMenu = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	grid-gap: 10px;
+`;

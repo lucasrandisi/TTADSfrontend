@@ -37,7 +37,7 @@ const TableDetails: React.FC = () => {
 	const { order } = data.table;
 
 	return (
-		<div>
+		<>
 			<Header>
 				<p>Mesa: {tableId}</p>
 				<div>
@@ -55,7 +55,7 @@ const TableDetails: React.FC = () => {
 			)}
 
 			{order && <OrderPage orderId={order.id} />}
-		</div>
+		</>
 	);
 };
 export default TableDetails;
