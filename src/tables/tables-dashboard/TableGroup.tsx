@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Table from "./table";
+import Table from "./Table";
 
 export default function TableGroup(props) {
 	const { size, tables } = props;
