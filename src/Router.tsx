@@ -10,6 +10,7 @@ const TableDetails = React.lazy(() => import("./tables/table-details/TableDetail
 const TablesDashboard = React.lazy(() =>
 	import("./tables/tables-dashboard/TablesDashboard")
 );
+const Menu = React.lazy(() => import("./menu/Menu"));
 
 export default function Pages() {
 	return (
@@ -23,6 +24,7 @@ export default function Pages() {
 								<Route exact path="/" component={TablesDashboard} />
 								<Route path="/table/:tableId" component={TableDetails} />
 								<Route path="/orders" component={HistoryPage} />
+								<Route path="/menu" component={Menu} />
 							</Suspense>
 						</Switch>
 					</Main>
