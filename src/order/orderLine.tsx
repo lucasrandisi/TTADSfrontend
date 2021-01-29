@@ -14,7 +14,6 @@ const OrderLine = ({ data, onRemove }) => {
 				{quantity}
 			</td>
 			<td>{title}</td>
-			<td>${pricePerUnit}</td>
 			<td>${pricePerUnit * quantity}</td>
 			<Button onClick={() => onRemove(id)}>
 				<FontAwesomeIcon icon={faTrashAlt} />

@@ -1,5 +1,5 @@
 import React from "react";
-
+import styled from "styled-components";
 import { useMutation } from "@apollo/client";
 
 import OrderLine from "./orderLine";
@@ -17,37 +17,39 @@ const Order = ({ data }) => {
 	};
 
 	return (
-		<div className="container">
-			<div className="header">
+		<div>
+			<div>
 				<h3>Nro Orden: {id}</h3>
 			</div>
 
-			<table>
+			<StyledTable>
+				<colgroup>
+					<col style={{ width: "10%" }} />
+					<col style={{ width: "65%" }} />
+					<col style={{ width: "15%" }} />
+					<col style={{ width: "10%" }} />
+				</colgroup>
 				<thead>
 					<tr>
 						<th>Cant.</th>
 						<th>Descripcion</th>
-						<th>Precio unit.</th>
 						<th>Subtotal</th>
 						<th />
 					</tr>
 				</thead>
-
-				{lines && (
-					<tbody>
-						{lines.map(line => (
-							<OrderLine key={line.id} data={line} onRemove={handleRemove} />
-						))}
-					</tbody>
-				)}
-
-				<tfoot>
-					<tr>
-						<td>Total:</td>
-					</tr>
-				</tfoot>
-			</table>
+				<tbody>
+					{lines.map(line => (
+						<OrderLine key={line.id} data={line} onRemove={handleRemove} />
+					))}
+				</tbody>
+			</StyledTable>
+			<div>Total</div>
 		</div>
 	);
 };
 export default Order;
+
+const StyledTable = styled.table`
+	table-layout: fixed;
+	width: 100%;
+`;
