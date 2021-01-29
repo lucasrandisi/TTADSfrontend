@@ -1,8 +1,21 @@
 import React from "react";
+
+import { useMutation } from "@apollo/client";
+
 import OrderLine from "./orderLine";
+import { GET_ORDER, REMOVE_ITEM } from "./order.query";
 
 const Order = ({ data }) => {
 	const { id, lines } = data;
+
+	const [removeItem] = useMutation(REMOVE_ITEM, {
+		refetchQueries: [{ query: GET_ORDER, variables: { orderId: id } }],
+	});
+
+	const handleRemove = lineId => {
+		removeItem({ variables: { id: lineId } });
+	};
+
 	return (
 		<div className="container">
 			<div className="header">
@@ -23,7 +36,7 @@ const Order = ({ data }) => {
 				{lines && (
 					<tbody>
 						{lines.map(line => (
-							<OrderLine key={line.id} data={line} />
+							<OrderLine key={line.id} data={line} onRemove={handleRemove} />
 						))}
 					</tbody>
 				)}

@@ -1,33 +1,10 @@
 import React from "react";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import styled from "styled-components";
 
 import Order from "./order";
 import Menu from "./menu";
-
-const GET_ORDER = gql`
-	query GetOrder($orderId: ID!) {
-		order(id: $orderId) {
-			id
-			lines {
-				id
-				item {
-					title
-					pricePerUnit
-				}
-				quantity
-			}
-		}
-	}
-`;
-
-const ADD_ITEM = gql`
-	mutation addItem($orderId: ID!, $itemId: ID!, $quantity: Int!) {
-		createLine(line: { orderId: $orderId, itemId: $itemId, quantity: $quantity }) {
-			id
-		}
-	}
-`;
+import { ADD_ITEM, GET_ORDER } from "./order.query";
 
 export default function OrderPage({ orderId }) {
 	const [addItem] = useMutation(ADD_ITEM, {
