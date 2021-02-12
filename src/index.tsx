@@ -18,13 +18,11 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 ReactDOM.render(
-	<React.StrictMode>
-		<ApolloProvider client={client}>
-			<div className="app">
-				<Pages />
-			</div>
-		</ApolloProvider>
-	</React.StrictMode>,
+	<ApolloProvider client={client}>
+		<div className="app">
+			<Pages />
+		</div>
+	</ApolloProvider>,
 	document.getElementById("root")
 );
 
