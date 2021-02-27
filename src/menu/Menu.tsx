@@ -76,7 +76,7 @@ const Menu: React.FC = () => {
 
 			<div className={classes.content}>
 				<div className={classes.categoryListSection}>
-					<h2 className={classes.sectionTitle}>Categorías</h2>
+					<h2 className={classes.sectionTitle}>Categories</h2>
 					<CategoriesList
 						categories={data.categories}
 						selectedCategoryId={selectedCategoryId}

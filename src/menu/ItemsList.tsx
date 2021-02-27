@@ -11,7 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import React from "react";
 import { useMutation } from "@apollo/client";
 
-import REMOVE_ITEM_FROM_CATEGORY from "./queries/remove-item-from-category.query";
+import REMOVE_CATEGORY_FROM_ITEM from "./queries/remove-category-from-item.mutation";
 
 const useStyles = makeStyles({
 	tableRow: {
@@ -58,34 +58,35 @@ const useStyles = makeStyles({
 
 export default function ItemsList({ selectedCategoryId, items }) {
 	/* eslint no-use-before-define: ["error", { "functions": false }] */
-	const [removeCategoryFromItem] = useMutation(REMOVE_ITEM_FROM_CATEGORY, {
-		update: updateCacheAfterCategoryRemovedFromItem,
-	});
+	const [removeCategoryFromItem] = useMutation(REMOVE_CATEGORY_FROM_ITEM);
 	const classes = useStyles();
-	let itemToRemoveCategoryFrom;
 
 	function removeSelectedCategoryFromItem(targetItem) {
+		const filteredCategoriesId = targetItem.categories
+			.filter(category => category.id !== selectedCategoryId)
+			.map(category => category.id);
+
 		removeCategoryFromItem({
 			variables: {
-				id: selectedCategoryId,
-				itemId: targetItem.id,
-			},
-		});
-
-		itemToRemoveCategoryFrom = targetItem;
-	}
-
-	function updateCacheAfterCategoryRemovedFromItem(cache) {
-		cache.modify({
-			id: cache.identify(itemToRemoveCategoryFrom),
-			fields: {
-				categories(prevCategories, { readField }) {
-					return prevCategories.filter(
-						category => selectedCategoryId !== readField("id", category)
-					);
+				id: targetItem.id,
+				itemInput: {
+					categoriesId: filteredCategoriesId,
 				},
 			},
+			update: (cache, result) =>
+				updateCacheAfterCategoryRemovedFromItem(cache, result, targetItem),
 		});
+	}
+
+	function updateCacheAfterCategoryRemovedFromItem(cache, result, targetItem) {
+		if (result) {
+			cache.modify({
+				id: cache.identify(targetItem),
+				fields: {
+					categories: () => result.categories,
+				},
+			});
+		}
 	}
 
 	return (

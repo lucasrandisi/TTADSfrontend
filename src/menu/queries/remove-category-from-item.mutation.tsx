@@ -1,12 +1,8 @@
 import { gql } from "@apollo/client";
 
 export default gql`
-	query getCategoriesAndItems {
-		categories {
-			id
-			desc
-		}
-		items {
+	mutation removeCategoryFromItem($id: ID!, $itemInput: itemInput!) {
+		updateItem(id: $id, itemInput: $itemInput) {
 			id
 			title
 			desc
@@ -14,6 +10,7 @@ export default gql`
 			pricePerUnit
 			categories {
 				id
+				desc
 			}
 		}
 	}
