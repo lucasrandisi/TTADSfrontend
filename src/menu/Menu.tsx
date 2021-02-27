@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeContext } from "styled-components";
-
 import { useQuery } from "@apollo/client";
-import GET_CATEGORIES_AND_DISHES from "./queries/categories-and-dishes.query";
+
+import GET_CATEGORIES_AND_ITEMS from "./queries/categories-and-items.query";
 import CategoriesList from "./CategoriesList";
-import DishesList from "./DishesList";
+import ItemsList from "./ItemsList";
 
 const useStyles = makeStyles({
 	main: {
@@ -44,14 +44,14 @@ const useStyles = makeStyles({
 		marginRight: "5%",
 	},
 
-	dishesTableSection: {
+	itemsTableSection: {
 		flexGrow: 1,
 	},
 });
 
 const Menu: React.FC = () => {
-	const [selectedCategoryId, setSelectedCategoryId] = useState(0);
-	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_DISHES);
+	const [selectedCategoryId, setSelectedCategoryId] = useState("0");
+	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_ITEMS);
 
 	const theme = useContext(ThemeContext);
 	const classes = useStyles(theme);
@@ -59,12 +59,13 @@ const Menu: React.FC = () => {
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>ERROR: {error.message}</p>;
 
-	let dishes = [];
+	// Cargar items según la categoría seleccionada
+	let items = [];
 
-	if (selectedCategoryId === 0) {
-		dishes = data.items;
+	if (selectedCategoryId === "0") {
+		items = data.items;
 	} else {
-		dishes = data.items.filter(item =>
+		items = data.items.filter(item =>
 			item.categories.some(category => category.id === selectedCategoryId)
 		);
 	}
@@ -83,9 +84,9 @@ const Menu: React.FC = () => {
 					/>
 				</div>
 
-				<div className={classes.dishesTableSection}>
+				<div className={classes.itemsTableSection}>
 					<h2 className={classes.sectionTitle}>Dishes</h2>
-					<DishesList dishes={dishes} />
+					<ItemsList selectedCategoryId={selectedCategoryId} items={items} />
 				</div>
 			</div>
 		</div>
