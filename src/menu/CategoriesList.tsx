@@ -4,11 +4,14 @@ import ListItem from "@material-ui/core/ListItem";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
-	list: {},
+	list: {
+		border: "2px solid #8282828a",
+	},
 
 	category: {
 		fontSize: "1rem",
 		fontWeight: "bold",
+		padding: "1vh 1vw",
 	},
 });
 
@@ -26,9 +29,9 @@ export default function CategoriesList({
 				button
 				autoFocus
 				disableGutters
-				selected={selectedCategoryId === 0}
+				selected={selectedCategoryId === "0"}
 				className={classes.category}
-				onClick={() => setSelectedCategoryId(0)}>
+				onClick={() => setSelectedCategoryId("0")}>
 				Todas
 			</ListItem>
 			{categories.map(category => (
