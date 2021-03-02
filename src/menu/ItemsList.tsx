@@ -89,6 +89,8 @@ export default function ItemsList({ selectedCategoryId, items }) {
 		}
 	}
 
+	if (!items.length) return <div>No hay platos.</div>;
+
 	return (
 		<Table aria-label="table">
 			<TableHead>
