@@ -25,7 +25,7 @@ const SidebarRoutes = [
 	},
 	{
 		title: "Menu",
-		path: "#",
+		path: "/menu",
 		icon: <RestaurantRounded fontSize="large" />,
 	},
 	{
