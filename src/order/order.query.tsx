@@ -29,3 +29,9 @@ export const REMOVE_ITEM = gql`
 		deleteLine(id: $id)
 	}
 `;
+
+export const CLOSE_ORDER = gql`
+	mutation close($id: ID!) {
+		closeOrder(id: $id)
+	}
+`;
