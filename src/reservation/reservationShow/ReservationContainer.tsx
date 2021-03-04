@@ -11,7 +11,6 @@ export default function Reservations() {
 	if (error) return <p>ERROR: {error.message}</p>;
 
 	const { reservations } = data;
-
 	return (
 		<>
 			<Container component="main" maxWidth="lg">
