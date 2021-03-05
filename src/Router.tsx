@@ -4,6 +4,7 @@ import styled, { ThemeProvider } from "styled-components";
 
 import Reservations from "reservation/reservationShow/ReservationContainer";
 import ReservationMoreInfo from "reservation/reservationShow/reservationTable/ReservationMoreInfo";
+import CreateReservation from "reservation/reservationCreate/CreateReservation";
 import { theme } from "./styles/theme";
 import Navbar from "./common/nav/Navbar";
 
@@ -29,6 +30,7 @@ export default function Pages() {
 								<Route path="/menu" component={Menu} />
 								<Route path="/reservations" component={Reservations} />
 								<Route path="/reservation/info/:id" component={ReservationMoreInfo} />
+								<Route exact path="/reservation/new" component={CreateReservation} />
 							</Suspense>
 						</Switch>
 					</Main>
