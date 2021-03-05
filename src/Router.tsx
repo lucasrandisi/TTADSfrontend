@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 
 import Reservations from "reservation/reservationShow/ReservationContainer";
+import ReservationMoreInfo from "reservation/reservationShow/reservationTable/ReservationMoreInfo";
 import { theme } from "./styles/theme";
 import Navbar from "./common/nav/Navbar";
 
@@ -27,6 +28,7 @@ export default function Pages() {
 								<Route path="/orders" component={HistoryPage} />
 								<Route path="/menu" component={Menu} />
 								<Route path="/reservations" component={Reservations} />
+								<Route path="/reservation/info/:id" component={ReservationMoreInfo} />
 							</Suspense>
 						</Switch>
 					</Main>

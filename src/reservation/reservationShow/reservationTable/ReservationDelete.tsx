@@ -1,5 +1,4 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
 	IconButton,
@@ -8,16 +7,13 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogContentText,
-	DialogTitle,
 	TableCell,
 } from "@material-ui/core";
 import moment from "moment";
-import { DELETE_RESERVATION } from "../../queries/ReservationQuery";
 
 export default function ReservationDelete(props) {
-	const { res, setDeleted } = props;
+	const { res, handleDelete } = props;
 	const [open, setOpen] = React.useState(false);
-	const [deleteReservation] = useMutation(DELETE_RESERVATION);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -27,12 +23,10 @@ export default function ReservationDelete(props) {
 		setOpen(false);
 	};
 
-	const handleDelete = () => {
-		deleteReservation({ variables: { id: res.id } });
-		setDeleted(true);
+	const onDelete = () => {
+		handleDelete(res.id);
 		handleClose();
 	};
-
 	return (
 		<>
 			<TableCell align="center">
@@ -40,19 +34,13 @@ export default function ReservationDelete(props) {
 					<DeleteIcon />
 				</IconButton>
 			</TableCell>
-			<Dialog
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="alert-dialog-title"
-				aria-describedby="alert-dialog-description">
-				<DialogTitle id="alert-dialog-title">
-					{`Delete reservation for the date 
-                        ${moment(res.reservationDateTime).format("DD/MM/YYYY HH:SS")}?`}
-				</DialogTitle>
+
+			<Dialog open={open} onClose={handleClose}>
 				<DialogContent>
-					<DialogContentText id="alert-dialog-description">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim sint aut
-						distinctio!
+					<DialogContentText>
+						{`Delete reservation for the date ${moment(res.reservationDateTime).format(
+							"DD/MM/YYYY"
+						)}?`}
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
@@ -60,7 +48,7 @@ export default function ReservationDelete(props) {
 						{" "}
 						Cancel{" "}
 					</Button>
-					<Button onClick={handleDelete} color="primary" autoFocus>
+					<Button onClick={onDelete} color="primary" autoFocus>
 						{" "}
 						Delete{" "}
 					</Button>
