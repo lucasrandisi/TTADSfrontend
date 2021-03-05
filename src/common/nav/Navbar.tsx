@@ -7,66 +7,73 @@ import SidebarRoutes from "./SidebarRoutes";
 const Navbar = () => {
 	return (
 		<Sidebar>
-			<ul>
+			<Nav>
 				{SidebarRoutes.map(item => (
 					<Route key={item.title}>
 						<TabLink to={item.path}>
 							{item.icon}
-							<span>{item.title}</span>
+							<span className="link-text">{item.title}</span>
 						</TabLink>
 					</Route>
 				))}
-			</ul>
+			</Nav>
 		</Sidebar>
 	);
 };
 export default Navbar;
 
-const TabLink = styled(Link)`
-	margin-left: 0.75rem;
-	font-size: 2rem;
-	background: none;
+const Sidebar = styled.nav`
+	background-color: ${props => props.theme.bg_sidebar};
+	/* width: 3.5rem; */
+	height: 100vh;
+	padding: 10px;
+	/* transition: width 380ms ease-in-out; */
 
-	span {
-		margin-left: 16px;
-	}
+	/* &:hover {
+		width: 10rem;
+		.link-text {
+			display: block;
+		}
+	} */
 `;
 
-const Sidebar = styled.nav`
-	background-color: #060b26;
-	width: 235px;
-	height: 100vh;
+const Nav = styled.ul`
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	height: 100%;
 	display: flex;
-	justify-content: center;
-	top: 0;
-	left: -100%;
-	transition: 850ms;
-
-	ul {
-		width: 100%;
-	}
+	flex-direction: column;
 `;
 
 const Route = styled.li`
-	display: flex;
-	justify-content: start;
-	align-items: center;
-	list-style: none;
-	height: 60px;
+	width: 100%;
+	padding-block: 6px;
 
-	a {
-		text-decoration: none;
-		color: #f5f5f5;
-		font-size: x-large;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		padding: 0 16px;
-		border-radius: 4px;
+	&:last-child {
+		margin-top: auto;
+	}
+`;
+
+const TabLink = styled(Link)`
+	color: ${props => props.theme.sidebar_icon};
+
+	border-radius: 8px;
+	padding: 0.5rem;
+
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+
+	transition: 350ms;
+	&:hover {
+		color: ${props => props.theme.white};
+		background-color: ${props => props.theme.bg_sidebar_icon};
+		filter: grayscale(0%) opacity(1);
 	}
 
-	a:hover {
-		background-color: #2185d0;
+	.link-text {
+		margin-left: 5px;
+		display: none;
 	}
 `;
