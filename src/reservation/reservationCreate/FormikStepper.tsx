@@ -25,9 +25,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 	const [reservationDate, setReservationDate] = React.useState(new Date());
 	const [completed, setCompleted] = useState(false);
 
-	function isLastStep() {
-		return step === childrenArray.length - 1;
-	}
+	const isLastStep = step === childrenArray.length - 1;
 
 	const handleReset = resetForm => {
 		setStep(0);
@@ -44,7 +42,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 			validateOnChange={false}
 			validationSchema={currentChild.props.validationSchema}
 			onSubmit={async (values, helpers) => {
-				if (isLastStep()) {
+				if (isLastStep) {
 					await onSubmit({ ...values, reservationDateTime: reservationDate }, helpers);
 					setCompleted(true);
 				} else setStep(s => s + 1);
@@ -56,9 +54,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 						childrenArray={childrenArray}
 						completed={completed}
 					/>
-					{completed ? (
-						<ButtonReset handleReset={handleReset} resetForm={resetForm} />
-					) : (
+					{!completed && (
 						<div>
 							{currentChild}
 							{step === 1 && (
@@ -76,6 +72,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 							/>
 						</div>
 					)}
+					{completed && <ButtonReset handleReset={handleReset} resetForm={resetForm} />}
 				</Form>
 			)}
 		</Formik>

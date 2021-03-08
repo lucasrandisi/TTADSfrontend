@@ -12,10 +12,9 @@ import {
 
 import { Field } from "formik";
 import { TextField } from "formik-material-ui";
-import { number, object, string } from "yup";
+import * as Yup from "yup";
 import { FormikStep, FormikStepper } from "./FormikStepper";
 import { CREATE_RESERVATION, GET_RESERVATIONS } from "../queries/ReservationQuery";
-import "yup-phone";
 
 const useStyles = makeStyles(() => ({
 	container: {
@@ -28,19 +27,14 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-const sleep = time =>
-	new Promise(acc => {
-		setTimeout(acc, time);
-	});
-
-const validationSize = object({
-	partySize: number().required().moreThan(0).lessThan(100),
+const validationSize = Yup.object({
+	partySize: Yup.number().required().moreThan(0).lessThan(100),
 });
 
-const validationPersonalInf = object().shape({
-	customerName: string().required("This field is required."),
-	phone: string().phone().required("This field is required"),
-	email: string().email("Invalid email").required("This field is required."),
+const validationPersonalInf = Yup.object().shape({
+	customerName: Yup.string().required("This field is required."),
+	phone: Yup.string().phone("Invalid phone number.").required("This field is required"),
+	email: Yup.string().email("Invalid email.").required("This field is required."),
 });
 
 export default function CreateReservation() {
@@ -53,6 +47,19 @@ export default function CreateReservation() {
 	};
 
 	const classes = useStyles();
+
+	const initialValues = {
+		partySize: 1,
+		phone: "",
+		email: "",
+		customerName: "",
+	};
+
+	const handleSubmit = async values => {
+		createReservation(values);
+		await new Promise(r => setTimeout(r, 3000));
+	};
+
 	// eslint-disable-next-line
 	const FieldStyled = props => <TextField fullWidth variant="outlined" {...props} />;
 
@@ -62,17 +69,7 @@ export default function CreateReservation() {
 			<Container className={classes.container}>
 				<Card>
 					<CardContent className={classes.card}>
-						<FormikStepper
-							initialValues={{
-								partySize: 1,
-								phone: "",
-								email: "",
-								customerName: "",
-							}}
-							onSubmit={async values => {
-								createReservation(values);
-								await sleep(3000);
-							}}>
+						<FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
 							<FormikStep label="Amount of people" validationSchema={validationSize}>
 								<Box paddingBottom={2}>
 									<Field

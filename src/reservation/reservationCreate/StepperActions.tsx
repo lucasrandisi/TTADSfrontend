@@ -30,7 +30,7 @@ export default function StepperActions(props) {
 					color="primary"
 					type="submit">
 					{/* eslint-disable-next-line */}
-					{isSubmitting ? "Loading" : isLastStep() ? "Create" : "Next"}
+					{isSubmitting ? "Loading" : isLastStep ? "Create" : "Next"}
 				</Button>
 			</Grid>
 		</Grid>
