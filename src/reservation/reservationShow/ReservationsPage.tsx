@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Grid, Container } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { useQuery } from "@apollo/client";
 import moment from "moment";
+import { Grid, Container, Button } from "@material-ui/core";
+
 import ReservationTable from "./reservationTable/ReservationTable";
 import ReservationFilters from "./ReservationFilters";
 import { GET_RESERVATIONS } from "../queries/ReservationQuery";
-import ReservationButtonNew from "./ReservationButtonNew";
 import ReservationPagination from "./ReservationPagination";
 
-export default function Reservations() {
+export default function ReservationsPage() {
 	const [searchInput, setSearchInput] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
 
@@ -17,7 +19,7 @@ export default function Reservations() {
 	if (error) return <p>ERROR: {error.message}</p>;
 
 	const { reservations } = data;
-	const resPerPage = 5;
+	const resPerPage = 8;
 	const indexLastRes = currentPage * resPerPage;
 	const indexFirstRes = indexLastRes - resPerPage;
 
@@ -39,9 +41,22 @@ export default function Reservations() {
 	return (
 		<>
 			<Container component="main" maxWidth="lg">
+				<h1>Reservations</h1>
+
 				<Grid container spacing={3}>
-					<ReservationButtonNew />
-					<ReservationFilters searchInput={searchInput} setSearchInput={setSearchInput} />
+					<Header>
+						<StyledLink to="/reservation/new">
+							<Button type="submit" variant="contained" color="primary">
+								+ New
+							</Button>
+						</StyledLink>
+
+						<ReservationFilters
+							searchInput={searchInput}
+							setSearchInput={setSearchInput}
+						/>
+					</Header>
+
 					<ReservationTable
 						reservations={filterSearch().slice(indexFirstRes, indexLastRes)}
 					/>
@@ -56,3 +71,17 @@ export default function Reservations() {
 		</>
 	);
 }
+
+const StyledLink = styled(Link)`
+	text-decoration: none;
+`;
+
+const Header = styled.div`
+	margin-top: 1rem;
+	padding: 0px 12px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+`;

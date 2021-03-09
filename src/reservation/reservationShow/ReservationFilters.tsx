@@ -7,7 +7,6 @@ import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		padding: "2px 4px",
 		display: "flex",
 		alignItems: "center",
 		width: 300,
@@ -27,7 +26,7 @@ export default function ReservationFilters({ searchInput, setSearchInput }) {
 	return (
 		<Paper component="form" className={classes.root}>
 			<InputBase
-				name="filter"
+				name="searchBar"
 				className={classes.input}
 				placeholder="Filter..."
 				value={searchInput}

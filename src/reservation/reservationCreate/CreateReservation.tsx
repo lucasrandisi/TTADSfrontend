@@ -18,6 +18,7 @@ import { CREATE_RESERVATION, GET_RESERVATIONS } from "../queries/ReservationQuer
 
 const useStyles = makeStyles(() => ({
 	container: {
+		paddingTop: "1.5rem",
 		width: "1000px",
 	},
 	card: {
