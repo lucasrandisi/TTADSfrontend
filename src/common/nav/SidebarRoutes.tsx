@@ -20,7 +20,7 @@ const SidebarRoutes = [
 	},
 	{
 		title: "Reservations",
-		path: "#",
+		path: "/reservations",
 		icon: <EventNoteRounded fontSize="large" />,
 	},
 	{
