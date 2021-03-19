@@ -10,8 +10,9 @@ import EditIcon from "@material-ui/icons/Edit";
 import Tooltip from "@material-ui/core/Tooltip";
 import React from "react";
 import { useMutation } from "@apollo/client";
+import { Link, useRouteMatch } from "react-router-dom";
 
-import REMOVE_CATEGORY_FROM_ITEM from "./queries/remove-category-from-item.mutation";
+import UPDATE_ITEM from "../queries/update-item";
 
 const useStyles = makeStyles({
 	tableRow: {
@@ -58,8 +59,9 @@ const useStyles = makeStyles({
 
 export default function ItemsList({ selectedCategoryId, items }) {
 	/* eslint no-use-before-define: ["error", { "functions": false }] */
-	const [removeCategoryFromItem] = useMutation(REMOVE_CATEGORY_FROM_ITEM);
+	const [removeCategoryFromItem] = useMutation(UPDATE_ITEM);
 	const classes = useStyles();
+	const { url } = useRouteMatch();
 
 	function removeSelectedCategoryFromItem(targetItem) {
 		const filteredCategoriesId = targetItem.categories
@@ -73,7 +75,7 @@ export default function ItemsList({ selectedCategoryId, items }) {
 					categoriesId: filteredCategoriesId,
 				},
 			},
-			update: (cache, result) =>
+			update: (cache, result) => 
 				updateCacheAfterCategoryRemovedFromItem(cache, result, targetItem),
 		});
 	}
@@ -140,11 +142,13 @@ export default function ItemsList({ selectedCategoryId, items }) {
 						</TableCell>
 						<TableCell className={`${classes.tableCell} ${classes.actionsCell}`}>
 							{selectedCategoryId === "0" ? (
-								<Tooltip title="Edit">
-									<IconButton className={classes.button} aria-label="edit">
-										<EditIcon />
-									</IconButton>
-								</Tooltip>
+								<Link to={`${url}/items/${item.id}`}>
+									<Tooltip title="Edit">
+										<IconButton className={classes.button} aria-label="edit">
+											<EditIcon />
+										</IconButton>
+									</Tooltip>
+								</Link>
 							) : (
 								<Tooltip title="Remove from category">
 									<IconButton

@@ -3,39 +3,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ThemeContext } from "styled-components";
 import { useQuery } from "@apollo/client";
 
-import GET_CATEGORIES_AND_ITEMS from "./queries/categories-and-items.query";
+import GET_CATEGORIES_AND_ITEMS from "../queries/get-categories-and-items.query";
 import CategoriesList from "./CategoriesList";
 import ItemsList from "./ItemsList";
+import useDefaultClasses from 'styles/classes';
 
-const useStyles = makeStyles({
-	main: {
-		padding: "2vh 4vw",
 
-		"@media (min-width: 1366px)": {
-			padding: "4vh 3vw",
-		},
-	},
-
-	mainTitle: {
-		color: (props: any) => props.color1,
-		fontSize: "2rem",
-
-		"@media (min-width: 1366px)": {
-			fontSize: "3rem",
-		},
-	},
-
-	content: {
-		marginTop: "2vh",
-		display: "flex",
-
-		"@media (min-width: 1366px)": {
-			marginTop: "4vh",
-		},
+const useClasses = makeStyles({
+	flex: {
+		display: "flex"
 	},
 
 	sectionTitle: {
-		fontSize: "1.5ren",
+		fontSize: "1.2rem",
 		marginBottom: "1vh",
 	},
 
@@ -54,7 +34,8 @@ const Menu: React.FC = () => {
 	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_ITEMS);
 
 	const theme = useContext(ThemeContext);
-	const classes = useStyles(theme);
+	const classes = useClasses(theme);
+	const defaultClasses = useDefaultClasses(theme);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>ERROR: {error.message}</p>;
@@ -71,10 +52,10 @@ const Menu: React.FC = () => {
 	}
 
 	return (
-		<div className={classes.main}>
-			<h1 className={classes.mainTitle}>Menu</h1>
+		<div className={defaultClasses.main}>
+			<h1 className={defaultClasses.mainTitle}>Menu</h1>
 
-			<div className={classes.content}>
+			<div className={`${defaultClasses.content} ${classes.flex}`}>
 				<div className={classes.categoryListSection}>
 					<h2 className={classes.sectionTitle}>Categories</h2>
 					<CategoriesList

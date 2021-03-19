@@ -5,8 +5,11 @@ export const theme = {
 	color4: "#ffffff",
 	color5: "#e8b56a",
 
+	error: "red",
+
 	sm: "320px",
 	md: "768px",
 	lg: "1366px",
 	xl: "1920px",
 };
+

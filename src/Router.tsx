@@ -7,10 +7,8 @@ import Navbar from "./common/nav/Navbar";
 
 const HistoryPage = React.lazy(() => import("./order/OrderHistoryPage"));
 const TableDetails = React.lazy(() => import("./tables/table-details/TableDetails"));
-const TablesDashboard = React.lazy(() =>
-	import("./tables/tables-dashboard/TablesDashboard")
-);
-const Menu = React.lazy(() => import("./menu/Menu"));
+const TablesDashboard = React.lazy(() =>import("./tables/tables-dashboard/TablesDashboard"));
+const MenuRouting = React.lazy(() => import("./menu/MenuRouting"));
 
 export default function Pages() {
 	return (
@@ -24,7 +22,7 @@ export default function Pages() {
 								<Route exact path="/" component={TablesDashboard} />
 								<Route path="/table/:tableId" component={TableDetails} />
 								<Route path="/orders" component={HistoryPage} />
-								<Route path="/menu" component={Menu} />
+								<Route path="/menu" component={MenuRouting} />
 							</Suspense>
 						</Switch>
 					</Main>

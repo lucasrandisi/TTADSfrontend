@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export default gql`
-	mutation removeCategoryFromItem($id: ID!, $itemInput: itemInput!) {
-		updateItem(id: $id, itemInput: $itemInput) {
+	mutation createItem($itemInput: itemInput!) {
+		createItem(itemInput: $itemInput) {
 			id
 			title
 			desc
