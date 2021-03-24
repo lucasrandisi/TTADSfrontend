@@ -1,18 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import styled from "styled-components";
-import Calendar from "react-calendar";
-import moment from "moment";
-import "react-calendar/dist/Calendar.css";
+import { addMonths } from "date-fns";
 
-import Box from "@material-ui/core/Box";
+import DayPicker from "react-day-picker";
+import MomentLocaleUtils from "react-day-picker/moment";
+import "react-day-picker/lib/style.css";
+
+import { Grid } from "@material-ui/core";
+
 import { GET_RESERVATIONS_TABLES } from "../queries/ReservationQuery";
+import "moment/locale/es";
+
+const modifiersStyles = {
+	selected: {
+		color: "white",
+		backgroundColor: "#ffc107",
+	},
+	reserved: {
+		color: "#ffc107",
+		backgroundColor: "#fffdee",
+	},
+	outside: {
+		backgroundColor: "white",
+	},
+};
 
 export default function CalendarReservations({
 	partySize,
 	reservationDate,
 	setReservationDate,
 }) {
+	const [invalid, setInvalid] = useState(false);
+
 	const { loading, error, data } = useQuery(GET_RESERVATIONS_TABLES, {
 		variables: { size: partySize },
 	});
@@ -26,106 +45,43 @@ export default function CalendarReservations({
 		return <p>There are no tables available because the size is too large</p>;
 	}
 
-	const isReserved = date =>
-		reservedDates.find(reservedDate => moment(reservedDate).isSame(date, "date"));
-
-	function tileClassName({ date }) {
-		if (!reservedDates.includes("available") && isReserved(date)) {
-			return "reserved";
-		}
-
-		return null;
-	}
-
-	const handleChangeEvent = (value, event) => {
-		if (isReserved(value)) {
-			event.preventDefault();
+	const handleDayChange = (value, modifiers) => {
+		if (modifiers.disabled) {
+			setInvalid(true);
 		} else {
+			setInvalid(false);
 			setReservationDate(value);
 		}
 	};
 
+	const reserved = reservedDates.map(r => new Date(r));
+
+	const modifiers = {
+		disabled: [...reserved, { daysOfWeek: [1] }, { before: new Date() }],
+		reserved,
+		selected: reservationDate,
+	};
+
 	return (
-		<Box paddingBottom={2}>
-			<StyledCalendar
-				minDetail="month"
-				minDate={new Date()}
-				maxDate={moment().add(1, "M").toDate()}
-				tileClassName={tileClassName}
-				value={reservationDate}
-				onChange={handleChangeEvent}
-			/>
-		</Box>
+		<>
+			<Grid container justify="center">
+				<DayPicker
+					numberOfMonths={2}
+					selectedDays={reservationDate}
+					onDayClick={handleDayChange}
+					modifiers={modifiers}
+					modifiersStyles={modifiersStyles}
+					month={new Date()}
+					fromMonth={new Date()}
+					toMonth={new Date(addMonths(new Date(), 3))}
+					locale="es-AR"
+					localeUtils={MomentLocaleUtils}
+				/>
+			</Grid>
+			<p>
+				{!reservationDate && !invalid && "Please select a day 👻"}
+				{invalid && "Invalid date!"}
+			</p>
+		</>
 	);
 }
-
-const StyledCalendar = styled(Calendar)`
-	&& {
-		width: 70%;
-		margin-left: auto;
-		margin-right: auto;
-		.reserved {
-			background-color: #d45f5f;
-
-			&:hover {
-				background-color: #b53535;
-			}
-		}
-
-		.react-calendar__navigation {
-			height: 6.6vh;
-			margin: 0;
-
-			button {
-				font-size: 0.6rem;
-
-				@media (min-width: ${props => props.theme.md}) {
-					font-size: 1.13rem;
-				}
-
-				@media (min-width: ${props => props.theme.xl}) {
-					font-size: 1.53rem;
-				}
-			}
-		}
-
-		.react-calendar__month-view__weekdays {
-			height: 5.3vh;
-			align-items: center;
-
-			.react-calendar__month-view__weekdays__weekday {
-				@media (min-width: ${props => props.theme.md}) {
-					font-size: 0.6rem;
-				}
-
-				@media (min-width: ${props => props.theme.xl}) {
-					font-size: 1.06rem;
-				}
-			}
-		}
-
-		.react-calendar__month-view__days {
-			@media (min-width: ${props => props.theme.md}) {
-				height: 25.3vh;
-			}
-
-			@media (min-width: ${props => props.theme.lg}) {
-				height: 43.3vh;
-			}
-
-			.react-calendar__tile {
-				@media (min-width: ${props => props.theme.md}) {
-					font-size: 0.7rem;
-				}
-
-				@media (min-width: ${props => props.theme.lg}) {
-					font-size: 0.9rem;
-				}
-
-				@media (min-width: ${props => props.theme.xl}) {
-					font-size: 1.2rem;
-				}
-			}
-		}
-	}
-`;
