@@ -1,3 +1,4 @@
+import { Tooltip } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -10,10 +11,12 @@ const Navbar = () => {
 			<Nav>
 				{SidebarRoutes.map(item => (
 					<Route key={item.title}>
-						<TabLink to={item.path}>
-							{item.icon}
-							<span className="link-text">{item.title}</span>
-						</TabLink>
+						<Tooltip title={item.title} aria-label={item.title} placement="right">
+							<TabLink to={item.path}>
+								{item.icon}
+								<span className="link-text">{item.title}</span>
+							</TabLink>
+						</Tooltip>
 					</Route>
 				))}
 			</Nav>
