@@ -1,10 +1,9 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
-import { Switch as MdSwitch } from "@material-ui/core";
 
 import { useTheme } from "styles/useTheme";
-import { light } from "./styles/theme";
+import { themes } from "./styles/theme";
 import Navbar from "./common/nav/Navbar";
 
 const HistoryPage = React.lazy(() => import("./order/OrderHistoryPage"));
@@ -27,13 +26,9 @@ const ReservationMoreInfo = React.lazy(() =>
 export default function Pages() {
 	const { theme, toggleTheme } = useTheme();
 
-	const ThemeSwitch = (
-		<MdSwitch checked={theme === light} onChange={toggleTheme} name="themeSwitch" />
-	);
-
 	return (
 		<BrowserRouter>
-			<ThemeProvider theme={theme}>
+			<ThemeProvider theme={themes[theme]}>
 				<Layout>
 					<Navbar />
 					<Main>
@@ -47,7 +42,7 @@ export default function Pages() {
 								<Route path="/reservation/info/:id" component={ReservationMoreInfo} />
 								<Route exact path="/reservation/new" component={CreateReservation} />
 								<Route path="/settings">
-									<SettingsPage themeButton={ThemeSwitch} />
+									<SettingsPage theme={theme} toggleTheme={toggleTheme} />
 								</Route>
 							</Suspense>
 						</Switch>

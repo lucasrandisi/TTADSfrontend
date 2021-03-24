@@ -1,4 +1,4 @@
-export const dark = {
+const dark = {
 	color1: "#132261",
 	color2: "#e6e6e6",
 	color3: "#08b867",
@@ -22,7 +22,7 @@ export const dark = {
 	xl: "1920px",
 };
 
-export const light = {
+const light = {
 	color1: "#132261",
 	color2: "#e6e6e6",
 	color3: "#08b867",
@@ -44,4 +44,9 @@ export const light = {
 	md: "768px",
 	lg: "1366px",
 	xl: "1920px",
+};
+
+export const themes = {
+	dark,
+	light,
 };
