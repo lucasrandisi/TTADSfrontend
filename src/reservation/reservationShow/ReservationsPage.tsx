@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@apollo/client";
-import moment from "moment";
 import { Grid, Container, Button } from "@material-ui/core";
 
 import ReservationTable from "./reservationTable/ReservationTable";
@@ -11,8 +10,12 @@ import { GET_RESERVATIONS } from "../queries/ReservationQuery";
 import ReservationPagination from "./ReservationPagination";
 
 export default function ReservationsPage() {
-	const [searchInput, setSearchInput] = useState("");
+	// Pagination
 	const [currentPage, setCurrentPage] = useState(1);
+	// Filters
+	const [searchInput, setSearchInput] = useState("");
+	const [from, setFrom] = useState<Date | undefined>();
+	const [to, setTo] = useState<Date | undefined>();
 
 	const { data, loading, error } = useQuery(GET_RESERVATIONS);
 	if (loading) return <p>Loading...</p>;
@@ -23,19 +26,33 @@ export default function ReservationsPage() {
 	const indexLastRes = currentPage * resPerPage;
 	const indexFirstRes = indexLastRes - resPerPage;
 
+	const handleResetFliters = () => {
+		setFrom(undefined);
+		setTo(undefined);
+		setSearchInput("");
+	};
+
 	const filterSearch = () => {
-		if (!searchInput) {
+		if (!searchInput && !to && !from) {
 			return reservations;
 		}
 
-		return reservations.filter(
-			r =>
-				r.customerName.toLowerCase().includes(searchInput.toLowerCase()) ||
-				moment(r.reservationDateTime)
-					.format("DD/MM/YYYY HH:MM")
-					.toString()
-					.includes(searchInput)
-		);
+		let search = reservations;
+		if (searchInput) {
+			search = search.filter(r =>
+				r.customerName.toLowerCase().includes(searchInput.toLowerCase())
+			);
+		}
+
+		if (from && to) {
+			search = search.filter(r => {
+				return (
+					r?.reservationDateTime <= to.toISOString() &&
+					r?.reservationDateTime >= from.toISOString()
+				);
+			});
+		}
+		return search;
 	};
 
 	return (
@@ -54,6 +71,11 @@ export default function ReservationsPage() {
 						<ReservationFilters
 							searchInput={searchInput}
 							setSearchInput={setSearchInput}
+							from={from}
+							setFrom={setFrom}
+							to={to}
+							setTo={setTo}
+							onReset={handleResetFliters}
 						/>
 					</Header>
 
