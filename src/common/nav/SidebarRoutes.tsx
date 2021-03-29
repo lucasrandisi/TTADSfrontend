@@ -30,7 +30,7 @@ const SidebarRoutes = [
 	},
 	{
 		title: "Settings",
-		path: "#",
+		path: "/settings",
 		icon: <SettingsRounded fontSize="large" />,
 	},
 ];

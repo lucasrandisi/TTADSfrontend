@@ -2,12 +2,12 @@ import React, { Suspense } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 
-import ReservationMoreInfo from "reservation/reservationShow/reservationTable/ReservationMoreInfo";
-import CreateReservation from "reservation/reservationCreate/CreateReservation";
-import { theme } from "./styles/theme";
+import { useTheme } from "styles/useTheme";
+import { themes } from "./styles/theme";
 import Navbar from "./common/nav/Navbar";
 
 const HistoryPage = React.lazy(() => import("./order/OrderHistoryPage"));
+const SettingsPage = React.lazy(() => import("common/SettingsPage"));
 const ReservationsPage = React.lazy(() =>
 	import("reservation/reservationShow/ReservationsPage")
 );
@@ -15,12 +15,20 @@ const TableDetails = React.lazy(() => import("./tables/table-details/TableDetail
 const TablesDashboard = React.lazy(() =>
 	import("./tables/tables-dashboard/TablesDashboard")
 );
+const CreateReservation = React.lazy(() =>
+	import("reservation/reservationCreate/CreateReservation")
+);
 const Menu = React.lazy(() => import("./menu/Menu"));
+const ReservationMoreInfo = React.lazy(() =>
+	import("reservation/reservationShow/reservationTable/ReservationMoreInfo")
+);
 
 export default function Pages() {
+	const { theme, toggleTheme } = useTheme();
+
 	return (
 		<BrowserRouter>
-			<ThemeProvider theme={theme}>
+			<ThemeProvider theme={themes[theme]}>
 				<Layout>
 					<Navbar />
 					<Main>
@@ -33,6 +41,9 @@ export default function Pages() {
 								<Route path="/reservations" component={ReservationsPage} />
 								<Route path="/reservation/info/:id" component={ReservationMoreInfo} />
 								<Route exact path="/reservation/new" component={CreateReservation} />
+								<Route path="/settings">
+									<SettingsPage theme={theme} toggleTheme={toggleTheme} />
+								</Route>
 							</Suspense>
 						</Switch>
 					</Main>
