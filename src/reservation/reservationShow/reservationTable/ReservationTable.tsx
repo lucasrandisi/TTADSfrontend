@@ -140,7 +140,8 @@ export default function ReservationTable({ reservations }) {
 											active={orderBy === headCell.id}
 											direction={orderBy === headCell.id ? order : undefined}
 											onClick={createSortHandler(headCell.id)}
-											disabled={!headCell.sortable}>
+											disabled={!headCell.sortable}
+											style={{ fontWeight: "bold" }}>
 											{headCell.label}
 										</TableSortLabel>
 									</TableCell>

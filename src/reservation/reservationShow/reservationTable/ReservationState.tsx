@@ -1,60 +1,56 @@
 import React from "react";
-import { TableCell, makeStyles, Chip } from "@material-ui/core";
-import moment from "moment";
+import styled from "styled-components";
 
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 
-const useStyles = makeStyles(() => ({
-	normal: {
-		borderRadius: 10,
-		padding: 0.5,
+type Status = "canceled" | "pending" | "served" | undefined;
+
+const statuses = {
+	canceled: {
+		label: "Canceled",
+		background: "#ffebeb",
+		color: "#a50000",
+		icon: <CloseIcon fontSize="small" />,
+	},
+	pending: {
+		label: "Pending",
+		background: "#fffedc",
+		color: " #764400",
+		icon: <HourglassEmptyIcon fontSize="small" />,
+	},
+	overtime: {
+		label: "Overtime",
+		background: "#eddbfa",
+		color: " #5200a5",
+		icon: <HourglassEmptyIcon fontSize="small" />,
 	},
 	served: {
-		backgroundColor: "#8bc34a",
-		color: "#FFFFFF",
-		borderRadius: 10,
-		padding: 0.5,
+		label: "Served",
+		background: "#cdffe0",
+		color: " #00592e",
+		icon: <DoneIcon fontSize="small" />,
 	},
-	servedIcon: {
-		color: "#FFFFFF",
-	},
-}));
+};
 
-export default function ReservationState({ res }) {
-	const classes = useStyles();
-	const pastDate = moment(res.reservationDateTime).diff(moment(new Date())) < 0;
+export default function ReservationState({ status }) {
+	const s = statuses[status];
 	return (
 		<>
-			<TableCell align="center">
-				{res.cancelationDateTime && (
-					<Chip
-						label="Canceled"
-						className={classes.normal}
-						color="secondary"
-						size="small"
-						icon={<CloseIcon />}
-					/>
-				)}
-				{!pastDate && (
-					<Chip
-						label="Pending"
-						className={classes.normal}
-						color="primary"
-						size="small"
-						icon={<HourglassEmptyIcon />}
-					/>
-				)}
-				{pastDate && (
-					<Chip
-						label="Served"
-						className={classes.served}
-						size="small"
-						icon={<DoneIcon className={classes.servedIcon} />}
-					/>
-				)}
-			</TableCell>
+			<Chip background={s.background} color={s.color}>
+				{s.icon}
+				{s.label}
+			</Chip>
 		</>
 	);
 }
+
+const Chip = styled.span`
+	padding: 4px 10px;
+	border-radius: 16px;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	display: inline-flex;
+	background-color: ${props => props.background};
+	color: ${props => props.color};
+`;
