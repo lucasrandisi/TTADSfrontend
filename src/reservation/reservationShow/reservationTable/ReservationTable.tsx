@@ -16,14 +16,12 @@ import ReservationTableRow from "./ReservationTableRow";
 import { TableToolbar } from "./TableToolbar";
 
 const columns = [
-	{ id: "info", label: "More", sortable: false, width: 70 },
 	{ id: "state", label: "State", sortable: false, width: 130 },
 	{ id: "date", label: "Date", sortable: true, width: 90 },
 	{ id: "time", label: "Time", sortable: true, width: 90 },
 	{ id: "firstName", label: "Customer name", sortable: true, width: 130 },
 	{ id: "partySize", label: "Seats", sortable: true, width: 90 },
-	{ id: "delete", label: "Delete", sortable: false, width: 90 },
-	{ id: "edit", label: "Edit", sortable: false, width: 90 },
+	{ id: "actions", label: "Actions", sortable: false, width: 90 },
 ];
 
 function descendingComparator(a, b, orderBy) {

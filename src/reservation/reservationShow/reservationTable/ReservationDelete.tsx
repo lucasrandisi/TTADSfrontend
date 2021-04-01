@@ -1,39 +1,50 @@
 import React from "react";
+import { useMutation } from "@apollo/client";
+
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
-	IconButton,
 	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
-	TableCell,
+	MenuItem,
+	ListItemIcon,
+	ListItemText,
 } from "@material-ui/core";
 import moment from "moment";
 
+import { DELETE_RESERVATION, GET_RESERVATIONS } from "../../queries/ReservationQuery";
+
 export default function ReservationDelete(props) {
-	const { res, handleDelete } = props;
+	const { res } = props;
 	const [open, setOpen] = React.useState(false);
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
+	const [deleteReservation] = useMutation(DELETE_RESERVATION, {
+		refetchQueries: [{ query: GET_RESERVATIONS }],
+	});
 
 	const handleClose = () => {
 		setOpen(false);
 	};
 
-	const onDelete = () => {
-		handleDelete(res.id);
+	const onDelete = id => {
+		deleteReservation({ variables: { id } });
 		handleClose();
 	};
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
 	return (
 		<>
-			<TableCell align="center">
-				<IconButton aria-label="delete" onClick={handleClickOpen}>
+			<MenuItem onClick={handleClickOpen}>
+				<ListItemIcon aria-label="delete">
 					<DeleteIcon />
-				</IconButton>
-			</TableCell>
+				</ListItemIcon>
+				<ListItemText primary="Delete" />
+			</MenuItem>
 
 			<Dialog open={open} onClose={handleClose}>
 				<DialogContent>
@@ -45,12 +56,10 @@ export default function ReservationDelete(props) {
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">
-						{" "}
-						Cancel{" "}
+						Cancel
 					</Button>
 					<Button onClick={onDelete} color="primary" autoFocus>
-						{" "}
-						Delete{" "}
+						Delete
 					</Button>
 				</DialogActions>
 			</Dialog>
