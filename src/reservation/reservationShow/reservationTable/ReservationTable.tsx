@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import _ from "lodash";
+import { isSameDay, isWithinInterval, parseISO } from "date-fns";
+
 import {
 	Table,
 	TableBody,
@@ -39,37 +42,12 @@ const columns = [
 	{ id: "actions", label: "Actions", sortable: false },
 ];
 
-function descendingComparator(a, b, orderBy) {
-	if (b[orderBy] < a[orderBy]) {
-		return -1;
-	}
-	if (b[orderBy] > a[orderBy]) {
-		return 1;
-	}
-	return 0;
-}
-
-function getComparator(order, orderBy) {
-	return order === "desc"
-		? (a, b) => descendingComparator(a, b, orderBy)
-		: (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-	const stabilizedThis = array.map((el, index) => [el, index]);
-	stabilizedThis.sort((a, b) => {
-		const order = comparator(a[0], b[0]);
-		if (order !== 0) return order;
-		return a[1] - b[1];
-	});
-	return stabilizedThis.map(el => el[0]);
-}
-
 type Order = "asc" | "desc";
 interface Data {
 	partySize: number;
 	customerName: string;
-	reservationDateTime: Date;
+	date: string;
+	time: string;
 }
 
 export default function ReservationTable({ reservations }) {
@@ -112,21 +90,38 @@ export default function ReservationTable({ reservations }) {
 		setSearchInput("");
 	};
 
-	let rows = reservations;
-	if (to && from) {
-		rows = rows.filter(
-			r =>
-				r?.reservationDateTime <= to.toISOString() &&
-				r?.reservationDateTime >= from.toISOString()
-		);
-	}
-	if (searchInput) {
-		rows = rows.filter(
-			r =>
-				r?.customerName.toLowerCase().includes(searchInput.toLowerCase()) ||
-				r?.id.includes(searchInput)
-		);
-	}
+	const filterDates = React.useCallback(
+		r => {
+			const date = parseISO(r.reservationDateTime);
+			return (
+				(!to && !from) ||
+				(from && isSameDay(date, from)) ||
+				(to && isSameDay(date, to)) ||
+				(from && to && isWithinInterval(date, { start: from, end: to }))
+			);
+		},
+		[to, from]
+	);
+
+	const filterSearch = React.useCallback(
+		r => {
+			const search = searchInput.toLowerCase();
+			return (
+				!searchInput ||
+				(searchInput &&
+					(r.customerName.toLowerCase().includes(search) || search.includes(r.id)))
+			);
+		},
+		[searchInput]
+	);
+
+	const [rows, setRows] = useState(reservations);
+	useEffect(() => {
+		setPage(0);
+		let r = _.filter(reservations, filterSearch);
+		r = _.filter(r, filterDates);
+		setRows(_.orderBy(r, [orderBy], [order]));
+	}, [orderBy, order, reservations, filterSearch, filterDates]);
 
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -165,12 +160,11 @@ export default function ReservationTable({ reservations }) {
 						</TableHead>
 
 						<TableBody>
-							{stableSort(rows, getComparator(order, orderBy))
+							{rows
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map(res => (
 									<ReservationTableRow res={res} key={res.id} />
 								))}
-
 							{emptyRows > 0 && (
 								<TableRow style={{ height: 60 * emptyRows }}>
 									<TableCell colSpan={6} />
