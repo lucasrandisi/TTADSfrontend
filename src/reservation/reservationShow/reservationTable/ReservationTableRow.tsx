@@ -24,17 +24,14 @@ export default function ReservationTableRow({ res }) {
 	return (
 		<>
 			<TableRow hover key={res.id} tabIndex={-1}>
+				<TableCell>#{res.id}</TableCell>
 				<TableCell>
 					<ReservationState status={status(res)} />
 				</TableCell>
-				<TableCell align="left">
-					{moment(res.reservationDateTime).format("DD/MM/YYYY")}
-				</TableCell>
-				<TableCell align="center">
-					{moment(res.reservationDateTime).format("HH:mm")}
-				</TableCell>
+				<TableCell>{moment(res.reservationDateTime).format("DD/MM/YYYY")}</TableCell>
+				<TableCell>{moment(res.reservationDateTime).format("HH:mm")}</TableCell>
 				<TableCell>{res.customerName}</TableCell>
-				<TableCell align="center">{res.partySize}</TableCell>
+				<TableCell>{res.partySize}</TableCell>
 				<TableCell>
 					<ReservationTableRowActions res={res} />
 				</TableCell>

@@ -11,17 +11,32 @@ import {
 	TableSortLabel,
 	TablePagination,
 } from "@material-ui/core";
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import TodayOutlinedIcon from "@material-ui/icons/TodayOutlined";
 
 import ReservationTableRow from "./ReservationTableRow";
 import { TableToolbar } from "./TableToolbar";
 
 const columns = [
-	{ id: "state", label: "State", sortable: false, width: 130 },
-	{ id: "date", label: "Date", sortable: true, width: 90 },
-	{ id: "time", label: "Time", sortable: true, width: 90 },
-	{ id: "firstName", label: "Customer name", sortable: true, width: 130 },
-	{ id: "partySize", label: "Seats", sortable: true, width: 90 },
-	{ id: "actions", label: "Actions", sortable: false, width: 90 },
+	{ id: "id", label: "ID", sortable: false, width: 15 },
+	{ id: "state", label: "State", sortable: false, width: 20 },
+	{
+		id: "date",
+		label: "Date",
+		icon: <TodayOutlinedIcon fontSize="small" />,
+		sortable: true,
+		width: 80,
+	},
+	{
+		id: "time",
+		label: "Time",
+		icon: <ScheduleIcon fontSize="small" />,
+		sortable: true,
+		width: 78,
+	},
+	{ id: "customerName", label: "Customer name", sortable: true },
+	{ id: "partySize", label: "Seats", sortable: true, width: 34 },
+	{ id: "actions", label: "Actions", sortable: false },
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -104,11 +119,12 @@ export default function ReservationTable({ reservations }) {
 				r?.reservationDateTime <= to.toISOString() &&
 				r?.reservationDateTime >= from.toISOString()
 		);
-		// TODO setPage(0);
 	}
 	if (searchInput) {
-		rows = rows.filter(r =>
-			r?.customerName.toLowerCase().includes(searchInput.toLowerCase())
+		rows = rows.filter(
+			r =>
+				r?.customerName.toLowerCase().includes(searchInput.toLowerCase()) ||
+				r?.id.includes(searchInput)
 		);
 	}
 
@@ -133,15 +149,14 @@ export default function ReservationTable({ reservations }) {
 								{columns.map(headCell => (
 									<TableCell
 										key={headCell.id}
-										// align={headCell.numeric ? "right" : "left"}
-										// padding={headCell.disablePadding ? "none" : "default"}
 										sortDirection={orderBy === headCell.id ? order : false}>
 										<TableSortLabel
 											active={orderBy === headCell.id}
 											direction={orderBy === headCell.id ? order : undefined}
 											onClick={createSortHandler(headCell.id)}
 											disabled={!headCell.sortable}
-											style={{ fontWeight: "bold" }}>
+											style={{ fontWeight: "bold", width: headCell.width }}>
+											{headCell.icon}
 											{headCell.label}
 										</TableSortLabel>
 									</TableCell>
