@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import "moment/locale/es";
+import { endOfWeek, startOfWeek } from "date-fns";
 
 import DayPicker from "react-day-picker/DayPicker";
 import { DateUtils } from "react-day-picker";
 import MomentLocaleUtils from "react-day-picker/moment";
 import "react-day-picker/lib/style.css";
 
-import { Input } from "@material-ui/core";
+import { Button, Input } from "@material-ui/core";
 
 import useComponentVisible from "utils/useComponentVisible";
 
@@ -44,6 +45,19 @@ export const DatePickerInput = ({ from, setFrom, to, setTo }) => {
 		}
 	};
 
+	const selectToday = () => {
+		setFrom(new Date());
+		setTo(new Date());
+		setIsComponentVisible(false);
+	};
+
+	const selectThisWeek = () => {
+		const today = new Date();
+		setFrom(startOfWeek(today));
+		setTo(endOfWeek(today));
+		setIsComponentVisible(false);
+	};
+
 	return (
 		<FromToInput>
 			<DatePickerInputGroup>
@@ -64,17 +78,27 @@ export const DatePickerInput = ({ from, setFrom, to, setTo }) => {
 
 			<DayPickerSelector ref={ref}>
 				{isComponentVisible && (
-					<DayPicker
-						className="Range"
-						numberOfMonths={2}
-						selectedDays={[from, { from, to: enteredTo }]}
-						modifiers={{ start: from, end: to }}
-						initialMonth={new Date()}
-						onDayClick={handleDayClick}
-						onDayMouseEnter={handleDayMouseEnter}
-						locale="es-AR"
-						localeUtils={MomentLocaleUtils}
-					/>
+					<>
+						<DayPicker
+							className="Range"
+							numberOfMonths={2}
+							selectedDays={[from, { from, to: enteredTo }]}
+							modifiers={{ start: from, end: to }}
+							initialMonth={new Date()}
+							onDayClick={handleDayClick}
+							onDayMouseEnter={handleDayMouseEnter}
+							locale="es-AR"
+							localeUtils={MomentLocaleUtils}
+						/>
+						<DayPickerFooter>
+							<Button color="primary" onClick={selectToday}>
+								Today
+							</Button>
+							<Button color="primary" onClick={selectThisWeek}>
+								This week
+							</Button>
+						</DayPickerFooter>
+					</>
 				)}
 			</DayPickerSelector>
 		</FromToInput>
@@ -91,6 +115,12 @@ const DatePickerInputGroup = styled.div`
 	position: relative;
 	width: 100%;
 	overflow: hidden;
+`;
+
+const DayPickerFooter = styled.div`
+	display: grid;
+	grid-auto-flow: column;
+	padding-block-end: 0.5rem;
 `;
 
 const DayPickerSelector = styled.div`
