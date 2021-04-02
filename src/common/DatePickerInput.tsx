@@ -9,6 +9,7 @@ import MomentLocaleUtils from "react-day-picker/moment";
 import "react-day-picker/lib/style.css";
 
 import { Button, Input } from "@material-ui/core";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 import useComponentVisible from "utils/useComponentVisible";
 
@@ -67,7 +68,7 @@ export const DatePickerInput = ({ from, setFrom, to, setTo }) => {
 					readOnly
 					onClick={toggleDatepicker}
 				/>
-				⟶
+				<ChevronRightIcon />
 				<Input
 					value={to ? to.toLocaleDateString() : ""}
 					placeholder="To"
@@ -110,7 +111,11 @@ const FromToInput = styled.div`
 `;
 
 const DatePickerInputGroup = styled.div`
-	display: flex;
+	display: grid;
+	grid-row-gap: 3px;
+	grid-auto-flow: column;
+	grid-gap: 6px;
+
 	align-items: center;
 	position: relative;
 	width: 100%;
