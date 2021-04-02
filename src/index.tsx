@@ -19,7 +19,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 
 ReactDOM.render(
 	<ApolloProvider client={client}>
-		<div className="app">
+		<div>
 			<Pages />
 		</div>
 	</ApolloProvider>,

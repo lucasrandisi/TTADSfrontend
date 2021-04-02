@@ -54,12 +54,12 @@ export default function Pages() {
 }
 
 const Layout = styled.div`
-	display: flex;
-	flex-direction: row;
+	display: grid;
+	grid-template-columns: auto 1fr;
 `;
 
 const Main = styled.div`
 	flex-grow: 1;
-	height: 100vh;
+	width: auto;
 	background-color: ${props => props.theme.color2};
 `;

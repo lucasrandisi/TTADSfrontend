@@ -27,9 +27,12 @@ export default Navbar;
 
 const Sidebar = styled.nav`
 	background-color: ${props => props.theme.bg_sidebar};
-	/* width: 3.5rem; */
+	position: sticky;
+	align-self: start;
+	top: 0;
 	height: 100vh;
 	padding: 10px;
+
 	/* transition: width 380ms ease-in-out; */
 
 	/* &:hover {
