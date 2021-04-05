@@ -22,7 +22,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 	const [step, setStep] = useState(0);
 	const currentChild = childrenArray[step] as React.ReactElement<FormikStepProps>;
 
-	const [reservationDate, setReservationDate] = React.useState(new Date());
+	const [reservationDate, setReservationDate] = React.useState<Date | undefined>();
 	const [completed, setCompleted] = useState(false);
 
 	const isLastStep = step === childrenArray.length - 1;
@@ -30,7 +30,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 	const handleReset = resetForm => {
 		setStep(0);
 		setCompleted(false);
-		setReservationDate(new Date());
+		setReservationDate(undefined);
 		resetForm();
 	};
 
