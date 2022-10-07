@@ -2,6 +2,10 @@ import React from "react";
 import "./RegisterForm.scss";
 import { useFormik } from "formik";
 import { Input } from "@material-ui/core";
+import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { toast } from "react-toastify";
+import { REGISTER } from "../users";
 
 function initialValues() {
 	return {
@@ -14,12 +18,38 @@ function initialValues() {
 
 export default function RegisterForm(props) {
 	const { setShowLogin } = props;
+	const [register] = useMutation(REGISTER);
 
 	const formik = useFormik({
 		initialValues: initialValues(),
-		validationSchema: null,
-		onSubmit: () => {
-			setShowLogin(true);
+		validationSchema: Yup.object({
+			email: Yup.string().email("Invalid email.").required("This field is required."),
+			username: Yup.string().required("This field is required."),
+			password: Yup.string()
+				.required("This field is required.")
+				.oneOf([Yup.ref("repeat_password")], "Las contraseñas no son iguales"),
+			repeat_password: Yup.string()
+				.required("This field is required.")
+				.oneOf([Yup.ref("password")], "Las contraseñas no son iguales"),
+		}),
+		onSubmit: async formValues => {
+			try {
+				const result = await register({
+					variables: {
+						input: {
+							username: formValues.username,
+							email: formValues.email,
+							password: formValues.password,
+						},
+					},
+				});
+
+				console.log(result);
+				toast.success("Usuario registrado correctamente");
+				setShowLogin(true);
+			} catch (error) {
+				toast.error(error.message);
+			}
 		},
 	});
 
@@ -37,6 +67,7 @@ export default function RegisterForm(props) {
 					className="register-input"
 					placeholder="Correo electronico"
 					name="email"
+					error={!!formik.errors.email}
 				/>
 				<Input
 					value={formik.values.username}
@@ -44,6 +75,7 @@ export default function RegisterForm(props) {
 					className="register-input"
 					placeholder="Username"
 					name="username"
+					error={!!formik.errors.username}
 				/>
 				<Input
 					value={formik.values.password}
@@ -51,6 +83,8 @@ export default function RegisterForm(props) {
 					className="register-input"
 					placeholder="Contraseña"
 					name="password"
+					type="password"
+					error={!!formik.errors.password}
 				/>
 				<Input
 					value={formik.values.repeat_password}
@@ -58,12 +92,14 @@ export default function RegisterForm(props) {
 					className="register-input"
 					placeholder="Repetir contraseña"
 					name="repeat_password"
+					type="password"
+					error={!!formik.errors.repeat_password}
 				/>
 				<button type="submit" className="btn-submit">
 					Registrarse
 				</button>
-				<button type="button" onClick={formik.handleReset}>
-					Reset
+				<button type="button" className="btn-reset" onClick={formik.handleReset}>
+					Clear
 				</button>
 			</form>
 		</>

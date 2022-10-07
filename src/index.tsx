@@ -6,10 +6,11 @@ import {
 	ApolloProvider,
 	InMemoryCache,
 } from "@apollo/client";
-
+import { ToastContainer } from "react-toastify";
 import * as serviceWorker from "./serviceWorker";
 import Pages from "./Router";
 import "./styles/app.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import Auth from "./auth";
 
@@ -20,7 +21,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 function App() {
-	const auth = false;
+	const auth = true;
 	return (
 		<ApolloProvider client={client}>
 			{!auth ? (
@@ -30,6 +31,18 @@ function App() {
 					<Pages />
 				</div>
 			)}
+			<ToastContainer
+				position="top-right"
+				autoClose={5000}
+				hideProgressBar
+				newestOnTop
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="colored"
+			/>
 		</ApolloProvider>
 	);
 }

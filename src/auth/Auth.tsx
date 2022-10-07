@@ -5,14 +5,14 @@ import logo from "../assets/png/Restaurant.png";
 import "./Auth.scss";
 
 export default function Auth() {
-	const [showLogin, setShowLogin] = useState(false);
+	const [showLogin, setShowLogin] = useState(true);
 
 	return (
 		<Container fixed className="auth">
 			<img alt="undefined" className="img-form" src={logo} />
 
 			<div className="container-form">
-				{showLogin ? <p>form de login</p> : <RegisterForm setShowLogin={setShowLogin} />}
+				{showLogin ? <p>Login</p> : <RegisterForm setShowLogin={setShowLogin} />}
 			</div>
 
 			<div className="change-form">
