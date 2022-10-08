@@ -1,7 +1,7 @@
 import React from "react";
 import "./RegisterForm.scss";
 import { useFormik } from "formik";
-import { Input } from "@material-ui/core";
+import { OutlinedInput } from "@material-ui/core";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
@@ -34,7 +34,7 @@ export default function RegisterForm(props) {
 		}),
 		onSubmit: async formValues => {
 			try {
-				const result = await register({
+				await register({
 					variables: {
 						input: {
 							username: formValues.username,
@@ -44,7 +44,6 @@ export default function RegisterForm(props) {
 					},
 				});
 
-				console.log(result);
 				toast.success("Usuario registrado correctamente");
 				setShowLogin(true);
 			} catch (error) {
@@ -61,7 +60,7 @@ export default function RegisterForm(props) {
 				className="register-form"
 				noValidate
 				autoComplete="off">
-				<Input
+				<OutlinedInput
 					value={formik.values.email}
 					onChange={formik.handleChange}
 					className="register-input"
@@ -69,7 +68,7 @@ export default function RegisterForm(props) {
 					name="email"
 					error={!!formik.errors.email}
 				/>
-				<Input
+				<OutlinedInput
 					value={formik.values.username}
 					onChange={formik.handleChange}
 					className="register-input"
@@ -77,7 +76,7 @@ export default function RegisterForm(props) {
 					name="username"
 					error={!!formik.errors.username}
 				/>
-				<Input
+				<OutlinedInput
 					value={formik.values.password}
 					onChange={formik.handleChange}
 					className="register-input"
@@ -86,7 +85,7 @@ export default function RegisterForm(props) {
 					type="password"
 					error={!!formik.errors.password}
 				/>
-				<Input
+				<OutlinedInput
 					value={formik.values.repeat_password}
 					onChange={formik.handleChange}
 					className="register-input"

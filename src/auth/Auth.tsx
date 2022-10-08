@@ -3,6 +3,7 @@ import Container from "@material-ui/core/Container";
 import RegisterForm from "./register-form/RegisterForm";
 import logo from "../assets/png/Restaurant.png";
 import "./Auth.scss";
+import LoginForm from "./login-form/LoginForm";
 
 export default function Auth() {
 	const [showLogin, setShowLogin] = useState(true);
@@ -12,7 +13,7 @@ export default function Auth() {
 			<img alt="undefined" className="img-form" src={logo} />
 
 			<div className="container-form">
-				{showLogin ? <p>Login</p> : <RegisterForm setShowLogin={setShowLogin} />}
+				{showLogin ? <LoginForm /> : <RegisterForm setShowLogin={setShowLogin} />}
 			</div>
 
 			<div className="change-form">
