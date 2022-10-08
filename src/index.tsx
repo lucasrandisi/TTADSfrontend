@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import ReactDOM from "react-dom";
 import {
 	ApolloClient,
@@ -11,6 +11,8 @@ import * as serviceWorker from "./serviceWorker";
 import Pages from "./Router";
 import "./styles/app.css";
 import "react-toastify/dist/ReactToastify.css";
+import { getToken } from "./utils/token";
+import AuthContext from "./context/authContext";
 
 import Auth from "./auth";
 
@@ -21,28 +23,55 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 function App() {
-	const auth = true;
+	const [auth, setAuth] = useState("");
+
+	useEffect(() => {
+		const token = getToken();
+		if (!token) {
+			setAuth("");
+		} else {
+			setAuth(token);
+		}
+	}, []);
+
+	const logout = () => {};
+
+	const setUser = user => {
+		setAuth(user);
+	};
+
+	const authData = useMemo(
+		() => ({
+			auth,
+			logout,
+			setUser,
+		}),
+		[auth]
+	);
+
 	return (
 		<ApolloProvider client={client}>
-			{!auth ? (
-				<Auth />
-			) : (
-				<div>
-					<Pages />
-				</div>
-			)}
-			<ToastContainer
-				position="top-right"
-				autoClose={5000}
-				hideProgressBar
-				newestOnTop
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-				theme="colored"
-			/>
+			<AuthContext.Provider value={authData}>
+				{!auth ? (
+					<Auth />
+				) : (
+					<div>
+						<Pages />
+					</div>
+				)}
+				<ToastContainer
+					position="top-right"
+					autoClose={5000}
+					hideProgressBar
+					newestOnTop
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+					theme="colored"
+				/>
+			</AuthContext.Provider>
 		</ApolloProvider>
 	);
 }

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LoginForm.scss";
 import { OutlinedInput } from "@material-ui/core";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import useAuth from "hooks/useAuth";
+import { LOGIN } from "../queries/users";
+import { setToken } from "../../utils/token";
 
 function initialValues() {
 	return {
@@ -11,13 +15,35 @@ function initialValues() {
 	};
 }
 export default function LoginForm() {
+	const [error, setError] = useState("");
+	const [login] = useMutation(LOGIN);
+
+	const { setUser } = useAuth();
+
 	const formik = useFormik({
 		initialValues: initialValues(),
 		validationSchema: Yup.object({
 			email: Yup.string().email("Invalid email.").required("This field is required."),
 			password: Yup.string().required("This field is required."),
 		}),
-		onSubmit: () => {},
+		onSubmit: async formValues => {
+			setError("");
+			try {
+				const { data } = await login({
+					variables: {
+						input: formValues,
+					},
+				});
+
+				const { token } = data.login;
+				setToken(token);
+				setUser(token);
+				// eslint-disable-next-line
+			} catch (error) {
+				// eslint-disable-next-line
+				setError(error.message);
+			}
+		},
 	});
 	return (
 		<>
@@ -47,6 +73,7 @@ export default function LoginForm() {
 				<button type="submit" className="btn-submit">
 					Iniciar sesión
 				</button>
+				{error && <p className="submit-error">{error}</p>}
 			</form>
 		</>
 	);

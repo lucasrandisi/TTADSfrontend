@@ -5,7 +5,7 @@ import { OutlinedInput } from "@material-ui/core";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
-import { REGISTER } from "../users";
+import { REGISTER } from "../queries/users";
 
 function initialValues() {
 	return {
