@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import useAuth from "hooks/useAuth";
 import { LOGIN } from "../queries/users";
-import { setToken } from "../../utils/token";
+import { setToken, decodeToken } from "../../utils/token";
 
 function initialValues() {
 	return {
@@ -37,10 +37,9 @@ export default function LoginForm() {
 
 				const { token } = data.login;
 				setToken(token);
-				setUser(token);
+				setUser(decodeToken(token));
 				// eslint-disable-next-line
 			} catch (error) {
-				// eslint-disable-next-line
 				setError(error.message);
 			}
 		},

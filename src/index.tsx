@@ -13,6 +13,7 @@ import "./styles/app.css";
 import "react-toastify/dist/ReactToastify.css";
 import { getToken } from "./utils/token";
 import AuthContext from "./context/authContext";
+import Home from "./home/home";
 
 import Auth from "./auth";
 
@@ -56,6 +57,7 @@ function App() {
 					<Auth />
 				) : (
 					<div>
+						<Home />
 						<Pages />
 					</div>
 				)}
