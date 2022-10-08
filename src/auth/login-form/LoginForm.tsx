@@ -2,6 +2,7 @@ import React from "react";
 import "./LoginForm.scss";
 import { OutlinedInput } from "@material-ui/core";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function initialValues() {
 	return {
@@ -12,7 +13,10 @@ function initialValues() {
 export default function LoginForm() {
 	const formik = useFormik({
 		initialValues: initialValues(),
-		validationSchema: null,
+		validationSchema: Yup.object({
+			email: Yup.string().email("Invalid email.").required("This field is required."),
+			password: Yup.string().required("This field is required."),
+		}),
 		onSubmit: () => {},
 	});
 	return (
@@ -29,6 +33,7 @@ export default function LoginForm() {
 					name="email"
 					onChange={formik.handleChange}
 					value={formik.values.email}
+					error={!!formik.errors.email}
 				/>
 				<OutlinedInput
 					className="register-input"
@@ -37,6 +42,7 @@ export default function LoginForm() {
 					type="password"
 					onChange={formik.handleChange}
 					value={formik.values.password}
+					error={!!formik.errors.password}
 				/>
 				<button type="submit" className="btn-submit">
 					Iniciar sesión
