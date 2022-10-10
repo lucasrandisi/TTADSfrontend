@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, Button, CircularProgress, Grid } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
 	grid: {
@@ -11,13 +12,21 @@ const useStyles = makeStyles(() => ({
 export default function StepperActions(props) {
 	const classes = useStyles();
 	const { step, setStep, isSubmitting, isLastStep } = props;
+	const history = useHistory();
+
+	const setCurrentStep = (step) => {
+		if (!step){
+			history.push("/reservations");
+		} else {
+			setStep((s: number) => s - 1)
+		}
+	};
 
 	return (
 		<Grid container spacing={2} className={classes.grid}>
 			<Grid item>
-				<Button
-					disabled={step === 0}
-					onClick={() => setStep(s => s - 1)}
+				<Button					
+					onClick={() => setCurrentStep(step)}
 					variant="contained">
 					Back
 				</Button>
@@ -30,7 +39,7 @@ export default function StepperActions(props) {
 					color="primary"
 					type="submit">
 					{/* eslint-disable-next-line */}
-					{isSubmitting ? "Loading" : isLastStep ? "Create" : "Next"}
+					{isSubmitting ? "Loading" : isLastStep ? "Save" : "Next"}
 				</Button>
 			</Grid>
 		</Grid>

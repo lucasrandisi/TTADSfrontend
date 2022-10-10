@@ -57,7 +57,7 @@ export default function CalendarReservations({
 	const reserved = reservedDates.map(r => new Date(r));
 
 	const modifiers = {
-		disabled: [...reserved, { daysOfWeek: [1] }, { before: new Date() }],
+		disabled: [...reserved, { daysOfWeek: [1,2,3] }, { before: new Date() }],
 		reserved,
 		selected: reservationDate,
 	};

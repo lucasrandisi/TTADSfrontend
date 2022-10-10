@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,14 +10,18 @@ import {
 	ListItemText,
 } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
+import DeleteIcon from "@material-ui/icons/Delete";
 import PriorityHighIcon from "@material-ui/icons/PriorityHigh";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import MoreIcon from "@material-ui/icons/More";
 
-import ReservationDelete from "./ReservationDelete";
+import ReservationCancelModal from "./ReservationCancelModal";
+import ReservationEdit from "./ReservationEdit";
 
 export const ReservationTableRowActions = ({ res }) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+	const [childrenModal, setChildrenModal] = useState<any>(null);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -26,6 +30,19 @@ export const ReservationTableRowActions = ({ res }) => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const handleModal = (type) => {
+		switch (type) {
+			case "cancel":
+				setChildrenModal(<ReservationCancelModal idReservation={res.id} />)
+				break;
+			case "edit":
+				setChildrenModal(<ReservationEdit res={res} />)
+				break;
+			default:
+				break;
+		}
+	}
 
 	return (
 		<>
@@ -59,18 +76,18 @@ export const ReservationTableRowActions = ({ res }) => {
 						<ListItemText primary="Details" />
 					</MenuItem>
 				</StyledLink>
-
-				<StyledLink to={`/reservation/edit/${res.id}`}>
-					<MenuItem>
-						<ListItemIcon aria-label="edit">
-							<CreateIcon />
-						</ListItemIcon>
-						<ListItemText primary="Edit" />
-					</MenuItem>
-				</StyledLink>
-
-				<ReservationDelete res={res} />
-
+				<MenuItem onClick={() => handleModal("edit")}>
+					<ListItemIcon aria-label="edit">
+						<CreateIcon />
+					</ListItemIcon>
+					<ListItemText primary="Edit" />
+				</MenuItem>
+				<MenuItem onClick={() => handleModal("cancel")}>
+					<ListItemIcon aria-label="cancel">
+						<DeleteIcon />
+					</ListItemIcon>
+					<ListItemText primary="Cancel" />
+				</MenuItem>
 				<MenuItem>
 					<ListItemIcon>
 						<PriorityHighIcon />
@@ -78,6 +95,8 @@ export const ReservationTableRowActions = ({ res }) => {
 					<ListItemText primary="Confirm" />
 				</MenuItem>
 			</Menu>
+
+			{childrenModal}
 		</>
 	);
 };

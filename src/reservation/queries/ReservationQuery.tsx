@@ -64,8 +64,43 @@ export const CREATE_RESERVATION = gql`
 	}
 `;
 
+export const UPDATE_RESERVATION = gql`
+	mutation updateReservation(
+		$id: ID!
+		$customerName: String!
+		$phone: String
+		$email: String
+		$partySize: Int!
+		$reservationDateTime: DateTime!
+	) {
+		updateReservation(
+			id: $id,
+			reservation: {
+				customerName: $customerName
+				phone: $phone
+				email: $email
+				partySize: $partySize
+				reservationDateTime: $reservationDateTime
+			}
+		) {
+			id
+		}
+	}
+`;
+
 export const GET_RESERVATIONS_TABLES = gql`
 	query($size: Int!) {
 		reservationsBySize(size: $size)
+	}
+`;
+
+export const GET_RESERVATIONS_BY_DATE = gql`
+	query($reservationDate: DateTime!, $size: Int!) {
+		reservationsByDate(reservationDate: $reservationDate, size: $size){
+			reservationDateTime
+			table {
+				id
+			}
+		}
 	}
 `;

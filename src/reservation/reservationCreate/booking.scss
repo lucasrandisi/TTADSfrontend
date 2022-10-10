@@ -1,0 +1,19 @@
+@import "../../styles/index.scss";
+
+.container-booking-time{
+    margin-left: 320px;
+    padding: 10px;
+    width: 40%;
+}
+
+.individual-booking-time{
+    background-color: #f2f8fb;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.MuiRadio-colorSecondary.Mui-checked {
+    color: gray !important;
+}

@@ -24,6 +24,7 @@ export default function ReservationMoreInfo() {
 			<p>Email: {res.email}</p>
 			<p>Phone: {res.phone}</p>
 			<p>Party size: {res.table.size} chairs</p>
+			<p>Table id: {res.table.id}</p>
 			<p>Reserved at {moment(res.reservationDateTime).format("DD/MM/YYYY HH:MM")}</p>
 			{res.cancelationDateTime && (
 				<p>Cancelled at {moment(res.cancelationDateTime).format("DD/MM/YYYY HH:MM")}</p>
