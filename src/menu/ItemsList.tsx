@@ -99,6 +99,7 @@ export default function ItemsList({ selectedCategoryId, items }) {
 					<ItemForm 
 						setChildrenModal={setChildrenModal}
 						values={items[id]}
+						isEdit={true}
 						title="Editing dishes"
 					/>
 				)

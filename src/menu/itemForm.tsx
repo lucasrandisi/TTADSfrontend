@@ -58,9 +58,9 @@ export default function ItemForm(props) {
 
     const updateItemEdit = values => {
         updateItem({ variables: {
+            id: values.id,
             itemInput: 
-                {
-                    id: values.id,
+                {                    
                     title: values.title,
                     desc: values.desc,
                     servings: parseInt(values.servings),

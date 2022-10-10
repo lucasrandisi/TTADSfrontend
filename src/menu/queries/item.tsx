@@ -2,9 +2,11 @@ import { gql } from "@apollo/client";
 
 export const UPDATE_ITEM =  gql`
 	mutation updateItem(
-        $itemInput: itemEditInput!
+        $itemInput: itemInput!
+		$id: ID!
 	) {
 		updateItem(
+			id: $id
 			itemInput: $itemInput
 		) {
 			id
