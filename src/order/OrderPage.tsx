@@ -40,6 +40,9 @@ export default function OrderPage({ orderId }) {
 			<Button color="secondary" onClick={handleClose}>
 				Cerrar
 			</Button>
+			<Button color="secondary">
+				Cobrar orden
+			</Button>
 		</OrderMenu>
 	);
 }

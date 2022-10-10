@@ -16,6 +16,12 @@ const Order = ({ data }) => {
 		removeItem({ variables: { id: lineId } });
 	};
 
+	let total = 0;
+
+	lines.map(line => {
+		total = total + line.item.pricePerUnit * line.quantity
+	})
+
 	return (
 		<div>
 			<div>
@@ -41,9 +47,14 @@ const Order = ({ data }) => {
 					{lines.map(line => (
 						<OrderLine key={line.id} data={line} onRemove={handleRemove} />
 					))}
+					<br></br>
+					<tr>
+						<td></td>
+						<td><b>Total</b></td>
+						<td>${total}</td>
+					</tr>
 				</tbody>
 			</StyledTable>
-			<div>Total</div>
 		</div>
 	);
 };
