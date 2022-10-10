@@ -34,10 +34,18 @@ export const ReservationTableRowActions = ({ res }) => {
 	const handleModal = (type) => {
 		switch (type) {
 			case "cancel":
-				setChildrenModal(<ReservationCancelModal idReservation={res.id} />)
+				setChildrenModal(
+					<ReservationCancelModal 
+						idReservation={res.id}
+						setChildrenModal={setChildrenModal}
+					/>)
 				break;
 			case "edit":
-				setChildrenModal(<ReservationEdit res={res} />)
+				setChildrenModal(
+					<ReservationEdit 
+						res={res} 
+						setChildrenModal={setChildrenModal}
+					/>)
 				break;
 			default:
 				break;

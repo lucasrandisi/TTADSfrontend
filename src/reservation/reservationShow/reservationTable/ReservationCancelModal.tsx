@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { DELETE_RESERVATION, GET_RESERVATIONS } from "../../queries/ReservationQuery";
 import { useMutation } from "@apollo/client";
 
-export default function ReservationCancelModal({idReservation}) {
+export default function ReservationCancelModal({idReservation, setChildrenModal}) {
 
     const [state, setState] = useState(true);
 
@@ -18,6 +18,7 @@ export default function ReservationCancelModal({idReservation}) {
 
     const handleClose = () => {
         setState(false);
+        setChildrenModal(<></>);
     };
 
     const handleCancel = () => {

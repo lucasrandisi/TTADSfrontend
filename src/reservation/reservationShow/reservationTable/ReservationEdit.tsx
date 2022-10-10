@@ -3,12 +3,13 @@ import React, {useState} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import "./reservation.scss";
 
-export default function ReservationEdit({res}) {
+export default function ReservationEdit({res, setChildrenModal}) {
 
     const [state, setState] = useState(true);
 
     const handleClose = () => {
         setState(false);
+        setChildrenModal(<></>);
     };
 
     return (
