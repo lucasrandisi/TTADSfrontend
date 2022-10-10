@@ -1,0 +1,12 @@
+@import "../styles/index.scss";
+
+.item-input{
+    width: 100%; 
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.MuiDialog-paperWidthSm {
+    max-width: 400px !important;
+    max-height: 100% !important;
+}

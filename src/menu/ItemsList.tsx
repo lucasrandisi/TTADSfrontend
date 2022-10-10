@@ -1,5 +1,10 @@
-import IconButton from "@material-ui/core/IconButton";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import REMOVE_CATEGORY_FROM_ITEM from "./queries/remove-category-from-item.mutation";
+import ItemForm from "./itemForm";
+
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,10 +13,6 @@ import TableRow from "@material-ui/core/TableRow";
 import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
 import Tooltip from "@material-ui/core/Tooltip";
-import React from "react";
-import { useMutation } from "@apollo/client";
-
-import REMOVE_CATEGORY_FROM_ITEM from "./queries/remove-category-from-item.mutation";
 
 const useStyles = makeStyles({
 	tableRow: {
@@ -89,6 +90,22 @@ export default function ItemsList({ selectedCategoryId, items }) {
 		}
 	}
 
+	const [childrenModal, setChildrenModal] = useState<any>(null);
+
+	const handleModal = (type, id=0) => {
+		switch (type) {
+			case "edit":
+				setChildrenModal(
+					<ItemForm 
+						setChildrenModal={setChildrenModal}
+						values={items[id]}
+						title="Editing dishes"
+					/>
+				)
+				break;
+		}
+	}
+
 	if (!items.length) return <div>No hay platos.</div>;
 
 	return (
@@ -102,6 +119,10 @@ export default function ItemsList({ selectedCategoryId, items }) {
 					<TableCell
 						className={`${classes.tableCell} ${classes.header} ${classes.descCell}`}>
 						Description
+					</TableCell>
+					<TableCell
+						className={`${classes.tableCell} ${classes.header} ${classes.descCell}`}>
+						Categoria
 					</TableCell>
 					<TableCell
 						className={`${classes.tableCell} ${classes.header} ${classes.shortCell}`}>
@@ -118,7 +139,7 @@ export default function ItemsList({ selectedCategoryId, items }) {
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{items.map(item => (
+				{items.map((item, i) => (
 					<TableRow key={item.id} className={classes.tableRow}>
 						<TableCell
 							padding="none"
@@ -129,6 +150,11 @@ export default function ItemsList({ selectedCategoryId, items }) {
 							padding="none"
 							className={`${classes.tableCell} ${classes.descCell}`}>
 							{item.desc}
+						</TableCell>
+						<TableCell
+							padding="none"
+							className={`${classes.tableCell} ${classes.descCell}`}>
+							{item.categories.map(i => i.desc).join()}
 						</TableCell>
 						<TableCell
 							padding="none"
@@ -143,7 +169,9 @@ export default function ItemsList({ selectedCategoryId, items }) {
 						<TableCell className={`${classes.tableCell} ${classes.actionsCell}`}>
 							{selectedCategoryId === "0" ? (
 								<Tooltip title="Edit">
-									<IconButton className={classes.button} aria-label="edit">
+									<IconButton className={classes.button} aria-label="edit"
+										onClick={() => handleModal("edit", i)}
+									>
 										<EditIcon />
 									</IconButton>
 								</Tooltip>
@@ -161,6 +189,7 @@ export default function ItemsList({ selectedCategoryId, items }) {
 					</TableRow>
 				))}
 			</TableBody>
+			{childrenModal}
 		</Table>
 	);
 }
