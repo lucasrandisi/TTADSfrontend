@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 
 export const UPDATE_ITEM =  gql`
 	mutation updateItem(
-        $itemInput: itemInput!
 		$id: ID!
+        $itemInput: itemInput!
 	) {
 		updateItem(
 			id: $id
@@ -15,22 +15,8 @@ export const UPDATE_ITEM =  gql`
 `;
 
 export const CREATE_ITEM =  gql`
-	mutation createItem(
-		$title: String
-		$desc: String
-		$servings: Int
-		$pricePerUnit: Int
-	) {
-		createItem(
-			item: {
-				title : $title,
-				desc : $desc,
-				servings : $servings,
-				pricePerUnit : $pricePerUnit,
-			}
-		) {
-			id
-		}
+	mutation createItem( $item: itemInput! ) {
+		createItem(item : $item ) { id }
 	}
 `;
 

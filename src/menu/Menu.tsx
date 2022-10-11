@@ -62,7 +62,6 @@ const Menu: React.FC = () => {
 				title="New dish"
 				setChildrenModal={setChildrenModal}
 				isEdit={false}
-				values={{ title: "", desc: "", servings: null, pricePerUnit: null}}
 			/>
 		)
 	}
@@ -103,7 +102,10 @@ const Menu: React.FC = () => {
 
 				<div className={classes.itemsTableSection}>
 					<h2 className={classes.sectionTitle}>Dishes</h2>
-					<ItemsList selectedCategoryId={selectedCategoryId} items={items} />
+					<ItemsList 
+						selectedCategoryId={selectedCategoryId} 
+						items={items}
+					/>
 				</div>
 			</div>
 		</div>
