@@ -13,6 +13,9 @@ import TableRow from "@material-ui/core/TableRow";
 import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
 import Tooltip from "@material-ui/core/Tooltip";
+import BasicModal from "utils/basicModal";
+import { DELETE_ITEM } from "./queries/item";
+import GET_CATEGORIES_AND_ITEMS from "./queries/categories-and-items.query";
 
 const useStyles = makeStyles({
 	tableRow: {
@@ -90,18 +93,39 @@ export default function ItemsList({ selectedCategoryId, items }) {
 		}
 	}
 
+	const [deleteItem] = useMutation(DELETE_ITEM, {
+		refetchQueries: [{ query: GET_CATEGORIES_AND_ITEMS }],
+	});
+
+	const handleDelete = (id) => {
+		console.log(id)
+		deleteItem({ variables: { id:id } })
+	}
+
 	const [childrenModal, setChildrenModal] = useState<any>(null);
 
-	const handleModal = (type, id=0) => {
+	const handleModal = (type, item=null) => {
 		switch (type) {
 			case "edit":
 				setChildrenModal(
 					<ItemForm 
 						setChildrenModal={setChildrenModal}
-						values={items[id]}
+						values={item}
 						isEdit={true}
 						title="Editing dishes"
 					/>
+				)
+				break;
+			case "delete":
+				setChildrenModal(
+					<BasicModal
+						setChildrenModal={setChildrenModal}
+						title="Delete item from menu"
+						buttonText="Delete"
+						handleAction={() => handleDelete(item)}
+					>
+						Si acepta se procederá a eliminar el item del menú. ¿Está seguro?
+					</BasicModal>
 				)
 				break;
 		}
@@ -169,13 +193,22 @@ export default function ItemsList({ selectedCategoryId, items }) {
 						</TableCell>
 						<TableCell className={`${classes.tableCell} ${classes.actionsCell}`}>
 							{selectedCategoryId === "0" ? (
-								<Tooltip title="Edit">
-									<IconButton className={classes.button} aria-label="edit"
-										onClick={() => handleModal("edit", i)}
-									>
-										<EditIcon />
-									</IconButton>
-								</Tooltip>
+								<>
+									<Tooltip title="Edit">
+										<IconButton className={classes.button} aria-label="edit"
+											onClick={() => handleModal("edit", item)}
+										>
+											<EditIcon />
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Delete">
+										<IconButton className={classes.button} aria-label="delete"
+											onClick={() => handleModal("delete", item.id)}
+										>
+											<CloseIcon />
+										</IconButton>
+									</Tooltip>
+								</>
 							) : (
 								<Tooltip title="Remove from category">
 									<IconButton

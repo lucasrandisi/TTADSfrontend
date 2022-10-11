@@ -106,12 +106,13 @@ export default function ItemForm(props) {
                 <form className='item-form' onSubmit={formik.handleSubmit}>
                     {
                         form_inputs.map(
-                            ({name, label}) => 
+                            ({name, label}, i) => 
                             <OutlinedInput
+                                key={i}
                                 className="item-input"
                                 placeholder={label}
                                 name={name}
-                                value={formik.values[name] || undefined}
+                                value={formik.values[name] || ""}
                                 onChange={formik.handleChange}
                                 error={!!formik.errors[name]}
                             />
