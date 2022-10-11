@@ -33,26 +33,3 @@ export const CREATE_ITEM =  gql`
 		}
 	}
 `;
-
-
-export const CREATE_RESERVATION = gql`
-	mutation createNewReservation(
-		$customerName: String!
-		$phone: String
-		$email: String
-		$partySize: Int!
-		$reservationDateTime: DateTime!
-	) {
-		createReservation(
-			reservation: {
-				customerName: $customerName
-				phone: $phone
-				email: $email
-				partySize: $partySize
-				reservationDateTime: $reservationDateTime
-			}
-		) {
-			id
-		}
-	}
-`;
