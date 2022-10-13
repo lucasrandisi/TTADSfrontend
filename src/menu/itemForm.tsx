@@ -86,12 +86,13 @@ export default function ItemForm(props) {
         initialValues,
         validationSchema,
         onSubmit: (values) => { 
+            const categIds = selectedOptions.map((e) => e.value.id)
             const row = {                
                 title: values.title,
                 desc: values.desc,
                 servings: parseInt(values.servings),
                 pricePerUnit: parseInt(values.pricePerUnit),
-                categoriesId: selectedOptions.map((e) => e.value.id)
+                categoriesId: categIds.filter((id, index) => categIds.indexOf(id) === index)
             }
             props.isEdit ? 
                 updateItem({ variables: { id: values.id, itemInput: row } }) : 

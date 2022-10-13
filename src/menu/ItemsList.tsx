@@ -10,6 +10,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import DeleteIcon from '@material-ui/icons/Delete';
 import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -205,7 +206,7 @@ export default function ItemsList({ selectedCategoryId, items }) {
 										<IconButton className={classes.button} aria-label="delete"
 											onClick={() => handleModal("delete", item.id)}
 										>
-											<CloseIcon />
+											<DeleteIcon />
 										</IconButton>
 									</Tooltip>
 								</>
