@@ -3,6 +3,9 @@ import styled from "styled-components";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { TableInterface } from "../models/table.model";
+import ListAlt from '@material-ui/icons/ListAlt';
+import EventBusy from '@material-ui/icons/EventBusy';
+import Add from '@material-ui/icons/Add';
 
 export default function Table(props) {
 	const { table }: { table: TableInterface } = props;
@@ -13,71 +16,63 @@ export default function Table(props) {
 
 		return () => clearTimeout(dateTimer);
 	});
-
-	if (table.currentOrder) {
+	
+	if (table.currentOrder) {		
 		const timeDifference = moment().diff(moment(table.currentOrder.createdAt));
-		const duration = moment.duration(timeDifference);
+		timer = `${moment(timeDifference).format('H:mm')}`;
 
-		timer = `${duration.get("hours").toString().padStart(2, "0")} : 
-			${duration.get("minutes").toString().padStart(2, "0")}`;
 	} else if (table.nextReservation) {
 		const reservationTime = moment(table.nextReservation.reservationDateTime);
-
-		timer = `${reservationTime.hours()} : ${reservationTime.minutes()}`;
+		timer = `${reservationTime.utc().format('HH:mm')}`;
 	}
 
 	return (
-		<StyledLink to={`table/${table.id}`} table={table}>
-			<span>Table {table.id}</span>
-			{(table.currentOrder || table.nextReservation) && <span>{timer}</span>}
-		</StyledLink>
+		<TableLink to={`table/${table.id}/${table.nextReservation?.id}`}>
+		<div className="container">
+			<div				
+				className="table-container table-container-left"
+			>{table.id}</div>
+			<StateTable table={table} className="table-container table-container-icon">
+				{(table.currentOrder) && <ListAlt />}
+				{(table.nextReservation) && <EventBusy />}
+				{!(table.nextReservation) && !(table.currentOrder) && <Add />}
+				
+			</StateTable>
+			<div className="table-container table-container-time">
+				{(table.nextReservation) && <StyleP>Booking at <br></br> {timer} hr</StyleP>}
+				{(table.currentOrder) && <StyleP>Duration <br></br>{timer} hr</StyleP>}
+				{!(table.nextReservation) && !(table.currentOrder) && 
+					<StyleP className="available">Available</StyleP>}
+			</div>
+			<StateTable table={table} className="table-container table-container-right">
+				{(table.nextReservation) && <StyleP>Customer name: {table.nextReservation.customerName}</StyleP>}				
+			</StateTable>
+		</div>
+		</TableLink>
 	);
-}
+} 
 
-const StyledLink = styled(Link)`
-	width: 30%;
-	height: 10vh;
-	margin: 0 1% 3vh;
+const StyleP = styled.p`
+	font-family: 'Poppins';
+	font-size: 13px;
+`
+const StateTable = styled.div`
 	background-color: ${props => {
 		if (props.table.currentOrder) {
-			return props.theme.color3;
+			return props.theme.with_order;
 		}
 		if (props.table.nextReservation) {
-			return props.theme.color5;
+			return props.theme.with_reservation;
 		}
-		return props.theme.color4;
+		return props.theme.available;
 	}};
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
+`;
+
+const TableLink = styled(Link)`
 	text-decoration: none;
-
-	@media (min-width: ${props => props.theme.md}) {
-		width: 25%;
-		height: 7vh;
-		font-size: 1.2rem;
-	}
-
-	@media (min-width: ${props => props.theme.lg}) {
-		width: 13%;
-		height: 8vh;
-	}
-
-	@media (min-width: ${props => props.theme.xl}) {
-		width: 10%;
-		height: 7vh;
-	}
-
 	&:hover {
-		border: 1px solid black;
+		color: green;
 		cursor: pointer;
 	}
-
-	span {
-		font-weight: 700;
-		color: ${props =>
-			props.table.currentOrder ? props.theme.color4 : props.theme.color1};
-	}
+	color: black;
 `;

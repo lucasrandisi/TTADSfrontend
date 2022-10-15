@@ -1,0 +1,63 @@
+.table-name{
+    margin: 15px;
+    text-align: left !important;
+}
+
+.card-common-table{
+    width: 30%;
+    height: 80px;
+    margin-bottom: 20px;
+}
+.card-table{
+    padding: 0px !important;
+}
+
+.table-container{
+    height: 70px;
+    display: inline;
+    float:left;
+    margin-bottom: 20px;
+}
+
+.table-container-left{
+    background-color: #212121;
+    color: white;
+    width: 50px;
+    text-align: center;
+    padding-top: 20px;
+    font-weight: 600;
+    font-family: 'Franklin Gothic Medium';
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-size: 30px;
+    box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+}
+
+.table-container-right{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;    
+    width: 300px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+}
+
+.table-container-icon{
+    padding-top: 20px;
+    width: 40px;
+    text-align: center;
+    box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+}
+
+.table-container-time{
+    padding-top: 17px;
+    width: 100px;
+    text-align: center;
+    background-color: #F5EFE6;
+    box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+}
+
+.available{
+    padding-top: 8px;
+}

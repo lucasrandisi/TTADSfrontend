@@ -3,35 +3,34 @@ import styled from "styled-components";
 import Table from "./Table";
 
 export default function TableGroup(props) {
-	const { size, tables } = props;
+	const { size, tables, time } = props;
 
 	return (
 		<>
-			<Header>
-				<span>{size} Asientos</span>
-			</Header>
+			<HeaderTable>
+				<span>Tables with <b>{size}</b> seats</span>
+			</HeaderTable>
 			<TablesGroupRow>
 				{tables.map(table => (
-					<Table key={table.id} table={table} />
+					<Table 
+						key={table.id} 
+						table={table}
+						time={time}
+					/>
 				))}
 			</TablesGroupRow>
 		</>
 	);
 }
 
-const Header = styled.div`
-	height: 10vh;
-	background-color: ${props => props.theme.color1};
+const HeaderTable = styled.div`
+	height: 5vh;
+	background-color: ${props => props.theme.header_table};
 	color: white;
-	font-weight: 700;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	@media (min-width: ${props => props.theme.md}) {
-		height: 7vh;
-		font-size: 1.2rem;
-	}
+	border: 4px solid ${props => props.theme.header_border_table};
 `;
 
 const TablesGroupRow = styled.div`

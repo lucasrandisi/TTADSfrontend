@@ -1,17 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
 
-import { GET_TABLE_CURRENT_ORDER } from "../queries/tables.query";
+import { GET_TABLES, GET_TABLE_CURRENT_ORDER } from "../queries/tables.query";
 import OrderPage from "../../order/OrderPage";
 import Button from "../../common/Button";
 
 const CREATE_ORDER = gql`
-	mutation($tableId: ID) {
-		createOrder(tableId: $tableId) {
+	mutation($tableId: ID, $resId: ID) {
+		createOrder(tableId: $tableId, resId: $resId) {
 			id
 			table {
 				id
@@ -21,20 +21,25 @@ const CREATE_ORDER = gql`
 `;
 
 const TableDetails: React.FC = () => {
-	const { tableId } = useParams();
+	const { tableId, resId } = useParams();
 
 	const [createOrder] = useMutation(CREATE_ORDER, {
-		refetchQueries: [{ query: GET_TABLE_CURRENT_ORDER, variables: { tableId } }],
+		refetchQueries: [
+			{ query: GET_TABLE_CURRENT_ORDER, variables: { tableId } },
+			{ query: GET_TABLES }
+		],
 	});
 
 	const { data, loading, error } = useQuery(GET_TABLE_CURRENT_ORDER, {
 		variables: { tableId },
 	});
 
+	const [reservations, setReservations] = useState(false);
+
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>ERROR: {error.message}</p>;
 
-	const { order } = data.table;
+	let { order } = data.table;
 
 	return (
 		<>
@@ -46,15 +51,22 @@ const TableDetails: React.FC = () => {
 				</div>
 			</Header>
 
-			{!order && (
-				<Button
-					onClick={() => createOrder({ variables: { tableId } })}
-					icon={<FontAwesomeIcon icon={faPlus} />}>
-					Nueva Orden
-				</Button>
-			)}
+			{!order && !reservations && (
+				<>
+					<Button
+						onClick={() => createOrder({ variables: { tableId, resId } })}
+						icon={<FontAwesomeIcon icon={faPlus} />}>
+						Nueva Orden
+					</Button>
 
-			{order && <OrderPage orderId={order.id} />}
+					<Button
+						onClick={() => setReservations(true)}
+						icon={<FontAwesomeIcon icon={faPlus} />}>
+						Ver reservas de hoy
+					</Button>
+				</>
+			)}
+			{order && <OrderPage orderId={order.id} tableId={tableId}/>}
 		</>
 	);
 };

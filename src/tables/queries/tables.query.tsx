@@ -9,7 +9,9 @@ export const GET_TABLES = gql`
 				createdAt
 			}
 			nextReservation {
+				id
 				reservationDateTime
+				customerName
 			}
 		}
 	}
@@ -29,3 +31,9 @@ export const GET_TABLE_CURRENT_ORDER = gql`
 		}
 	}
 `;
+
+export const MAX_TABLE = gql`
+	query {
+		max_table
+	}
+`
