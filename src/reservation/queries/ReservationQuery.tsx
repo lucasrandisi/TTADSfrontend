@@ -49,6 +49,7 @@ export const CREATE_RESERVATION = gql`
 		$email: String
 		$partySize: Int!
 		$reservationDateTime: DateTime!
+		$tableId: ID
 	) {
 		createReservation(
 			reservation: {
@@ -57,6 +58,7 @@ export const CREATE_RESERVATION = gql`
 				email: $email
 				partySize: $partySize
 				reservationDateTime: $reservationDateTime
+				tableId: $tableId
 			}
 		) {
 			id
@@ -95,12 +97,25 @@ export const GET_RESERVATIONS_TABLES = gql`
 `;
 
 export const GET_RESERVATIONS_BY_DATE = gql`
-	query($reservationDate: DateTime!, $size: Int!) {
-		reservationsByDate(reservationDate: $reservationDate, size: $size){
+	query($reservationDate: DateTime!, $size: Int!, $reservationTime: String) {
+		reservationsByDate(
+				reservationDate: $reservationDate, 
+				size: $size,
+				reservationTime: $reservationTime
+			){
 			reservationDateTime
 			table {
 				id
 			}
+		}
+	}
+`;
+
+export const GET_AVAILABLE_TABLES = gql`
+	query($date: DateTime, $size: Int){
+		tablesAvailableByDateSize(date: $date, size: $size){
+			time
+    		tableId
 		}
 	}
 `;

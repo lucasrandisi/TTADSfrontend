@@ -39,14 +39,11 @@ export default function Table(props) {
 				
 			</StateTable>
 			<div className="table-container table-container-time">
-				{(table.nextReservation) && <StyleP>Booking at <br></br> {timer} hr</StyleP>}
-				{(table.currentOrder) && <StyleP>Duration <br></br>{timer} hr</StyleP>}
+				{(table.nextReservation) && <StyleP>Booking at <br></br> {timer} hrs</StyleP>}
+				{(table.currentOrder) && <StyleP>Duration <br></br>{timer} hrs</StyleP>}
 				{!(table.nextReservation) && !(table.currentOrder) && 
 					<StyleP className="available">Available</StyleP>}
 			</div>
-			<StateTable table={table} className="table-container table-container-right">
-				{(table.nextReservation) && <StyleP>Customer name: {table.nextReservation.customerName}</StyleP>}				
-			</StateTable>
 		</div>
 		</TableLink>
 	);

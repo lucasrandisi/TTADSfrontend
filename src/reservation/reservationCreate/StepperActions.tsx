@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
 
 export default function StepperActions(props) {
 	const classes = useStyles();
-	const { step, setStep, isSubmitting, isLastStep } = props;
+	const { step, setStep, isSubmitting, isLastStep, disable, setDisable } = props;
 	const history = useHistory();
 
 	const setCurrentStep = (step) => {
@@ -20,6 +20,7 @@ export default function StepperActions(props) {
 		} else {
 			setStep((s: number) => s - 1)
 		}
+		setDisable(false)
 	};
 
 	return (
@@ -34,7 +35,7 @@ export default function StepperActions(props) {
 			<Grid item>
 				<Button
 					startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-					disabled={isSubmitting}
+					disabled={disable || isSubmitting}
 					variant="contained"
 					color="primary"
 					type="submit">

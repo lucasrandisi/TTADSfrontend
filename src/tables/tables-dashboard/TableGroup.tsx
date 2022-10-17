@@ -7,7 +7,7 @@ export default function TableGroup(props) {
 
 	return (
 		<>
-			<HeaderTable>
+			<HeaderTable className="table-background">
 				<span>Tables with <b>{size}</b> seats</span>
 			</HeaderTable>
 			<TablesGroupRow>
@@ -25,12 +25,10 @@ export default function TableGroup(props) {
 
 const HeaderTable = styled.div`
 	height: 5vh;
-	background-color: ${props => props.theme.header_table};
 	color: white;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 4px solid ${props => props.theme.header_border_table};
 `;
 
 const TablesGroupRow = styled.div`

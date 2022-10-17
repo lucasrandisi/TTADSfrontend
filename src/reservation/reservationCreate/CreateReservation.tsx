@@ -78,9 +78,6 @@ export default function CreateReservation(props) {
 	} : editReservation;
 
 	const handleSubmit = async values => {
-		values.reservationDateTime
-			.setHours(values.timeReservation.substring(0, 2), 0, 0);
-
 		if (editReservation){
 			updateReservation({ 
 				variables: {id: editReservation.id, ...values} 
@@ -88,7 +85,6 @@ export default function CreateReservation(props) {
 		} else {
 			createReservation(values);
 		}
-		await new Promise(r => setTimeout(r, 3000));
 	};
 
 	

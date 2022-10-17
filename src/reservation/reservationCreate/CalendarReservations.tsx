@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useQuery } from "@apollo/client";
 import { addMonths } from "date-fns";
 
 import DayPicker from "react-day-picker";
@@ -8,7 +7,6 @@ import "react-day-picker/lib/style.css";
 
 import { Grid } from "@material-ui/core";
 
-import { GET_RESERVATIONS_TABLES } from "../queries/ReservationQuery";
 import "moment/locale/es";
 
 const modifiersStyles = {
@@ -32,19 +30,6 @@ export default function CalendarReservations({
 }) {
 	const [invalid, setInvalid] = useState(false);
 
-	const { loading, error, data } = useQuery(GET_RESERVATIONS_TABLES, {
-		variables: { size: partySize },
-	});
-
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error! {error.message}</p>;
-
-	const reservedDates = data.reservationsBySize;
-
-	if (!reservedDates.length) {
-		return <p>There are no tables available because the size is too large</p>;
-	}
-
 	const handleDayChange = (value, modifiers) => {
 		if (modifiers.disabled) {
 			setInvalid(true);
@@ -53,12 +38,8 @@ export default function CalendarReservations({
 			setReservationDate(value);
 		}
 	};
-
-	const reserved = reservedDates.map(r => new Date(r));
-
 	const modifiers = {
-		disabled: [...reserved, { daysOfWeek: [1,2,3] }, { before: new Date() }],
-		reserved,
+		disabled: [{ daysOfWeek: [6,0] }, { before: new Date() }],
 		selected: reservationDate,
 	};
 
@@ -79,7 +60,7 @@ export default function CalendarReservations({
 				/>
 			</Grid>
 			<p>
-				{!reservationDate && !invalid && "Please select a day 👻"}
+				{!reservationDate && !invalid && "Please select a day"}
 				{invalid && "Invalid date!"}
 			</p>
 		</>
