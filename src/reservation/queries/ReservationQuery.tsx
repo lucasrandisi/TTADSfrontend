@@ -90,27 +90,6 @@ export const UPDATE_RESERVATION = gql`
 	}
 `;
 
-export const GET_RESERVATIONS_TABLES = gql`
-	query($size: Int!) {
-		reservationsBySize(size: $size)
-	}
-`;
-
-export const GET_RESERVATIONS_BY_DATE = gql`
-	query($reservationDate: DateTime!, $size: Int!, $reservationTime: String) {
-		reservationsByDate(
-				reservationDate: $reservationDate, 
-				size: $size,
-				reservationTime: $reservationTime
-			){
-			reservationDateTime
-			table {
-				id
-			}
-		}
-	}
-`;
-
 export const GET_AVAILABLE_TABLES = gql`
 	query($date: DateTime, $size: Int){
 		tablesAvailableByDateSize(date: $date, size: $size){

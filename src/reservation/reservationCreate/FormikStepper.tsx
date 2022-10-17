@@ -36,7 +36,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 
 	const [timeReservation, setTimeReservation] = React.useState<String | undefined>(
 		initialValues.reservationDateTime ? 
-      getDate(initialValues.reservationDateTime).format("HH:mm") : initialTime
+      	getDate(initialValues.reservationDateTime).format("HH:mm") : initialTime
 	);
 	const [completed, setCompleted] = useState(false);
 
@@ -58,11 +58,17 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 			validationSchema={currentChild.props.validationSchema}
 			onSubmit={async (values, helpers) => {
 				if (isLastStep) {
+
+					let setTime = availableTable
+					if(!availableTable){					
+						setTime = initialValues.table.id;
+					}
+
 					await onSubmit({ 
 						...values, 
 						reservationDateTime: getSubsDate(unionDateTime(reservationDate, timeReservation)),
-            			tableId: availableTable
-					}, helpers);
+						tableId: setTime
+					}, helpers)
 					setCompleted(true);
 				} else setStep(s => s + 1);
 			}}>
@@ -103,7 +109,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 							/>
 						</div>
 					)}
-					{completed && <ButtonReset handleReset={handleReset} resetForm={resetForm} />}
+					{completed && !editMode && <ButtonReset handleReset={handleReset} resetForm={resetForm} />}
 				</Form>
 			)}
 		</Formik>

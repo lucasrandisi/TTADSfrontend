@@ -33,10 +33,9 @@ export default function TimeReservation(
     const setTableId = () => {
         try {
             const booking_table = available_times.filter((t) => t.time === timeReservation)[0];
-            console.log(booking_table)
             return booking_table.tableId;
         } catch (error) {
-            return error.message;
+            return "";
         }
 
     }
