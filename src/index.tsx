@@ -12,7 +12,7 @@ import * as serviceWorker from "./serviceWorker";
 import Pages from "./Router";
 import "./styles/app.css";
 import "react-toastify/dist/ReactToastify.css";
-import { getToken } from "./utils/token";
+import { getToken, decodeToken } from "./utils/token";
 import AuthContext from "./context/authContext";
 
 import Auth from "./auth";
@@ -31,7 +31,7 @@ function App() {
 		if (!token) {
 			setAuth("");
 		} else {
-			setAuth(token);
+			setAuth(decodeToken(token));
 		}
 	}, []);
 
@@ -49,6 +49,8 @@ function App() {
 		}),
 		[auth]
 	);
+
+	if (auth === "") return null;
 
 	return (
 		<ApolloProvider client={client}>
