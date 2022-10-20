@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import "./LoginForm.scss";
 import { OutlinedInput } from "@material-ui/core";
