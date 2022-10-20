@@ -35,7 +35,8 @@ export default function Pages() {
 						<Switch>
 							<Suspense fallback={<div>Loading...</div>}>
 								<Route exact path="/" component={TablesDashboard} />
-								<Route path="/table/:tableId" component={TableDetails} />
+								<Route exact path="/tables" component={TablesDashboard} />
+								<Route path="/table/:tableId/:resId" component={TableDetails} />
 								<Route path="/orders" component={HistoryPage} />
 								<Route path="/menu" component={Menu} />
 								<Route path="/reservations" component={ReservationsPage} />

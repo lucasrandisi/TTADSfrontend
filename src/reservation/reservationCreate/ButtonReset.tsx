@@ -11,7 +11,7 @@ export default function ButtonReset({ handleReset, resetForm }) {
 	const classes = useStyles();
 	return (
 		<div>
-			<p>The reservation was created with suceess</p>
+			<p>The reservation was saved with suceess</p>
 			<Grid container spacing={2} className={classes.gridReset}>
 				<Grid item>
 					<Button onClick={() => handleReset(resetForm)} variant="contained">

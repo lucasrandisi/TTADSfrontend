@@ -14,13 +14,16 @@ export const GET_RESERVATIONS = gql`
 				id
 				size
 			}
+			order{
+				paidAt
+			}
 		}
 	}
 `;
 
-export const DELETE_RESERVATION = gql`
-	mutation deleteReservation($id: ID!) {
-		deleteReservation(id: $id)
+export const CANCEL_RESERVATION = gql`
+	mutation cancelReservation($id: ID!) {
+		cancelReservation(id: $id)
 	}
 `;
 
@@ -49,8 +52,34 @@ export const CREATE_RESERVATION = gql`
 		$email: String
 		$partySize: Int!
 		$reservationDateTime: DateTime!
+		$tableId: ID
 	) {
 		createReservation(
+			reservation: {
+				customerName: $customerName
+				phone: $phone
+				email: $email
+				partySize: $partySize
+				reservationDateTime: $reservationDateTime
+				tableId: $tableId
+			}
+		) {
+			id
+		}
+	}
+`;
+
+export const UPDATE_RESERVATION = gql`
+	mutation updateReservation(
+		$id: ID!
+		$customerName: String!
+		$phone: String
+		$email: String
+		$partySize: Int!
+		$reservationDateTime: DateTime!
+	) {
+		updateReservation(
+			id: $id,
 			reservation: {
 				customerName: $customerName
 				phone: $phone
@@ -64,8 +93,11 @@ export const CREATE_RESERVATION = gql`
 	}
 `;
 
-export const GET_RESERVATIONS_TABLES = gql`
-	query($size: Int!) {
-		reservationsBySize(size: $size)
+export const GET_AVAILABLE_TABLES = gql`
+	query($date: DateTime, $size: Int){
+		tablesAvailableByDateSize(date: $date, size: $size){
+			time
+    		tableId
+		}
 	}
 `;

@@ -35,3 +35,23 @@ export const CLOSE_ORDER = gql`
 		closeOrder(id: $id)
 	}
 `;
+
+export const DELETE_ORDER = gql`
+	mutation deleteOrder($id: [ID!]) {
+		deleteOrder(id: $id)
+}
+`;
+
+export const GET_ORDERS = gql`
+	query {
+		orders {
+			id
+			createdAt
+			status
+			table{
+				id
+				size
+			}
+		}
+	}
+`;

@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeContext } from "styled-components";
 import { useQuery } from "@apollo/client";
-
+import { Button } from "@material-ui/core";
 import GET_CATEGORIES_AND_ITEMS from "./queries/categories-and-items.query";
 import CategoriesList from "./CategoriesList";
 import ItemsList from "./ItemsList";
+import ItemForm from "./itemForm";
 
 const useStyles = makeStyles({
 	main: {
@@ -53,6 +54,18 @@ const Menu: React.FC = () => {
 	const [selectedCategoryId, setSelectedCategoryId] = useState("0");
 	const { loading, error, data } = useQuery(GET_CATEGORIES_AND_ITEMS);
 
+	const [childrenModal, setChildrenModal] = useState<any>(null);
+
+	const handleModal = () => {
+		setChildrenModal(
+			<ItemForm 
+				title="New dish"
+				setChildrenModal={setChildrenModal}
+				isEdit={false}
+			/>
+		)
+	}
+
 	const theme = useContext(ThemeContext);
 	const classes = useStyles(theme);
 
@@ -72,8 +85,19 @@ const Menu: React.FC = () => {
 
 	return (
 		<div className={classes.main}>
-			<h1 className={classes.mainTitle}>Menu</h1>
+			<h1 className={classes.mainTitle}>
+				Menu &nbsp;
+				<Button 
+					type="submit" 
+					variant="contained" 
+					color="primary" 
+					onClick={() => handleModal() 
+				}>new item</Button>
+			</h1>
 
+
+			{childrenModal}
+			
 			<div className={classes.content}>
 				<div className={classes.categoryListSection}>
 					<h2 className={classes.sectionTitle}>Categories</h2>
@@ -86,7 +110,10 @@ const Menu: React.FC = () => {
 
 				<div className={classes.itemsTableSection}>
 					<h2 className={classes.sectionTitle}>Dishes</h2>
-					<ItemsList selectedCategoryId={selectedCategoryId} items={items} />
+					<ItemsList 
+						selectedCategoryId={selectedCategoryId} 
+						items={items}
+					/>
 				</div>
 			</div>
 		</div>

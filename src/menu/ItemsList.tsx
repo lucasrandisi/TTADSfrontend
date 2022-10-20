@@ -1,17 +1,22 @@
-import IconButton from "@material-ui/core/IconButton";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import REMOVE_CATEGORY_FROM_ITEM from "./queries/remove-category-from-item.mutation";
+import ItemForm from "./itemForm";
+
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import DeleteIcon from '@material-ui/icons/Delete';
 import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
 import Tooltip from "@material-ui/core/Tooltip";
-import React from "react";
-import { useMutation } from "@apollo/client";
-
-import REMOVE_CATEGORY_FROM_ITEM from "./queries/remove-category-from-item.mutation";
+import BasicModal from "utils/basicModal";
+import { DELETE_ITEM } from "./queries/item";
+import GET_CATEGORIES_AND_ITEMS from "./queries/categories-and-items.query";
 
 const useStyles = makeStyles({
 	tableRow: {
@@ -89,6 +94,44 @@ export default function ItemsList({ selectedCategoryId, items }) {
 		}
 	}
 
+	const [deleteItem] = useMutation(DELETE_ITEM, {
+		refetchQueries: [{ query: GET_CATEGORIES_AND_ITEMS }],
+	});
+
+	const handleDelete = (id) => {
+		console.log(id)
+		deleteItem({ variables: { id:id } })
+	}
+
+	const [childrenModal, setChildrenModal] = useState<any>(null);
+
+	const handleModal = (type, item=null) => {
+		switch (type) {
+			case "edit":
+				setChildrenModal(
+					<ItemForm 
+						setChildrenModal={setChildrenModal}
+						values={item}
+						isEdit={true}
+						title="Editing dishes"
+					/>
+				)
+				break;
+			case "delete":
+				setChildrenModal(
+					<BasicModal
+						setChildrenModal={setChildrenModal}
+						title="Delete item from menu"
+						buttonText="Delete"
+						handleAction={() => handleDelete(item)}
+					>
+						Si acepta se procederá a eliminar el item del menú. ¿Está seguro?
+					</BasicModal>
+				)
+				break;
+		}
+	}
+
 	if (!items.length) return <div>No hay platos.</div>;
 
 	return (
@@ -102,6 +145,10 @@ export default function ItemsList({ selectedCategoryId, items }) {
 					<TableCell
 						className={`${classes.tableCell} ${classes.header} ${classes.descCell}`}>
 						Description
+					</TableCell>
+					<TableCell
+						className={`${classes.tableCell} ${classes.header} ${classes.descCell}`}>
+						Categoria
 					</TableCell>
 					<TableCell
 						className={`${classes.tableCell} ${classes.header} ${classes.shortCell}`}>
@@ -118,7 +165,7 @@ export default function ItemsList({ selectedCategoryId, items }) {
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{items.map(item => (
+				{items.map((item, i) => (
 					<TableRow key={item.id} className={classes.tableRow}>
 						<TableCell
 							padding="none"
@@ -132,6 +179,11 @@ export default function ItemsList({ selectedCategoryId, items }) {
 						</TableCell>
 						<TableCell
 							padding="none"
+							className={`${classes.tableCell} ${classes.descCell}`}>
+							{item.categories.map(i => i.desc).join()}
+						</TableCell>
+						<TableCell
+							padding="none"
 							className={`${classes.tableCell} ${classes.shortCell}`}>
 							{item.servings}
 						</TableCell>
@@ -142,11 +194,22 @@ export default function ItemsList({ selectedCategoryId, items }) {
 						</TableCell>
 						<TableCell className={`${classes.tableCell} ${classes.actionsCell}`}>
 							{selectedCategoryId === "0" ? (
-								<Tooltip title="Edit">
-									<IconButton className={classes.button} aria-label="edit">
-										<EditIcon />
-									</IconButton>
-								</Tooltip>
+								<>
+									<Tooltip title="Edit">
+										<IconButton className={classes.button} aria-label="edit"
+											onClick={() => handleModal("edit", item)}
+										>
+											<EditIcon />
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Delete">
+										<IconButton className={classes.button} aria-label="delete"
+											onClick={() => handleModal("delete", item.id)}
+										>
+											<DeleteIcon />
+										</IconButton>
+									</Tooltip>
+								</>
 							) : (
 								<Tooltip title="Remove from category">
 									<IconButton
@@ -161,6 +224,7 @@ export default function ItemsList({ selectedCategoryId, items }) {
 					</TableRow>
 				))}
 			</TableBody>
+			{childrenModal}
 		</Table>
 	);
 }

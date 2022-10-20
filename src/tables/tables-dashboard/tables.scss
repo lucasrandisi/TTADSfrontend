@@ -1,0 +1,92 @@
+.table-name{
+    margin: 15px;
+    text-align: left !important;
+}
+
+.card-common-table{
+    width: 30%;
+    height: 80px;
+    margin-bottom: 20px;
+}
+.card-table{
+    padding: 0px !important;
+}
+
+.table-container{
+    height: 70px;
+    display: inline;
+    float:left;
+    margin-bottom: 20px;
+}
+
+.table-container-left{
+    // background-color: #212121;
+    background-image: url("../madera-negra.jpg");
+    background-size: 400px;
+    background-repeat: repeat;
+    color: white;
+    width: 50px;
+    text-align: center;
+    padding-top: 20px;
+    font-weight: 600;
+    font-family: 'Franklin Gothic Medium';
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-size: 30px;
+    box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+}
+
+.table-container-right{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;    
+    width: 150px; //o 300
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+    background-color: #4d2804 !important;
+    background-image: url("../madera.jpg");
+    background-repeat: repeat;
+    background-size: 200px;
+}
+
+.table-container-icon{
+    padding-top: 20px;
+    width: 40px;
+    text-align: center;
+    border: 1px solid #432302;
+    box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+    color: #432302;
+}
+
+.table-container-time{
+    padding-top: 17px;
+    width: 100px;
+    text-align: center;
+    background-image: url("../madera-negra.jpg");
+    background-size: 400px;
+    background-repeat: repeat;
+    color: white;
+    border-top: 1px solid #432302;
+    border-bottom: 1px solid #432302;
+    box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+}
+
+.available{
+    padding-top: 8px;
+}
+
+.table-background{
+    background-image: url("../fondo-black.jpg");
+    background-repeat: repeat;
+}
+
+.reservation{
+    color:white;
+}
+
+.next-reservation{
+    color:white;
+    font-size: 12px;
+    font-weight: 200;
+}
