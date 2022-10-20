@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import {
 	makeStyles,
@@ -13,7 +13,7 @@ import { Field } from "formik";
 import { TextField } from "formik-material-ui";
 import * as Yup from "yup";
 import { FormikStep, FormikStepper } from "./FormikStepper";
-import { CREATE_RESERVATION, GET_RESERVATIONS, UPDATE_RESERVATION } from "../queries/ReservationQuery";
+import { CREATE_RESERVATION, GET_AVAILABLE_TABLES, GET_RESERVATIONS, UPDATE_RESERVATION } from "../queries/ReservationQuery";
 import "./booking.scss";
 import { MAX_TABLE } from "../../tables/queries/tables.query";
 import _ from "lodash";
@@ -38,14 +38,18 @@ const validationPersonalInf = Yup.object().shape({
 });
 
 export default function CreateReservation(props) {
+	const [currentRest, setCurrentRest] = useState({})
 	const { loading, error, data } = useQuery(MAX_TABLE);
 
 	const [createNewReservation] = useMutation(CREATE_RESERVATION, {
-		refetchQueries: [{ query: GET_RESERVATIONS }],
+		refetchQueries: [
+			{ query: GET_RESERVATIONS },
+			{ query: GET_AVAILABLE_TABLES, variables: currentRest }
+		],
 	});
 
 	const [updateReservation] = useMutation(UPDATE_RESERVATION, {
-		refetchQueries: [{ query: GET_RESERVATIONS }],
+		refetchQueries: [{ query: GET_RESERVATIONS }, { query: GET_AVAILABLE_TABLES }],
 	});
 
 	const classes = useStyles();
@@ -64,9 +68,14 @@ export default function CreateReservation(props) {
 	}
 
 	const createReservation = newReservation => {
-		createNewReservation({ variables: newReservation });
+		setCurrentRest({
+			size: newReservation.partySize, 
+			date:newReservation.reservationDateTime
+		});
+		createNewReservation({ 
+			variables: newReservation,
+		});
 	};
-
 
 	const { editReservation } = props;
 

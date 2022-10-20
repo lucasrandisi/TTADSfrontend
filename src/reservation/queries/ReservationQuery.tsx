@@ -14,13 +14,16 @@ export const GET_RESERVATIONS = gql`
 				id
 				size
 			}
+			order{
+				paidAt
+			}
 		}
 	}
 `;
 
-export const DELETE_RESERVATION = gql`
-	mutation deleteReservation($id: ID!) {
-		deleteReservation(id: $id)
+export const CANCEL_RESERVATION = gql`
+	mutation cancelReservation($id: ID!) {
+		cancelReservation(id: $id)
 	}
 `;
 

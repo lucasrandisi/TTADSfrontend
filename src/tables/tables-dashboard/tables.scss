@@ -20,7 +20,10 @@
 }
 
 .table-container-left{
-    background-color: #212121;
+    // background-color: #212121;
+    background-image: url("../madera-negra.jpg");
+    background-size: 400px;
+    background-repeat: repeat;
     color: white;
     width: 50px;
     text-align: center;
@@ -37,27 +40,53 @@
     padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;    
-    width: 300px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    width: 150px; //o 300
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
     box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+    background-color: #4d2804 !important;
+    background-image: url("../madera.jpg");
+    background-repeat: repeat;
+    background-size: 200px;
 }
 
 .table-container-icon{
     padding-top: 20px;
     width: 40px;
     text-align: center;
+    border: 1px solid #432302;
     box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
+    color: #432302;
 }
 
 .table-container-time{
     padding-top: 17px;
     width: 100px;
     text-align: center;
-    background-color: #F5EFE6;
+    background-image: url("../madera-negra.jpg");
+    background-size: 400px;
+    background-repeat: repeat;
+    color: white;
+    border-top: 1px solid #432302;
+    border-bottom: 1px solid #432302;
     box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
 }
 
 .available{
     padding-top: 8px;
+}
+
+.table-background{
+    background-image: url("../fondo-black.jpg");
+    background-repeat: repeat;
+}
+
+.reservation{
+    color:white;
+}
+
+.next-reservation{
+    color:white;
+    font-size: 12px;
+    font-weight: 200;
 }

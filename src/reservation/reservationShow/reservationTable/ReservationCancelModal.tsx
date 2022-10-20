@@ -5,14 +5,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { DELETE_RESERVATION, GET_RESERVATIONS } from "../../queries/ReservationQuery";
+import { CANCEL_RESERVATION, GET_RESERVATIONS } from "../../queries/ReservationQuery";
 import { useMutation } from "@apollo/client";
+import "./reservationCancel.scss";
 
 export default function ReservationCancelModal({idReservation, setChildrenModal}) {
 
     const [state, setState] = useState(true);
 
-    const [deleteReservation] = useMutation(DELETE_RESERVATION, {
+    const [cancelReservation] = useMutation(CANCEL_RESERVATION, {
 		refetchQueries: [{ query: GET_RESERVATIONS }],
 	});
 
@@ -22,7 +23,7 @@ export default function ReservationCancelModal({idReservation, setChildrenModal}
     };
 
     const handleCancel = () => {
-		deleteReservation({ variables: { id: idReservation } });
+		cancelReservation({ variables: { id: idReservation } });
 		handleClose();
     }
 

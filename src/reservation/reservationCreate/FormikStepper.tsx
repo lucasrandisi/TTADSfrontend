@@ -6,7 +6,8 @@ import StepperActions from "./StepperActions";
 import ButtonReset from "./ButtonReset";
 import StepperHeader from "./StepperHeader";
 import TimeReservation from "./TimeReservation";
-import { getActualDate, getDate, getSubsDate, unionDateTime } from "utils/util";
+import { unionDateTime } from "utils/util";
+import moment from "moment";
 
 export interface FormikStepProps
 	extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
@@ -30,13 +31,13 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 	const editMode = initialValues.reservationDateTime ? true : false;
 	const [reservationDate, setReservationDate] = React.useState<Date | undefined>(
 		initialValues.reservationDateTime ? 
-		getActualDate(initialValues.reservationDateTime) : getActualDate(new Date())
+		new Date(initialValues.reservationDateTime) : new Date()
 	);
   	const initialTime = "08:00";
 
 	const [timeReservation, setTimeReservation] = React.useState<String | undefined>(
 		initialValues.reservationDateTime ? 
-      	getDate(initialValues.reservationDateTime).format("HH:mm") : initialTime
+		moment(initialValues.reservationDateTime).format("HH:mm") : initialTime
 	);
 	const [completed, setCompleted] = useState(false);
 
@@ -66,7 +67,7 @@ export function FormikStepper({ children, ...props }: FormikConfig<FormikValues>
 
 					await onSubmit({ 
 						...values, 
-						reservationDateTime: getSubsDate(unionDateTime(reservationDate, timeReservation)),
+						reservationDateTime: unionDateTime(reservationDate, timeReservation),
 						tableId: setTime
 					}, helpers)
 					setCompleted(true);

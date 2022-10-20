@@ -59,6 +59,8 @@ export default function OrderPage({ orderId, tableId }) {
 
 const OrderMenu = styled.div`
 	display: grid;
-	grid-template-columns: 1fr 2fr;
-	grid-gap: 10px;
+	grid-template-columns: 2fr 1fr;
+	grid-gap: 30px;
+	margin-top: 30px;
+	
 `;

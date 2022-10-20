@@ -23,27 +23,39 @@ export default function Table(props) {
 
 	} else if (table.nextReservation) {
 		const reservationTime = moment(table.nextReservation.reservationDateTime);
-		timer = `${reservationTime.utc().format('HH:mm')}`;
+		timer = `${reservationTime.format('HH:mm')}`;
 	}
+
+	const hasOrder = table.currentOrder;
+	const hasBooking = table.nextReservation;
+	const hasAny = !hasBooking && !hasOrder
+	const reservedTime = moment(table.nextReservation?.reservationDateTime).format('HH:mm');
 
 	return (
 		<TableLink to={`table/${table.id}/${table.nextReservation?.id}`}>
 		<div className="container">
-			<div				
-				className="table-container table-container-left"
+			<div className="table-container table-container-left"
 			>{table.id}</div>
 			<StateTable table={table} className="table-container table-container-icon">
-				{(table.currentOrder) && <ListAlt />}
-				{(table.nextReservation) && <EventBusy />}
-				{!(table.nextReservation) && !(table.currentOrder) && <Add />}
+				{hasOrder && <ListAlt />}
+				{hasBooking  && !hasOrder && <EventBusy />}				
+				{hasAny && <Add />}
 				
 			</StateTable>
 			<div className="table-container table-container-time">
-				{(table.nextReservation) && <StyleP>Booking at <br></br> {timer} hrs</StyleP>}
-				{(table.currentOrder) && <StyleP>Duration <br></br>{timer} hrs</StyleP>}
-				{!(table.nextReservation) && !(table.currentOrder) && 
-					<StyleP className="available">Available</StyleP>}
+				{hasBooking && !hasOrder && <StyleP>Booking at <br></br> {timer} hrs</StyleP>}
+				{/* {(table.currentOrder) && <StyleP>Duration <br></br>{timer} hrs</StyleP>} */}
+				{hasAny && <StyleP className="available">Available</StyleP>}		
 			</div>
+			
+			<StateTable table={table} className="table-container table-container-right">
+				{hasBooking && hasOrder && 
+					<p className="next-reservation">
+						Have a reservation soon at {reservedTime} hs
+					</p>
+				}
+				{/* {(table.nextReservation) && <StyleP className="reservation">Customer name: {table.nextReservation.customerName}</StyleP>}				 */}
+			</StateTable>
 		</div>
 		</TableLink>
 	);

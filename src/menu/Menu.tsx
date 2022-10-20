@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeContext } from "styled-components";
 import { useQuery } from "@apollo/client";
-
+import { Button } from "@material-ui/core";
 import GET_CATEGORIES_AND_ITEMS from "./queries/categories-and-items.query";
 import CategoriesList from "./CategoriesList";
 import ItemsList from "./ItemsList";
@@ -85,9 +85,17 @@ const Menu: React.FC = () => {
 
 	return (
 		<div className={classes.main}>
-			<h1 className={classes.mainTitle}>Menu</h1>
+			<h1 className={classes.mainTitle}>
+				Menu &nbsp;
+				<Button 
+					type="submit" 
+					variant="contained" 
+					color="primary" 
+					onClick={() => handleModal() 
+				}>new item</Button>
+			</h1>
 
-			<button onClick={() => handleModal() }>new item</button>
+
 			{childrenModal}
 			
 			<div className={classes.content}>

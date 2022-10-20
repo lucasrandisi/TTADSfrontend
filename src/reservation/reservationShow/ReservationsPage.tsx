@@ -6,6 +6,7 @@ import { Grid, Container, Button } from "@material-ui/core";
 
 import ReservationTable from "./reservationTable/ReservationTable";
 import { GET_RESERVATIONS } from "../queries/ReservationQuery";
+import "../../styles/index.scss";
 
 export default function ReservationsPage() {
 	const { data, loading, error } = useQuery(GET_RESERVATIONS);
@@ -15,7 +16,7 @@ export default function ReservationsPage() {
 	return (
 		<>
 			<Container component="main" maxWidth="lg">
-				<h1>Reservations</h1>
+				<h1 className="main-title">Reservations</h1>
 
 				<Grid container spacing={3}>
 					<Header>
