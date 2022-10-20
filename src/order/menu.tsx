@@ -51,9 +51,9 @@ const Menu = ({ addToOrder }) => {
 			{!loading && !error && data && (
 				<MenuGrid>
 					{data.items.map(item => (
-						<button key={item.id} type="button" onClick={() => handleClickOpen(item)}>
+						<Item key={item.id} type="button" onClick={() => handleClickOpen(item)}>
 							{item.title}
-						</button>
+						</Item>
 					))}
 				</MenuGrid>
 			)}
@@ -86,5 +86,9 @@ const MenuGrid = styled.div`
 `;
 
 const Container = styled.div`
-	margin: 0 1.5rem;
+	margin-top: 10px;
+`;
+
+const Item = styled.button`
+	padding: 8px;
 `;

@@ -14,28 +14,25 @@ export default function ReservationsPage() {
 	if (error) return <p>ERROR: {error.message}</p>;
 
 	return (
-		<>
-			<Container component="main" maxWidth="lg">
-				<h1 className="main-title">Reservations</h1>
-
-				<Grid container spacing={3}>
-					<Header>
-						<StyledLink to="/reservation/new">
-							<Button type="submit" variant="contained" color="primary">
-								+ New
-							</Button>
-						</StyledLink>
-					</Header>
-
-					<ReservationTable reservations={data.reservations} />
-				</Grid>
-			</Container>
-		</>
+		<Container component="main" maxWidth="lg">
+			<Grid container spacing={3}>
+				<h1 className="main-title">
+					Reservations
+					<StyledLink to="/reservation/new">
+						<Button type="submit" variant="contained" color="primary">
+							+ New
+						</Button>
+					</StyledLink>
+				</h1>
+				<ReservationTable reservations={data.reservations} />
+			</Grid>
+		</Container>
 	);
 }
 
 const StyledLink = styled(Link)`
 	text-decoration: none;
+	margin-left: 20px;
 `;
 
 const Header = styled.div`
