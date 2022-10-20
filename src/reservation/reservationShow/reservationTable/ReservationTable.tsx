@@ -21,10 +21,10 @@ import ReservationTableRow from "./ReservationTableRow";
 import { TableToolbar } from "./TableToolbar";
 
 const columns = [
-	{ id: "id", label: "ID", sortable: false, width: 15 },
+	{ id: "id", label: "ID", sortable: true, width: 15 },
 	{ id: "state", label: "State", sortable: false, width: 20 },
 	{
-		id: "date",
+		id: "reservationDateTime",
 		label: "Date",
 		icon: <TodayOutlinedIcon fontSize="small" />,
 		sortable: true,

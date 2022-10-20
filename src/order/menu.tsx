@@ -3,6 +3,7 @@ import { useQuery, gql } from "@apollo/client";
 import styled from "styled-components";
 import { Button, Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import NumberInput from "../common/NumberIntput";
+import "./order.scss";
 
 const GET_ITEMS = gql`
 	query {
@@ -50,9 +51,9 @@ const Menu = ({ addToOrder }) => {
 			{!loading && !error && data && (
 				<MenuGrid>
 					{data.items.map(item => (
-						<button key={item.id} type="button" onClick={() => handleClickOpen(item)}>
+						<Item key={item.id} type="button" onClick={() => handleClickOpen(item)}>
 							{item.title}
-						</button>
+						</Item>
 					))}
 				</MenuGrid>
 			)}
@@ -79,11 +80,15 @@ export default Menu;
 const MenuGrid = styled.div`
 	padding: 5px;
 	display: grid;
-	grid-template-columns: repeat(8, 1fr);
-	column-gap: 5px;
-	row-gap: 5px;
+	grid-template-columns: repeat(3, 1fr);
+	column-gap: 8px;
+	row-gap: 8px;
 `;
 
 const Container = styled.div`
-	margin: 0 1.5rem;
+	margin-top: 10px;
+`;
+
+const Item = styled.button`
+	padding: 8px;
 `;

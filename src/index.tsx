@@ -1,4 +1,5 @@
-import React from "react";
+//@ts-nocheck
+import React, { useState, useEffect, useMemo } from "react";
 import ReactDOM from "react-dom";
 import {
 	ApolloClient,
@@ -6,10 +7,15 @@ import {
 	ApolloProvider,
 	InMemoryCache,
 } from "@apollo/client";
-
+import { ToastContainer } from "react-toastify";
 import * as serviceWorker from "./serviceWorker";
 import Pages from "./Router";
 import "./styles/app.css";
+import "react-toastify/dist/ReactToastify.css";
+import { getToken, decodeToken } from "./utils/token";
+import AuthContext from "./context/authContext";
+
+import Auth from "./auth";
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 	cache: new InMemoryCache(),
@@ -17,14 +23,61 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 	resolvers: {},
 });
 
-ReactDOM.render(
-	<ApolloProvider client={client}>
-		<div>
-			<Pages />
-		</div>
-	</ApolloProvider>,
-	document.getElementById("root")
-);
+function App() {
+	const [auth, setAuth] = useState("");
+
+	useEffect(() => {
+		const token = getToken();
+		if (!token) {
+			setAuth("");
+		} else {
+			setAuth(decodeToken(token));
+		}
+	}, []);
+
+	const logout = () => {};
+
+	const setUser = user => {
+		setAuth(user);
+	};
+
+	const authData = useMemo(
+		() => ({
+			auth,
+			logout,
+			setUser,
+		}),
+		[auth]
+	);
+
+	if (auth === "") return null;
+
+	return (
+		<ApolloProvider client={client}>
+			<AuthContext.Provider value={authData}>
+				{!auth ? (
+					<Auth />
+				) : (
+					<Pages />
+				)}
+				<ToastContainer
+					position="top-right"
+					autoClose={5000}
+					hideProgressBar
+					newestOnTop
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+					theme="colored"
+				/>
+			</AuthContext.Provider>
+		</ApolloProvider>
+	);
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

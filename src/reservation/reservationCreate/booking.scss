@@ -1,0 +1,48 @@
+@import "../../styles/index.scss";
+
+.container-booking-time{
+    padding: 10px;
+}
+
+.individual-booking-time{
+    background-color: #f2f8fb;
+    margin-bottom: 20px;
+    margin-right: 25px;
+    padding-left: 10px;
+    font-size: 10px;
+    width: 140px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.MuiRadio-colorSecondary.Mui-checked {
+    color: gray !important;
+}
+
+.time-picker{
+    width: 300px;
+    margin-left: 250px;
+    margin-top: 20px;
+    margin-bottom: 220px;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.react-time-picker__wrapper {
+    border: 1px solid #c3c1c1 !important;
+    border-radius: 5px !important;
+}
+
+.react-time-picker__button {
+    border: 1px solid #c3c1c1 !important;
+}
+
+.MuiFormGroup-root{
+    display: block !important;
+}
+
+.booking-time{
+    width: 200px;
+    margin-left: 250px;
+}

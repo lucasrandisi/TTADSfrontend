@@ -1,0 +1,21 @@
+@import "./colors.scss";
+
+.btn-submit {
+    width: 100%;
+    background-color: $action;
+    color: $font-light;
+    height: 40px;
+    border-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.submit-error{
+    color: $danger;
+    text-align: center;
+    margin: 20px 0 0 0;
+}
+
+.main-title{
+    text-align: center;
+    margin: 20px;
+}

@@ -7,28 +7,38 @@ import { Button } from "@material-ui/core";
 import Order from "./order";
 import Menu from "./menu";
 import { ADD_ITEM, GET_ORDER, CLOSE_ORDER } from "./order.query";
+import { GET_TABLES, GET_TABLE_CURRENT_ORDER } from "tables/queries/tables.query";
 
-export default function OrderPage({ orderId }) {
+export default function OrderPage({ orderId, tableId }) {
 	const history = useHistory();
 
+	const { data, loading, error } = useQuery(GET_ORDER, {
+		variables: { orderId },
+	});
+
 	const [addItem] = useMutation(ADD_ITEM, {
-		refetchQueries: [{ query: GET_ORDER, variables: { orderId } }],
+		refetchQueries: [
+			{ query: GET_ORDER, variables: { orderId } },
+			{ query: GET_TABLES }
+		],
 	});
 
 	const addToOrder = (itemId, quantity) => {
 		addItem({ variables: { orderId, itemId, quantity } });
 	};
 
-	const [closeOrder] = useMutation(CLOSE_ORDER);
+	const [closeOrder] = useMutation(CLOSE_ORDER, {
+		refetchQueries: [
+			{ query: GET_TABLES },
+			{ query: GET_TABLE_CURRENT_ORDER, variables: { tableId } }
+		],	
+	});
 
 	const handleClose = () => {
-		closeOrder({ variables: { id: orderId } });
+		closeOrder({ variables: { id: orderId } });		
 		history.push("/");
 	};
 
-	const { data, loading, error } = useQuery(GET_ORDER, {
-		variables: { orderId },
-	});
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>ERROR: {error.message}</p>;
@@ -36,9 +46,8 @@ export default function OrderPage({ orderId }) {
 		<OrderMenu>
 			<Order data={data.order} />
 			<Menu addToOrder={addToOrder} />
-
 			<Button color="secondary" onClick={handleClose}>
-				Cerrar
+				Cobrar orden
 			</Button>
 		</OrderMenu>
 	);
@@ -46,6 +55,8 @@ export default function OrderPage({ orderId }) {
 
 const OrderMenu = styled.div`
 	display: grid;
-	grid-template-columns: 1fr 2fr;
-	grid-gap: 10px;
+	grid-template-columns: 2fr 1fr;
+	grid-gap: 30px;
+	margin-top: 30px;
+	
 `;

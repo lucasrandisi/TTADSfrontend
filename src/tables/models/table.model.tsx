@@ -8,6 +8,8 @@ export interface TableInterface {
 		lastName: string;
 	};
 	nextReservation: {
+		id: number;
 		reservationDateTime: Date;
+		customerName: String;
 	};
 }

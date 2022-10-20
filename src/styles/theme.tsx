@@ -1,9 +1,10 @@
 const dark = {
-	color1: "#132261",
+	header_table: "#212121",
+	header_border_table: "#212121",
 	color2: "#e6e6e6",
-	color3: "#08b867",
-	color4: "#ffffff",
-	color5: "#e8b56a",
+	with_order: "#4CACBC",
+	available: "#A0D995",
+	with_reservation: "#FFEF82",
 
 	bg_sidebar: "#121212",
 	bg_sidebar_icon: "#202020",
@@ -23,11 +24,11 @@ const dark = {
 };
 
 const light = {
-	color1: "#132261",
+	header_table: "#937DC2",
 	color2: "#e6e6e6",
-	color3: "#08b867",
-	color4: "#ffffff",
-	color5: "#e8b56a",
+	with_order: "#08b867",
+	available: "#ffffff",
+	with_reservation: "#e8b56a",
 
 	bg_sidebar: "#e6e6e6",
 	bg_sidebar_icon: "#202020",

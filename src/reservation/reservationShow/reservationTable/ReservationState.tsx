@@ -37,12 +37,10 @@ const statuses = {
 export default function ReservationState({ status }) {
 	const s = statuses[status];
 	return (
-		<>
-			<Chip background={s.background} color={s.color}>
-				{s.icon}
-				{s.label}
-			</Chip>
-		</>
+		<Chip background={s.background} color={s.color}>
+			{s.icon}
+			{s.label}
+		</Chip>
 	);
 }
 
