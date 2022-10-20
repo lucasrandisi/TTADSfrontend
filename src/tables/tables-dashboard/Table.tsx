@@ -20,6 +20,11 @@ export default function Table(props) {
 	if (table.currentOrder) {		
 		const timeDifference = moment().diff(moment(table.currentOrder.createdAt));
 		timer = `${moment(timeDifference).format('H:mm')}`;
+		
+		// var x = moment();
+		// var y = moment(table.currentOrder.createdAt)
+		
+		// timer = x.diff(y, 'hours')+":"+x.diff(y, 'minutes');
 
 	} else if (table.nextReservation) {
 		const reservationTime = moment(table.nextReservation.reservationDateTime);

@@ -46,11 +46,7 @@ export default function OrderPage({ orderId, tableId }) {
 		<OrderMenu>
 			<Order data={data.order} />
 			<Menu addToOrder={addToOrder} />
-
 			<Button color="secondary" onClick={handleClose}>
-				Cerrar
-			</Button>
-			<Button color="secondary">
 				Cobrar orden
 			</Button>
 		</OrderMenu>

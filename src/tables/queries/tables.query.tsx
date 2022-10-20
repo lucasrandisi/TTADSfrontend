@@ -48,3 +48,12 @@ export const CREATE_ORDER = gql`
 		}
 	}
 `;
+
+export const GET_NEXT_TABLE_RESERVATIONS = gql`
+	query($tableId: ID!) {
+		getNextTableReservations(tableId: $tableId) {
+			id
+			reservationDateTime
+		}
+	}
+`;
