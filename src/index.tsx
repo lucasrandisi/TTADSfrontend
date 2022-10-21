@@ -24,7 +24,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 function App() {
-	const [auth, setAuth] = useState("");
+	const [auth, setAuth] = useState(null);
 
 	useEffect(() => {
 		const token = getToken();
@@ -33,28 +33,15 @@ function App() {
 		} else {
 			setAuth(decodeToken(token));
 		}
-	}, []);
-
-	const logout = () => {};
-
-	const setUser = user => {
-		setAuth(user);
-	};
-
-	const authData = useMemo(
-		() => ({
-			auth,
-			logout,
-			setUser,
-		}),
-		[auth]
-	);
-
-	if (auth === "") return null;
+    }, []);
+    
+    if (!auth) {
+        return null;
+    }
 
 	return (
 		<ApolloProvider client={client}>
-			<AuthContext.Provider value={authData}>
+			<AuthContext.Provider value={{auth, setAuth}}>
 				{!auth ? (
 					<Auth />
 				) : (
