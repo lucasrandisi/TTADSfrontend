@@ -19,7 +19,7 @@ export default function LoginForm() {
 	const [error, setError] = useState("");
 	const [login] = useMutation(LOGIN);
 
-	const { setUser } = useAuth();
+	const { setAuth } = useAuth();
 
 	const formik = useFormik({
 		initialValues: initialValues(),
@@ -38,8 +38,7 @@ export default function LoginForm() {
 
 				const { token } = data.login;
 				setToken(token);
-				setUser(decodeToken(token));
-				// eslint-disable-next-line
+                setAuth(decodeToken(token));
 			} catch (error) {
 				setError(error.message);
 			}
