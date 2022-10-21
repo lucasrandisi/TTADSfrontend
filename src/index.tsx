@@ -33,7 +33,11 @@ function App() {
 		} else {
 			setAuth(decodeToken(token));
 		}
-	}, []);
+    }, []);
+    
+    if (!auth) {
+        return null;
+    }
 
 	return (
 		<ApolloProvider client={client}>
