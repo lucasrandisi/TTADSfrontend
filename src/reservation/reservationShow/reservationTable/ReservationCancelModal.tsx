@@ -37,7 +37,7 @@ export default function ReservationCancelModal({idReservation, setChildrenModal}
             <DialogTitle>Are you sure you want to cancel the booking?</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique nulla aliquam quos exercitationem veniam veritatis iste repellendus libero blanditiis laudantium dolore deserunt beatae maxime, quisquam ratione dolorum ad porro officiis?
+                    Se eliminará la reserva seleccionada
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

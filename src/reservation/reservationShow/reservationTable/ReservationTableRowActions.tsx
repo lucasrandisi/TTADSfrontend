@@ -96,12 +96,12 @@ export const ReservationTableRowActions = ({ res }) => {
 					</ListItemIcon>
 					<ListItemText primary="Cancel" />
 				</MenuItem>
-				<MenuItem>
+				{/* <MenuItem>
 					<ListItemIcon>
 						<PriorityHighIcon />
 					</ListItemIcon>
 					<ListItemText primary="Confirm" />
-				</MenuItem>
+				</MenuItem> */}
 			</Menu>
 
 			{childrenModal}
