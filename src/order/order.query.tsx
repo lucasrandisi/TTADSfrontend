@@ -4,13 +4,16 @@ export const GET_ORDER = gql`
 	query GetOrder($orderId: ID!) {
 		order(id: $orderId) {
 			id
+			createdAt
+			paidAt
+			status    
 			lines {
 				id
+				quantity      
 				item {
 					title
 					pricePerUnit
 				}
-				quantity
 			}
 		}
 	}
