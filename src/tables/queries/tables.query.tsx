@@ -23,10 +23,6 @@ export const GET_TABLE_CURRENT_ORDER = gql`
 			size
 			order: currentOrder {
 				id
-				staff {
-					firstName
-					lastName
-				}
 			}
 		}
 	}
