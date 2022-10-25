@@ -10,3 +10,34 @@
     text-align: center;
     margin-top: 20px;
 }
+
+.modal-order .MuiDialog-paperWidthSm {
+    min-width: 500px !important;
+    min-height: 400px;
+}
+
+.item{
+    padding-top: 10px;
+}
+
+.item-ul{
+    border: 1px solid black;
+    padding: 10px 30px 30px 20px;
+}
+
+.title-detalle{
+    padding: 10px 0px;
+}
+
+.item-total{
+    padding-top: 20px;
+}
+
+.order-nro{
+    padding-bottom: 10px;
+}
+
+.info-order-especific{
+    padding-top: 10px;
+    padding-bottom: 20px;
+}

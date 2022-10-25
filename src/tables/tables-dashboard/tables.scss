@@ -21,7 +21,7 @@
 
 .table-container-left{
     // background-color: #212121;
-    background-image: url("../madera-negra.jpg");
+    background-image: url("../table-imgs/madera-negra.jpg");
     background-size: 400px;
     background-repeat: repeat;
     color: white;
@@ -45,9 +45,10 @@
     border-bottom-right-radius: 3px;
     box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
     background-color: #4d2804 !important;
-    background-image: url("../madera.jpg");
+    background-image: url("../table-imgs/madera.jpg");
     background-repeat: repeat;
     background-size: 200px;
+    filter: brightness(70%);
 }
 
 .table-container-icon{
@@ -57,13 +58,15 @@
     border: 1px solid #432302;
     box-shadow: 0px 3px 14px -6px rgba(0,0,0,0.44);
     color: #432302;
+    background-size: 350px;
+    background-repeat: repeat;
 }
 
 .table-container-time{
     padding-top: 17px;
     width: 100px;
     text-align: center;
-    background-image: url("../madera-negra.jpg");
+    background-image: url("../table-imgs/madera-oscura.jpg");
     background-size: 400px;
     background-repeat: repeat;
     color: white;
@@ -77,7 +80,7 @@
 }
 
 .table-background{
-    background-image: url("../fondo-black.jpg");
+    background-image: url("../table-imgs/fondo-black.jpg");
     background-repeat: repeat;
 }
 

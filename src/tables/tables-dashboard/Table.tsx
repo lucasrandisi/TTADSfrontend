@@ -6,6 +6,9 @@ import { TableInterface } from "../models/table.model";
 import ListAlt from '@material-ui/icons/ListAlt';
 import EventBusy from '@material-ui/icons/EventBusy';
 import Add from '@material-ui/icons/Add';
+import maderaCeleste from "../table-imgs/madera-celeste.jpg";
+import maderaAmarilla from "../table-imgs/madera-amarilla.jpg";
+import maderaVerde from "../table-imgs/madera-verde.jpg";
 
 export default function Table(props) {
 	const { table }: { table: TableInterface } = props;
@@ -41,12 +44,12 @@ export default function Table(props) {
 		<div className="container">
 			<div className="table-container table-container-left"
 			>{table.id}</div>
-			<StateTable table={table} className="table-container table-container-icon">
+			<StateIconTable table={table} className="table-container table-container-icon">
 				{hasOrder && <ListAlt />}
 				{hasBooking  && !hasOrder && <EventBusy />}				
 				{hasAny && <Add />}
 				
-			</StateTable>
+			</StateIconTable>
 			<div className="table-container table-container-time">
 				{hasBooking && !hasOrder && <StyleP>Booking at <br></br> {timer} hrs</StyleP>}
 				{/* {(table.currentOrder) && <StyleP>Duration <br></br>{timer} hrs</StyleP>} */}
@@ -79,6 +82,18 @@ const StateTable = styled.div`
 			return props.theme.with_reservation;
 		}
 		return props.theme.available;
+	}};
+`;
+
+const StateIconTable = styled.div`
+	background-image: ${props => {
+		if (props.table.currentOrder) {
+			return `url(${maderaCeleste})`;
+		}
+		if (props.table.nextReservation) {
+			return `url(${maderaAmarilla})`;
+		}
+		return `url(${maderaVerde})`;
 	}};
 `;
 
