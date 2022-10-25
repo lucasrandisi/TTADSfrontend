@@ -124,15 +124,18 @@ export default function ItemForm(props) {
                     /> 
 
                     {form_inputs.map(({name, label}, i) => 
-                        <OutlinedInput
-                            key={i}
-                            className="item-input"
-                            placeholder={label}
-                            name={name}
-                            value={formik.values[name] || ""}
-                            onChange={formik.handleChange}
-                            error={!!formik.errors[name]}
-                        />
+                        <>
+                            <p>{label}</p>
+                            <OutlinedInput
+                                key={i}
+                                className="item-input"
+                                placeholder={label}
+                                name={name}
+                                value={formik.values[name] || ""}
+                                onChange={formik.handleChange}
+                                error={!!formik.errors[name]}
+                            />
+                        </>
                     )}              
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">

@@ -6,6 +6,9 @@ import {
 	NormalizedCacheObject,
 	ApolloProvider,
 	InMemoryCache,
+	HttpLink,
+	ApolloLink,
+	concat
 } from "@apollo/client";
 import { ToastContainer } from "react-toastify";
 import * as serviceWorker from "./serviceWorker";
@@ -17,10 +20,23 @@ import AuthContext from "./context/authContext";
 
 import Auth from "./auth";
 
+const httpLink = new HttpLink({ uri: 'http://localhost:4000/graphql' });
+const authMiddleware = new ApolloLink((operation, forward) => {
+	// add the authorization to the headers
+	operation.setContext(({ headers = {} }) => ({
+	  headers: {
+		...headers,
+		token: getToken() || null,
+	  }
+	}));
+  
+	return forward(operation);
+  })
+
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 	cache: new InMemoryCache(),
-	uri: "http://localhost:4000/graphql",
 	resolvers: {},
+	link: concat(authMiddleware, httpLink),
 });
 
 function App() {
@@ -35,9 +51,9 @@ function App() {
 		}
     }, []);
     
-    if (!auth) {
-        return null;
-    }
+    // if (!auth) {
+    //     return null;
+    // }
 
 	return (
 		<ApolloProvider client={client}>

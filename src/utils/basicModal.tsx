@@ -26,6 +26,7 @@ export default function BasicModal(props) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        className={props.className}
     >
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
@@ -35,11 +36,13 @@ export default function BasicModal(props) {
             <Button onClick={handleClose} color="primary">
                 Back
             </Button>
-            <Button 
-                type="submit"
-                onClick={handleAction} color="primary" autoFocus>
-                {props.buttonText ? props.buttonText : "Accept"}
-            </Button>            
+            {props.buttonText ?
+                <Button 
+                    type="submit"
+                    onClick={handleAction} color="primary" autoFocus>
+                    {props.buttonText}
+                </Button> : <></>
+            }         
         </DialogActions>
     </Dialog>
   )
