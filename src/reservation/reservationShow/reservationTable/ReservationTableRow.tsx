@@ -17,7 +17,7 @@ function status(res) {
 	if (!pastDate) {
 		return "pending";
 	} else if(!res.order?.paidAt){
-		return "canceled"
+		return "DidnotCome"
 	}
 	return "served";
 }

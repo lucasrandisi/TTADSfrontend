@@ -32,6 +32,12 @@ const statuses = {
 		color: " #00592e",
 		icon: <DoneIcon fontSize="small" />,
 	},
+	DidnotCome: {
+		label: "Did not come",
+		background: "#e6e6e6",
+		color: " #7a7a7a",
+		icon: <CloseIcon fontSize="small" />,
+	},
 };
 
 export default function ReservationState({ status }) {

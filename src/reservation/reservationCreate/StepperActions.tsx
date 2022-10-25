@@ -11,12 +11,13 @@ const useStyles = makeStyles(() => ({
 
 export default function StepperActions(props) {
 	const classes = useStyles();
-	const { step, setStep, isSubmitting, isLastStep, disable, setDisable } = props;
+	const { step, setStep, isSubmitting, isLastStep, disable, setDisable, handleClose } = props;
 	const history = useHistory();
 
 	const setCurrentStep = (step) => {
 		if (!step){
 			history.push("/reservations");
+			props.handleClose()
 		} else {
 			setStep((s: number) => s - 1)
 		}

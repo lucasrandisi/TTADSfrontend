@@ -59,6 +59,10 @@ export const DatePickerInput = ({ from, setFrom, to, setTo }) => {
 		setIsComponentVisible(false);
 	};
 
+	const resetDate = () => {
+		setFrom(undefined)
+		setTo(undefined);
+	}
 	return (
 		<FromToInput>
 			<DatePickerInputGroup>
@@ -75,6 +79,7 @@ export const DatePickerInput = ({ from, setFrom, to, setTo }) => {
 					readOnly
 					onClick={toggleDatepicker}
 				/>
+				<Button onClick={resetDate}>reset</Button>
 			</DatePickerInputGroup>
 
 			<DayPickerSelector ref={ref}>

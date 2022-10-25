@@ -115,6 +115,7 @@ export default function CreateReservation(props) {
 		}
 	};
 
+	const handleClose = props.handleClose ? props.handleClose : () => {};
 	
 	return (
 		<>
@@ -122,7 +123,7 @@ export default function CreateReservation(props) {
 			<Container className={classes.container}>
 				<Card className="card-container">
 					<CardContent className={classes.card}>
-						<FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
+						<FormikStepper initialValues={initialValues} onSubmit={handleSubmit} handleClose={handleClose}>
 							<FormikStep label="Amount of people" validationSchema={validationSize}>
 								<Box paddingBottom={2}>
 									<Field

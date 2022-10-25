@@ -20,7 +20,7 @@ export default function ReservationEdit({res, setChildrenModal}) {
             aria-describedby="alert-dialog-description"
             className='reservation-edit'
         >
-            <CreateReservation editReservation={res}/>
+            <CreateReservation editReservation={res} handleClose={handleClose}/>
         </Dialog>
     )
 }

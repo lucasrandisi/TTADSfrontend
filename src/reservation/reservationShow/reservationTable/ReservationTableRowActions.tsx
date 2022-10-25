@@ -84,24 +84,23 @@ export const ReservationTableRowActions = ({ res }) => {
 						<ListItemText primary="Details" />
 					</MenuItem>
 				</StyledLink>
-				<MenuItem onClick={() => handleModal("edit")}>
-					<ListItemIcon aria-label="edit">
-						<CreateIcon />
-					</ListItemIcon>
-					<ListItemText primary="Edit" />
-				</MenuItem>
-				<MenuItem onClick={() => handleModal("cancel")}>
-					<ListItemIcon aria-label="cancel">
-						<DeleteIcon />
-					</ListItemIcon>
-					<ListItemText primary="Cancel" />
-				</MenuItem>
-				{/* <MenuItem>
-					<ListItemIcon>
-						<PriorityHighIcon />
-					</ListItemIcon>
-					<ListItemText primary="Confirm" />
-				</MenuItem> */}
+				{
+					!res.cancelationDateTime && 
+					<>
+						<MenuItem onClick={() => handleModal("edit")}>
+							<ListItemIcon aria-label="edit">
+								<CreateIcon />
+							</ListItemIcon>
+							<ListItemText primary="Edit" />
+						</MenuItem>
+						<MenuItem onClick={() => handleModal("cancel")}>
+							<ListItemIcon aria-label="cancel">
+								<DeleteIcon />
+							</ListItemIcon>
+							<ListItemText primary="Cancel" />
+						</MenuItem>
+					</>
+				}
 			</Menu>
 
 			{childrenModal}
