@@ -24,7 +24,7 @@ export default function OrderPage({ orderId, tableId }) {
 	});
 
 	const addToOrder = (itemId, quantity) => {
-		addItem({ variables: { orderId, itemId, quantity } });
+        addItem({ variables: { lineInput: { orderId, itemId, quantity } } });
 	};
 
 	const [closeOrder] = useMutation(CLOSE_ORDER, {

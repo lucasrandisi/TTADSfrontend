@@ -49,7 +49,10 @@ export default function CreateReservation(props) {
 	});
 
 	const [updateReservation] = useMutation(UPDATE_RESERVATION, {
-		refetchQueries: [{ query: GET_RESERVATIONS }, { query: GET_AVAILABLE_TABLES }],
+        refetchQueries: [
+            { query: GET_RESERVATIONS },
+            { query: GET_AVAILABLE_TABLES, variables: currentRest }
+        ],
 	});
 
 	const classes = useStyles();
@@ -70,10 +73,10 @@ export default function CreateReservation(props) {
 	const createReservation = newReservation => {
 		setCurrentRest({
 			size: newReservation.partySize, 
-			date:newReservation.reservationDateTime
+			date: newReservation.reservationDateTime
 		});
 		createNewReservation({ 
-			variables: newReservation,
+            variables: { reservationInput: { ...newReservation } },
 		});
 	};
 
@@ -84,12 +87,28 @@ export default function CreateReservation(props) {
 		phone: "",
 		email: "",
 		customerName: "",
-	} : editReservation;
+    } : editReservation;
+    
 
 	const handleSubmit = async values => {
-		if (editReservation){
+        if (editReservation) {
+            setCurrentRest({
+                size: values.partySize,
+                date: values.reservationDateTime
+            });
+
 			updateReservation({ 
-				variables: {id: editReservation.id, ...values} 
+                variables: {
+                    id: editReservation.id,
+                    reservationInput: { 
+                        customerName: values.customerName,
+                        email: values.email,
+                        phone: values.phone,
+                        partySize: values.partySize,
+                        reservationDateTime: values.reservationDateTime,
+                        tableId: values.tableId
+                    }
+                } 
 			});
 		} else {
 			createReservation(values);

@@ -23,10 +23,6 @@ export const GET_TABLE_CURRENT_ORDER = gql`
 			size
 			order: currentOrder {
 				id
-				staff {
-					firstName
-					lastName
-				}
 			}
 		}
 	}
@@ -39,7 +35,7 @@ export const MAX_TABLE = gql`
 `
 
 export const CREATE_ORDER = gql`
-	mutation($tableId: ID, $resId: ID) {
+	mutation($tableId: ID!, $resId: ID) {
 		createOrder(tableId: $tableId, resId: $resId) {
 			id
 			table {

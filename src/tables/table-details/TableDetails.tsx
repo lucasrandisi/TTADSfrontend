@@ -9,7 +9,6 @@ import OrderPage from "../../order/OrderPage";
 import { GET_ORDERS } from "order/order.query";
 import { Card, Button, Box } from "@material-ui/core";
 import "./table.scss";
-import moment from "moment";
 
 const TableDetails: React.FC = () => {
 	const { tableId, resId } = useParams();
@@ -25,18 +24,10 @@ const TableDetails: React.FC = () => {
 		variables: { tableId },
 	});
 
-	const tableReservations = useQuery(GET_NEXT_TABLE_RESERVATIONS, {
-		variables: { tableId },
-	});
-
-	const [reservations, setReservations] = useState(false);
-
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>ERROR: {error.message}</p>;
 
 	let { order } = data.table;
-
-	const nextReservations = tableReservations.data?.getNextTableReservations
 
 	return (
 		<>
@@ -53,7 +44,7 @@ const TableDetails: React.FC = () => {
 					</div>
 				</Header>
 
-				{!order && !reservations && (
+				{!order && (
 					<>
 						<Box textAlign='center'>
 							<Button type="submit" variant="contained" color="primary"
@@ -66,31 +57,6 @@ const TableDetails: React.FC = () => {
 						</Box>
 					</>
 				)}
-
-				{/* { !order && (
-					<div>
-						<Box textAlign='right'>
-							<Button
-								onClick={() => setReservations(true)}							
-							>								
-								&nbsp;Ver reservas de hoy
-							</Button>
-						</Box>
-
-						{ !nextReservations && (
-							<div>
-								<p>Booking at: </p>
-								{
-									nextReservations.map((r) =>						
-									<ul key={r.id}>
-										<li>{moment(r.reservationDateTime).format('HH:mm')} hrs</li>
-									</ul>)
-								}
-							</div>
-						)}
-
-					</div>
-				)} */}
 				{order && <OrderPage orderId={order.id} tableId={tableId}/>}
 			</Card>
 		</>

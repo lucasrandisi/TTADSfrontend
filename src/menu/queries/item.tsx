@@ -1,22 +1,16 @@
 import { gql } from "@apollo/client";
 
 export const UPDATE_ITEM =  gql`
-	mutation updateItem(
-		$id: ID!
-        $itemInput: itemInput!
-	) {
-		updateItem(
-			id: $id
-			itemInput: $itemInput
-		) {
+	mutation updateItem($id: ID!, $itemInput: ItemInput!) {
+		updateItem(id: $id, itemInput: $itemInput) {
 			id
 		}
 	}
 `;
 
 export const CREATE_ITEM =  gql`
-	mutation createItem( $item: itemInput! ) {
-		createItem(item : $item ) { id }
+	mutation createItem( $item: ItemInput! ) {
+		createItem(itemInput : $item ) { id }
 	}
 `;
 

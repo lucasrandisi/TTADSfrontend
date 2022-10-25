@@ -23,7 +23,10 @@ export const GET_RESERVATIONS = gql`
 
 export const CANCEL_RESERVATION = gql`
 	mutation cancelReservation($id: ID!) {
-		cancelReservation(id: $id)
+		cancelReservation(id: $id) {
+            id,
+            cancelationDateTime
+        }
 	}
 `;
 
@@ -46,55 +49,23 @@ export const GET_RESERVATION = gql`
 `;
 
 export const CREATE_RESERVATION = gql`
-	mutation createNewReservation(
-		$customerName: String!
-		$phone: String
-		$email: String
-		$partySize: Int!
-		$reservationDateTime: DateTime!
-		$tableId: ID
-	) {
-		createReservation(
-			reservation: {
-				customerName: $customerName
-				phone: $phone
-				email: $email
-				partySize: $partySize
-				reservationDateTime: $reservationDateTime
-				tableId: $tableId
-			}
-		) {
+	mutation createNewReservation($reservationInput: ReservationInput!) {
+		createReservation(reservationInput: $reservationInput) {
 			id
 		}
 	}
 `;
 
 export const UPDATE_RESERVATION = gql`
-	mutation updateReservation(
-		$id: ID!
-		$customerName: String!
-		$phone: String
-		$email: String
-		$partySize: Int!
-		$reservationDateTime: DateTime!
-	) {
-		updateReservation(
-			id: $id,
-			reservation: {
-				customerName: $customerName
-				phone: $phone
-				email: $email
-				partySize: $partySize
-				reservationDateTime: $reservationDateTime
-			}
-		) {
+	mutation updateReservation($id: ID!, $reservationInput: ReservationInput!) {
+		updateReservation(id: $id, reservationInput: $reservationInput) {
 			id
 		}
 	}
 `;
 
 export const GET_AVAILABLE_TABLES = gql`
-	query($date: DateTime, $size: Int){
+	query($date: DateTime!, $size: Int!){
 		tablesAvailableByDateSize(date: $date, size: $size){
 			time
     		tableId
