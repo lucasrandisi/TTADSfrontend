@@ -17,8 +17,8 @@ export const GET_ORDER = gql`
 `;
 
 export const ADD_ITEM = gql`
-	mutation addItem($orderId: ID!, $itemId: ID!, $quantity: Int!) {
-		createLine(line: { orderId: $orderId, itemId: $itemId, quantity: $quantity }) {
+	mutation addItem($lineInput: LineInput!) {
+		createLine(lineInput: $lineInput) {
 			id
 		}
 	}
@@ -32,7 +32,10 @@ export const REMOVE_ITEM = gql`
 
 export const CLOSE_ORDER = gql`
 	mutation close($id: ID!) {
-		closeOrder(id: $id)
+		closeOrder(id: $id) {
+            id,
+            paidAt
+        }
 	}
 `;
 
