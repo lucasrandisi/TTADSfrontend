@@ -29,6 +29,11 @@ const TableDetails: React.FC = () => {
 
 	let { order } = data.table;
 
+	const createNewOrder = () => {
+		createOrder({ 
+			variables: { tableId, resId: resId !== 'undefined'? resId : undefined } 
+		})
+	}
 	return (
 		<>
 			<h1 className="main-title">Order detail</h1>			
@@ -48,9 +53,7 @@ const TableDetails: React.FC = () => {
 					<>
 						<Box textAlign='center'>
 							<Button type="submit" variant="contained" color="primary"
-								onClick={() => createOrder({ 
-									variables: { tableId, resId } 
-								})}
+								onClick={createNewOrder}
 							>
 								<FontAwesomeIcon icon={faPlus} />&nbsp;Nueva Orden								
 							</Button>

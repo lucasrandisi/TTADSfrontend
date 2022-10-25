@@ -14,8 +14,6 @@ import { toast } from "react-toastify";
 import BasicModal from "utils/basicModal";
 import _ from "lodash";
 
-import "../index.scss"
-
 export default function HistoryPage() {
 	const [currentOrder, setCurrentOrder] = useState({});
 	const [childrenModal, setChildrenModal] = useState<any>(null);

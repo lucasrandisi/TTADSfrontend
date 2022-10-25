@@ -40,7 +40,7 @@ export default function Table(props) {
 	const reservedTime = moment(table.nextReservation?.reservationDateTime).format('HH:mm');
 
 	return (
-		<TableLink to={`table/${table.id}`}>
+		<TableLink to={`table/${table.id}/${table.nextReservation?.id}`}>
 		<div className="container">
 			<div className="table-container table-container-left"
 			>{table.id}</div>

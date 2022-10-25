@@ -14,7 +14,7 @@ function status(res) {
 	}
 
 	const pastDate = moment(res.reservationDateTime).diff(moment(new Date())) < 0;
-	if (!pastDate) {
+	if (!pastDate && !res.order?.paidAt) {
 		return "pending";
 	} else if(!res.order?.paidAt){
 		return "DidnotCome"

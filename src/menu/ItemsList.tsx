@@ -17,6 +17,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import BasicModal from "utils/basicModal";
 import { DELETE_ITEM } from "./queries/item";
 import GET_CATEGORIES_AND_ITEMS from "./queries/categories-and-items.query";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles({
 	tableRow: {
@@ -101,6 +102,7 @@ export default function ItemsList({ selectedCategoryId, items }) {
 	const handleDelete = (id) => {
 		console.log(id)
 		deleteItem({ variables: { id:id } })
+		toast.success("The item has been successfully deleted");
 	}
 
 	const [childrenModal, setChildrenModal] = useState<any>(null);

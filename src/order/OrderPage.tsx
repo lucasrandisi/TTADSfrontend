@@ -8,6 +8,7 @@ import Order from "./order";
 import Menu from "./menu";
 import { ADD_ITEM, GET_ORDER, CLOSE_ORDER } from "./order.query";
 import { GET_TABLES, GET_TABLE_CURRENT_ORDER } from "tables/queries/tables.query";
+import { toast } from "react-toastify";
 
 export default function OrderPage({ orderId, tableId }) {
 	const history = useHistory();
@@ -37,6 +38,7 @@ export default function OrderPage({ orderId, tableId }) {
 	const handleClose = () => {
 		closeOrder({ variables: { id: orderId } });		
 		history.push("/");
+		toast.success("The order has been successfully closed");
 	};
 
 

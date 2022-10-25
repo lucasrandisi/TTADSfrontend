@@ -35,7 +35,7 @@ export const MAX_TABLE = gql`
 `
 
 export const CREATE_ORDER = gql`
-	mutation($tableId: ID!, $resId: ID) {
+	mutation createOrder ($tableId: ID!, $resId: ID) {
 		createOrder(tableId: $tableId, resId: $resId) {
 			id
 			table {
