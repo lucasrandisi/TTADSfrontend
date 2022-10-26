@@ -26,7 +26,7 @@ export default function Table(props) {
 	}
 
 	const hasOrder = table.currentOrder;
-	const hasBooking = table.nextReservation;
+	const hasBooking = table.nextReservation && !table.nextReservation.cancelationDateTime;
 	const hasAny = !hasBooking && !hasOrder
 	const reservedTime = moment(table.nextReservation?.reservationDateTime).format('HH:mm');
 
@@ -79,7 +79,7 @@ const StateIconTable = styled.div`
 		if (props.table.currentOrder) {
 			return `url(${maderaCeleste})`;
 		}
-		if (props.table.nextReservation) {
+		if (props.table.nextReservation && !props.table.nextReservation.cancelationDateTime) {
 			return `url(${maderaAmarilla})`;
 		}
 		return `url(${maderaVerde})`;

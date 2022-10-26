@@ -12,6 +12,7 @@ export const GET_TABLES = gql`
 				id
 				reservationDateTime
 				customerName
+				cancelationDateTime
 			}
 		}
 	}

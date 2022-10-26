@@ -11,5 +11,6 @@ export interface TableInterface {
 		id: number;
 		reservationDateTime: Date;
 		customerName: String;
+		cancelationDateTime: Date;
 	};
 }
