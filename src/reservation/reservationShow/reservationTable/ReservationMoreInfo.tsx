@@ -8,6 +8,44 @@ import { useQuery } from "@apollo/client";
 import { GET_RESERVATION } from "../../queries/ReservationQuery";
 import "./reservation.scss";
 
+
+const personalInfo = [
+    {
+        name: "customerName",
+        label: "Customer name: "
+    },
+    {
+        name: "email",
+        label: "Email: "
+    },
+    {
+        name: "phone",
+        label: "Phone: "
+    },
+    {
+        name: "tableSize",
+        label: "Party size (chairs): "
+    },
+]
+const bookingInfo = [
+    {
+        name: "tableId",
+        label: "Table id: "
+    },
+    {
+        name: "tableSize",
+        label: "Table size: "
+    },
+    {
+        name: "reservationDate",
+        label: "Booking date: "
+    },
+    {
+        name: "reservationTime",
+        label: "Booking time: "
+    },
+]
+
 export default function ReservationMoreInfo() {
 	const { id } = useParams();
 	const { data, loading, error } = useQuery(GET_RESERVATION, {
@@ -79,39 +117,3 @@ const Title = styled.h1`
 	margin-bottom: 20px;
 `
 
-const personalInfo = [
-	{
-		name:"customerName",
-		label:"Customer name: "
-	},
-	{
-		name:"email",
-		label:"Email: "
-	},
-	{
-		name:"phone",
-		label:"Phone: "
-	},
-	{
-		name:"tableSize",
-		label:"Party size (chairs): "
-	},
-]
-const bookingInfo = [
-	{
-		name:"tableId",
-		label:"Table id: "
-	},
-	{
-		name:"tableSize",
-		label:"Table size: "
-	},
-	{
-		name:"reservationDate",
-		label:"Booking date: "
-	},
-	{
-		name:"reservationTime",
-		label:"Booking time: "
-	},
-]

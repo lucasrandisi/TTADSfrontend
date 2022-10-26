@@ -20,16 +20,7 @@ export default function Table(props) {
 		return () => clearTimeout(dateTimer);
 	});
 	
-	if (table.currentOrder) {		
-		const timeDifference = moment().diff(moment(table.currentOrder.createdAt));
-		timer = `${moment(timeDifference).format('H:mm')}`;
-		
-		// var x = moment();
-		// var y = moment(table.currentOrder.createdAt)
-		
-		// timer = x.diff(y, 'hours')+":"+x.diff(y, 'minutes');
-
-	} else if (table.nextReservation) {
+    if (table.nextReservation) {
 		const reservationTime = moment(table.nextReservation.reservationDateTime);
 		timer = `${reservationTime.format('HH:mm')}`;
 	}
@@ -40,31 +31,29 @@ export default function Table(props) {
 	const reservedTime = moment(table.nextReservation?.reservationDateTime).format('HH:mm');
 
 	return (
-		<TableLink to={`table/${table.id}/${table.nextReservation?.id}`}>
-		<div className="container">
-			<div className="table-container table-container-left"
-			>{table.id}</div>
-			<StateIconTable table={table} className="table-container table-container-icon">
-				{hasOrder && <ListAlt />}
-				{hasBooking  && !hasOrder && <EventBusy />}				
-				{hasAny && <Add />}
-				
-			</StateIconTable>
-			<div className="table-container table-container-time">
-				{hasBooking && !hasOrder && <StyleP>Booking at <br></br> {timer} hrs</StyleP>}
-				{/* {(table.currentOrder) && <StyleP>Duration <br></br>{timer} hrs</StyleP>} */}
-				{hasAny && <StyleP className="available">Available</StyleP>}		
-			</div>
-			
-			<StateTable table={table} className="table-container table-container-right">
-				{hasBooking && hasOrder && 
-					<p className="next-reservation">
-						Have a reservation soon at {reservedTime} hs
-					</p>
-				}
-				{/* {(table.nextReservation) && <StyleP className="reservation">Customer name: {table.nextReservation.customerName}</StyleP>}				 */}
-			</StateTable>
-		</div>
+        <TableLink to={`table/${table.id}/${table.nextReservation ? table.nextReservation.id : 'new'}`}>
+            <div className="container">
+                <div className="table-container table-container-left"
+                >{table.id}</div>
+                <StateIconTable table={table} className="table-container table-container-icon">
+                    {hasOrder && <ListAlt />}
+                    {hasBooking  && !hasOrder && <EventBusy />}				
+                    {hasAny && <Add />}
+                    
+                </StateIconTable>
+                <div className="table-container table-container-time">
+                    {hasBooking && !hasOrder && <StyleP>Booking at <br></br> {timer} hrs</StyleP>}
+                    {hasAny && <StyleP className="available">Available</StyleP>}		
+                </div>
+                
+                <StateTable table={table} className="table-container table-container-right">
+                    {hasBooking && hasOrder && 
+                        <p className="next-reservation">
+                            Have a reservation soon at {reservedTime} hs
+                        </p>
+                    }
+                </StateTable>
+            </div>
 		</TableLink>
 	);
 } 
