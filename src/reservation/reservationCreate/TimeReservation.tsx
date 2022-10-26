@@ -22,7 +22,8 @@ export default function TimeReservation(
         variables: {
             size: partySize,
             date: moment(reservationDate).format("YYYY-MM-DD"),
-        }
+        },
+        fetchPolicy: 'network-only'
     });
 
 	if (loading) return <p>Loading...</p>;

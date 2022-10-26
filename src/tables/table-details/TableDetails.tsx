@@ -23,6 +23,7 @@ const TableDetails: React.FC = () => {
 
 	const { data, loading, error } = useQuery(GET_TABLE_CURRENT_ORDER, {
 		variables: { tableId },
+		fetchPolicy: 'network-only',
 	});
 
 	if (loading) return <p>Loading...</p>;
