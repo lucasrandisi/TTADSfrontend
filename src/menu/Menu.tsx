@@ -95,7 +95,6 @@ const Menu: React.FC = () => {
 				}>new item</Button>
 			</h1>
 
-
 			{childrenModal}
 			
 			<div className={classes.content}>
