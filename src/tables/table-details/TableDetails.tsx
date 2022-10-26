@@ -16,7 +16,8 @@ const TableDetails: React.FC = () => {
 	const [createOrder] = useMutation(CREATE_ORDER, {
 		refetchQueries: [
 			{ query: GET_TABLE_CURRENT_ORDER, variables: { tableId } },
-			{ query: GET_TABLES }, { query: GET_ORDERS }
+			{ query: GET_TABLES }, 
+            { query: GET_ORDERS }
 		],
 	});
 
@@ -31,7 +32,7 @@ const TableDetails: React.FC = () => {
 
 	const createNewOrder = () => {
 		createOrder({ 
-			variables: { tableId, resId: resId !== 'undefined'? resId : undefined } 
+			variables: { tableId, resId: resId !== 'new' ? resId : undefined } 
 		})
 	}
 	return (
