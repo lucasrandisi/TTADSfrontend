@@ -40,7 +40,7 @@ export default function LoginForm() {
 				setToken(token);
                 setAuth(decodeToken(token));
 			} catch (error) {
-				setError(error.message);
+				setError("Email y/o contraseña incorrectos");
 			}
 		},
 	});
