@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import { FormikStep, FormikStepper } from "./FormikStepper";
 import { CREATE_RESERVATION, GET_AVAILABLE_TABLES, GET_RESERVATIONS, UPDATE_RESERVATION } from "../queries/ReservationQuery";
 import "./booking.scss";
-import { MAX_TABLE } from "../../tables/queries/tables.query";
+import { GET_TABLES, MAX_TABLE } from "../../tables/queries/tables.query";
 import _ from "lodash";
 
 const useStyles = makeStyles(() => ({
@@ -44,6 +44,7 @@ export default function CreateReservation(props) {
 	const [createNewReservation] = useMutation(CREATE_RESERVATION, {
 		refetchQueries: [
 			{ query: GET_RESERVATIONS },
+			{ query: GET_TABLES },
 			{ query: GET_AVAILABLE_TABLES, variables: currentRest }
 		],
 	});
@@ -51,6 +52,7 @@ export default function CreateReservation(props) {
 	const [updateReservation] = useMutation(UPDATE_RESERVATION, {
         refetchQueries: [
             { query: GET_RESERVATIONS },
+			{ query: GET_TABLES },
             { query: GET_AVAILABLE_TABLES, variables: currentRest }
         ],
 	});

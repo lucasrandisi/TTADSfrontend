@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import Order from "./order";
 import Menu from "./menu";
-import { ADD_ITEM, GET_ORDER, CLOSE_ORDER } from "./order.query";
+import { ADD_ITEM, GET_ORDER, CLOSE_ORDER, GET_ORDERS } from "./order.query";
 import { GET_TABLES, GET_TABLE_CURRENT_ORDER } from "tables/queries/tables.query";
 import { toast } from "react-toastify";
 
@@ -30,7 +30,7 @@ export default function OrderPage({ orderId, tableId }) {
 
 	const [closeOrder] = useMutation(CLOSE_ORDER, {
 		refetchQueries: [
-			{ query: GET_TABLES },
+			{ query: GET_TABLES }, { query: GET_ORDERS },
 			{ query: GET_TABLE_CURRENT_ORDER, variables: { tableId } }
 		],	
 	});

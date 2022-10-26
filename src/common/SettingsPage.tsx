@@ -1,14 +1,28 @@
 import React from "react";
 
-import { Switch } from "@material-ui/core";
+import { Switch, Button } from "@material-ui/core";
+
+import { setToken } from "../utils/token"
 
 export default function SettingsPage({ theme, toggleTheme }) {
 	return (
-		<div>
-			<h1>Settings</h1>
+		<div style={{paddingLeft: "40px"}}>			
 			<div>
-				Toggle theme:
-				<Switch checked={theme === "light"} onChange={toggleTheme} name="themeSwitch" />
+				<h1>Settings <Switch 
+					checked={theme === "light"} 
+					onChange={toggleTheme} 
+					name="themeSwitch" 
+				/></h1>
+			</div>
+			<div style={{paddingTop: "20px"}}>				
+				<Button 
+					color="primary" 
+					variant="contained" 
+					onClick={() => {
+						setToken('');
+						window.location.reload();
+					}}
+				>Cerrar sesión</Button>
 			</div>
 		</div>
 	);

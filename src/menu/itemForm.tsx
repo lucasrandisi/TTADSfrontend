@@ -124,7 +124,7 @@ export default function ItemForm(props) {
                     /> 
 
                     {form_inputs.map(({name, label}, i) => 
-                        <>
+                        <div key={i}>
                             <p>{label}</p>
                             <OutlinedInput
                                 key={i}
@@ -135,7 +135,7 @@ export default function ItemForm(props) {
                                 onChange={formik.handleChange}
                                 error={!!formik.errors[name]}
                             />
-                        </>
+                        </div>
                     )}              
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">

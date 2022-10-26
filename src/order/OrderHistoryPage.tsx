@@ -10,6 +10,7 @@ import styled from "styled-components";
 import MUIDataTable from "mui-datatables";
 import "./order.scss";
 import { DELETE_ORDER, GET_ORDER, GET_ORDERS } from "./order.query";
+import { GET_TABLES } from "../tables/queries/tables.query"
 import { toast } from "react-toastify";
 import BasicModal from "utils/basicModal";
 import _ from "lodash";
@@ -27,6 +28,7 @@ export default function HistoryPage() {
 	const [deleteOrder] = useMutation(DELETE_ORDER, {
 		refetchQueries: [
 			{ query: GET_ORDERS },
+			{ query: GET_TABLES }
 		],	
 	});
 	
@@ -45,7 +47,6 @@ export default function HistoryPage() {
 	]);
 
 	const handleDeleteOrders = (rowsDeleted) => {
-		console.log("hola")
 		deleteOrder(
 			{ variables: 
 				{ 
@@ -116,7 +117,7 @@ export default function HistoryPage() {
 	};
 
 	return (
-		<div clasName="main">
+		<div>
 			<h1 className="order-title">Orders list</h1>
 			<Card className="container-order">				
 				<MUIDataTable
