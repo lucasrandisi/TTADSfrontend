@@ -40,7 +40,7 @@ export default function LoginForm() {
 				setToken(token);
                 setAuth(decodeToken(token));
 			} catch (error) {
-				setError(error.message);
+				setError("Email y/o contraseña incorrectos");
 			}
 		},
 	});
@@ -52,6 +52,7 @@ export default function LoginForm() {
 				noValidate
 				autoComplete="off"
 				onSubmit={formik.handleSubmit}>
+				{!!formik.errors.email && <p className="submit-error-yup">{formik.errors.email}</p>}
 				<OutlinedInput
 					className="register-input"
 					placeholder="Correo electronico"
@@ -68,7 +69,7 @@ export default function LoginForm() {
 					onChange={formik.handleChange}
 					value={formik.values.password}
 					error={!!formik.errors.password}
-				/>
+				/>				
 				<button type="submit" className="btn-submit">
 					Iniciar sesión
 				</button>

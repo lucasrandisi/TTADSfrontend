@@ -47,7 +47,7 @@ export default function RegisterForm(props) {
 				toast.success("Usuario registrado correctamente");
 				setShowLogin(true);
 			} catch (error) {
-				toast.error(error.message);
+				toast.error("El email ya se encuentra en uso");
 			}
 		},
 	});
